@@ -46,16 +46,35 @@ class Animator {
         return isDone;
     };
 
-    reverse() {
+    drawFrameReverse(tick, ctx, x, y, scale) {
+        if (this.isDOne()) {
+            if (this.loop) {
+                this.elapsedTime -= this.totalTime;
+            } else {
+                console.log("drawing empty frame");
+                return;
+            }
+        }
+
+        let frame = this.currentFrame();
+        if (this.reverse) frame = this.frameCount - frame - 1;
+
         var offscreenCanvas = document.createElement('canvas');
-        offscreenCanvas.width = 128;
-        offscreenCanvas.hieght = 128;
+        offscreenCanvas.width = this.width;
+        offscreenCanvas.hieght = this.hieght;
         var offscreenCtx = offscreenCanvas.getContext('2d');
         offscreenCtx.save();
         offscreenCtx.scale(-1,1);
-        this.walkAnimation[0].drawFrame(this.game.clockTick,offscreenCtx,-100,0,1);
+        this.elapsedTime += tick;
+        offscreenCtx.drawImage(this.spriteSheet,
+            this.xStart + frame * (this.width + this.framePadding), this.yStart, //source from sheet
+            this.width, this.height,
+            -this.width-0, 0,
+            this.width * scale,
+            this.height * scale);
         offscreenCtx.restore();
-        ctx.drawImage(offscreenCanvas,this.x,100);
+        ctx.drawImage(offscreenCanvas,x,y);
+
     }
 
 }
