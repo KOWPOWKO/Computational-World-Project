@@ -35,6 +35,32 @@ class Animator {
 
     };
 
+    drawFrameY(tick, ctx, x, y, scale) {
+        this.elapsedTime += tick;
+
+        if (this.isDOne()) {
+            if (this.loop) {
+                this.elapsedTime -= this.totalTime;
+            } else {
+                console.log("drawing empty frame");
+                return;
+            }
+        }
+
+        let frame = this.currentFrame();
+        if (this.reverse) frame = this.frameCount - frame - 1;
+
+
+        ctx.drawImage(this.spriteSheet,
+            this.xStart, this.yStart + frame * (this.height + this.framePadding), //source from sheet
+            this.width, this.height,
+            x, y,
+            this.width * scale,
+            this.height * scale);
+
+    };
+
+
 
     currentFrame() {
         let currFrame = Math.floor(this.elapsedTime / this.frameDuration);
