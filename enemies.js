@@ -101,3 +101,22 @@ class Mage {
             
     };
 };
+
+class Ogre {
+	constructor(game){
+		this.game = game;
+		this.animator = new Animator(ASSET_MANAGER.getAsset("./resources/monstor2.png"), 4, 0, 20, 28, 10, 0.4);
+		this.x = 0;
+		this.y = 350;
+		this.speed = 100;
+	};
+
+	update(){
+		this.x += this.speed * this.game.clockTick;
+		if(this.x > 1024) this.x = 0;
+	};
+	
+	draw(ctx){
+		this.animator.drawFrame(this.game.clockTick, ctx, this.x+100, this.y);
+	};
+};
