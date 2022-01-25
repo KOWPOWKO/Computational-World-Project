@@ -8,6 +8,7 @@ ASSET_MANAGER.queueDownload("./resources/castlefull.png");
 ASSET_MANAGER.queueDownload("./resources/coin.png");
 ASSET_MANAGER.queueDownload("./resources/defender.png");
 ASSET_MANAGER.queueDownload("./resources/character2.png");
+ASSET_MANAGER.queueDownload("./resources/monstor2.png");
 ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
@@ -69,6 +70,8 @@ ASSET_MANAGER.downloadAll(function() {
     gameEngine.addEntity(new Mage(gameEngine,1280,LEFT));
     gameEngine.addEntity(new Snake(gameEngine,-400, RIGHT));
     gameEngine.addEntity(new Snake(gameEngine,1500, LEFT));
+    gameEngine.addEntity(new Ogre(gameEngine,-100, RIGHT));
+    gameEngine.addEntity(new Ogre(gameEngine,1200, LEFT));
 
     //background props
     gameEngine.addEntity(new BirdBrown(gameEngine,-325,RIGHT));
