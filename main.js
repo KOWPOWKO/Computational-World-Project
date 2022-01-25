@@ -1,13 +1,13 @@
 var gameEngine = new GameEngine();
 var ASSET_MANAGER = new AssetManager();
 
-ASSET_MANAGER.queueDownload("./resources/defender.png");
-ASSET_MANAGER.queueDownload("./resources/boss.png");
-ASSET_MANAGER.queueDownload("./resources/coin.png");
-ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/bird.png");
-ASSET_MANAGER.queueDownload("./resources/zombie.png");
+ASSET_MANAGER.queueDownload("./resources/boss.png");
 ASSET_MANAGER.queueDownload("./resources/castle.png");
+ASSET_MANAGER.queueDownload("./resources/castlefull.png");
+ASSET_MANAGER.queueDownload("./resources/coin.png");
+ASSET_MANAGER.queueDownload("./resources/defender.png");
+ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
