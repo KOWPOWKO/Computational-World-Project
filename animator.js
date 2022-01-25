@@ -13,7 +13,7 @@ class Animator {
     drawFrame(tick, ctx, x, y, scale) {
         this.elapsedTime += tick;
 
-        if (this.isDOne()) {
+        if (this.isDone()) {
             if (this.loop) {
                 this.elapsedTime -= this.totalTime;
             } else {
@@ -32,8 +32,32 @@ class Animator {
             x, y,
             this.width * scale,
             this.height * scale);
-
     };
+
+    drawFrameY(tick, ctx, x, y, scale) {
+        this.elapsedTime += tick;
+
+        if (this.isDone()) {
+            if (this.loop) {
+                this.elapsedTime -= this.totalTime;
+            } else {
+                console.log("drawing empty frame");
+                return;
+            }
+        }
+
+        let frame = this.currentFrame();
+        if (this.reverse) frame = this.frameCount - frame - 1;
+
+
+        ctx.drawImage(this.spriteSheet,
+            this.xStart, this.yStart + frame * (this.height + this.framePadding), //source from sheet
+            this.width, this.height,
+            x, y,
+            this.width * scale,
+            this.height * scale);
+    };
+
 
 
     currentFrame() {
@@ -41,13 +65,8 @@ class Animator {
         return currFrame;
     };
 
-    isDOne() {
-        let isDone = (this.elapsedTime >= this.totalTime)
-        return isDone;
-    };
-
     drawFrameReverse(tick, ctx, x, y, scale) {
-        if (this.isDOne()) {
+        if (this.isDone()) {
             if (this.loop) {
                 this.elapsedTime -= this.totalTime;
             } else {
@@ -76,5 +95,10 @@ class Animator {
         ctx.drawImage(offscreenCanvas,x,y);
 
     }
+
+    isDone() {
+        let isDoneVar = (this.elapsedTime >= this.totalTime)
+        return isDoneVar;
+    };
 
 }

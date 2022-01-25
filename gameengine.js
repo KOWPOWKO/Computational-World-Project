@@ -10,10 +10,18 @@ class GameEngine {
         this.entities = [];
 
         // Information on the input
+        /*
         this.click = null;
         this.mouse = null;
         this.wheel = null;
         this.keys = {};
+        */
+       this.up = null;
+       this.right = null;
+       this.down = null;
+       this.left = null;
+       this.run = null;
+       this.attack = null;
 
         // THE KILL SWITCH
         this.running = false;
@@ -46,11 +54,70 @@ class GameEngine {
     };
 
     startInput() {
+        var that = this;
+
         const getXandY = e => ({
-            x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
-            y: e.clientY - this.ctx.canvas.getBoundingClientRect().top
+            x: e.clientX - that.ctx.canvas.getBoundingClientRect().left,
+            y: e.clientY - that.ctx.canvas.getBoundingClientRect().top
         });
 
+        this.ctx.canvas.addEventListener("keydown", function (e) {
+            switch (e.code) {
+                case "Space":
+                    that.up = true;
+                    break;
+
+                case "KeyW":
+                    that.up = true;
+                    break;
+
+                case "KeyA":
+                    that.left = true;
+                    break;    
+
+                case "KeyS":
+                    that.down = true;
+                    break;
+
+                case "KeyD":
+                    that.right = true;
+                    break;
+
+                case "KeyJ":
+                    that.attack = true;
+                    break;
+                case "ShiftLeft":
+                    that.run = true;
+            }
+        }, false);
+
+        this.ctx.canvas.addEventListener("keyup", function (e) {
+            switch (e.code) {
+                case "Space":
+                    that.up = false;
+                    break;
+
+                case "KeyW":
+                    that.up = false;
+                    break;
+
+                case "KeyA":
+                    that.left = false;
+                    break;    
+
+                case "KeyS":
+                    that.down = false;
+                    break;
+
+                case "KeyD":
+                    that.right = false;
+                    break;
+                case "ShiftLeft":
+                    that.run = false;
+            }
+        }, false);
+    };
+        /*
         this.ctx.canvas.addEventListener("mousemove", e => {
             if (this.options.debugging) {
                 console.log("MOUSE_MOVE", getXandY(e));
@@ -84,10 +151,8 @@ class GameEngine {
             }
             this.rightclick = getXandY(e);
         });
-
-        window.addEventListener("keydown", event => this.keys[event.key] = true);
-        window.addEventListener("keyup", event => this.keys[event.key] = false);
-    };
+        */
+    
 
     addEntity(entity) {
         this.entities.push(entity);
@@ -128,3 +193,4 @@ class GameEngine {
     };
 
 };
+
