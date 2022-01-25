@@ -7,6 +7,7 @@ ASSET_MANAGER.queueDownload("./resources/castle.png");
 ASSET_MANAGER.queueDownload("./resources/castlefull.png");
 ASSET_MANAGER.queueDownload("./resources/coin.png");
 ASSET_MANAGER.queueDownload("./resources/defender.png");
+ASSET_MANAGER.queueDownload("./resources/character2.png");
 ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
@@ -60,6 +61,8 @@ ASSET_MANAGER.downloadAll(function() {
     
     //player
     gameEngine.addEntity(new Hero(gameEngine,0,0));
+    gameEngine.addEntity(new Character_2(gameEngine,0,0));
+
 
     //enemies
     gameEngine.addEntity(new Mage(gameEngine,0,RIGHT));

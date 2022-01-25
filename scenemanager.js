@@ -10,7 +10,6 @@ class SceneManager {
     loadWorld() {
         this.game.addEntity(new Sun(this.game,0,0));
         this.game.addEntity(new Hero(this.game,0,0));
-        this.game.addEntity(new Bird(this.game,0,0));
 
     }
  
