@@ -13,7 +13,7 @@ class Animator {
     drawFrame(tick, ctx, x, y, scale) {
         this.elapsedTime += tick;
 
-        if (this.isDOne()) {
+        if (this.isDone()) {
             if (this.loop) {
                 this.elapsedTime -= this.totalTime;
             } else {
@@ -32,13 +32,12 @@ class Animator {
             x, y,
             this.width * scale,
             this.height * scale);
-
     };
 
     drawFrameY(tick, ctx, x, y, scale) {
         this.elapsedTime += tick;
 
-        if (this.isDOne()) {
+        if (this.isDone()) {
             if (this.loop) {
                 this.elapsedTime -= this.totalTime;
             } else {
@@ -57,7 +56,6 @@ class Animator {
             x, y,
             this.width * scale,
             this.height * scale);
-
     };
 
 
@@ -67,13 +65,8 @@ class Animator {
         return currFrame;
     };
 
-    isDOne() {
-        let isDone = (this.elapsedTime >= this.totalTime)
-        return isDone;
-    };
-
     drawFrameReverse(tick, ctx, x, y, scale) {
-        if (this.isDOne()) {
+        if (this.isDone()) {
             if (this.loop) {
                 this.elapsedTime -= this.totalTime;
             } else {
@@ -102,5 +95,10 @@ class Animator {
         ctx.drawImage(offscreenCanvas,x,y);
 
     }
+
+    isDone() {
+        let isDoneVar = (this.elapsedTime >= this.totalTime)
+        return isDoneVar;
+    };
 
 }
