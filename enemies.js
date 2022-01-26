@@ -106,6 +106,8 @@ class Ogre {
 	constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
 		this.spritesheet = ASSET_MANAGER.getAsset("./resources/monstor2.png");
+        this.spritesheet_2 = ASSET_MANAGER.getAsset("./resources/monstor2rev.png");
+
         this.loadProperties();
         this.animation = [];
         this.loadAnimation();
@@ -118,13 +120,14 @@ class Ogre {
 
         //restrictions
         this.SPEED = 0.4;
-        this.GROUND = 507;
+        this.GROUND = 440;
         this.y = this.GROUND;
     }
 
     loadAnimation() {
         // Walk
-        this.animation[0] = new Animator(this.spritesheet, 4, 0, 20, 28, 10, 0.4,10,false,true);
+        this.animation[0] = new Animator(this.spritesheet, 4, 0, 20, 28, 10, 0.4,0,false,true);
+        this.animation[1] = new Animator(this.spritesheet_2, 0, 0, 20, 28, 10, 0.4,0,false,true);
     }
 
 	update(){
@@ -141,7 +144,7 @@ class Ogre {
 	
 	draw(ctx){
         if (this.facing == this.LEFT) {
-            this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,5); 
+            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,5); 
         } else {
             this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,5);   
         }

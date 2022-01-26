@@ -9,6 +9,7 @@ ASSET_MANAGER.queueDownload("./resources/coin.png");
 ASSET_MANAGER.queueDownload("./resources/defender.png");
 ASSET_MANAGER.queueDownload("./resources/character2.png");
 ASSET_MANAGER.queueDownload("./resources/monstor2.png");
+ASSET_MANAGER.queueDownload("./resources/monstor2rev.png");
 ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
@@ -19,10 +20,7 @@ ASSET_MANAGER.queueDownload("./resources/background.jpg");
 
 
 ASSET_MANAGER.downloadAll(function() {
-    const LEFT = 0;
-    const RIGHT = 1;
-
-	var canvas = document.getElementById('gameWorld');
+    var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
     gameEngine.init(ctx);
@@ -60,26 +58,10 @@ ASSET_MANAGER.downloadAll(function() {
     gameEngine.addEntity(new Snake(gameEngine,0,0,"./resources/enemies.png"));
     */
     
-    //player
-    gameEngine.addEntity(new Hero(gameEngine,0,0));
-    gameEngine.addEntity(new Character_2(gameEngine,0,0));
-
-
-    //enemies
-    gameEngine.addEntity(new Mage(gameEngine,0,RIGHT));
-    gameEngine.addEntity(new Mage(gameEngine,1280,LEFT));
-    gameEngine.addEntity(new Snake(gameEngine,-400, RIGHT));
-    gameEngine.addEntity(new Snake(gameEngine,1500, LEFT));
-    gameEngine.addEntity(new Ogre(gameEngine,-100, RIGHT));
-    gameEngine.addEntity(new Ogre(gameEngine,1200, LEFT));
-
-    //background props
-    gameEngine.addEntity(new BirdBrown(gameEngine,-325,RIGHT));
-    gameEngine.addEntity(new BirdBrown(gameEngine,1412,LEFT));
-    //background
-    gameEngine.addEntity(new Sun(gameEngine, 180, 150));
-    gameEngine.addEntity(new Castle(gameEngine, 0, 0));
     
+    gameEngine.init(ctx);
+		
+	new SceneManager(gameEngine);
 
-    gameEngine.start();
+	gameEngine.start();
 });
