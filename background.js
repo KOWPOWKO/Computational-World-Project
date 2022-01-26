@@ -1,18 +1,31 @@
-class Sun { 
+class Sun {
     constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/sun.png");
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/sun.PNG");
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet, 1100, 0, this.x, this.y);
+    };
+}
+class Ground {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/ground.png");
+
     };
 
-    update() {
+    update () {
 
     };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,600,0);
+        ctx.drawImage(this.spritesheet, 0, 570, 1280, 150);
     };
-};
+}
 
 class Bird { 
     constructor(game,x,y,spritesheet) {
@@ -32,4 +45,20 @@ class Bird {
     draw(ctx) {
         this.animator.drawFrame(this.game.clockTick, ctx, this.x, this.y);
     };
+};
+
+class Fire {
+	constructor(game){
+		this.game = game;
+		this.animator = new Animator(ASSET_MANAGER.getAsset("./resources/fire.png"), 0, 0, 22.2, 12, 6, 1.5);
+	};
+
+	update(){
+
+	};
+	
+	draw(ctx){
+		this.animator.drawFrame(this.game.clockTick, ctx, 0,   400);
+
+	};
 };
