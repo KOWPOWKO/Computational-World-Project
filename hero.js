@@ -42,7 +42,7 @@ class Hero {
         this.LEFT = 0;
         this.RIGHT = 1;
 
-       //states
+        //states
         this.IDLE = 0;
         this.WALKING = 1;
         this.RUNNING = 2;

@@ -12,7 +12,7 @@ ASSET_MANAGER.queueDownload("./resources/monstor2.png");
 ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
-//ASSET_MANAGER.queueDownload("./resources/.png");
+ASSET_MANAGER.queueDownload("./resources/background.jpg");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
@@ -77,9 +77,9 @@ ASSET_MANAGER.downloadAll(function() {
     gameEngine.addEntity(new BirdBrown(gameEngine,-325,RIGHT));
     gameEngine.addEntity(new BirdBrown(gameEngine,1412,LEFT));
     //background
-    gameEngine.addEntity(new Ground(gameEngine, 0, 0));
-    gameEngine.addEntity(new Castle(gameEngine, 0, 0));
     gameEngine.addEntity(new Sun(gameEngine, 180, 150));
+    gameEngine.addEntity(new Castle(gameEngine, 0, 0));
+    
 
     gameEngine.start();
 });
