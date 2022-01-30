@@ -16,6 +16,8 @@ class GameEngine {
         this.wheel = null;
         this.keys = {};
         */
+       this.click = null;
+       this.mouse = null;
        this.up = null;
        this.right = null;
        this.down = null;
@@ -60,6 +62,14 @@ class GameEngine {
             x: e.clientX - that.ctx.canvas.getBoundingClientRect().left,
             y: e.clientY - that.ctx.canvas.getBoundingClientRect().top
         });
+
+        this.ctx.canvas.addEventListener("mousemove", function (e) {
+            that.mouse = getXandY(e);
+        }, false);
+
+        this.ctx.canvas.addEventListener("click", function (e) {
+            that.click = getXandY(e);
+        }, false);
 
         this.ctx.canvas.addEventListener("keydown", function (e) {
             switch (e.code) {

@@ -62,3 +62,37 @@ class Fire {
 
 	};
 };
+class chest {
+	constructor(game,x,y,open){
+        Object.assign(this,{game,x,y,open});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/chest.png");
+        this.animations = [];
+        this.loadAnimation();
+		this.open = false;
+		
+	};
+    loadAnimation(){
+        this.animations[0] = new Animator(this.spritesheet,0, 0, 47, 36, 1, .5,0,false,true);
+        this.openAnim = new Animator(this.spritesheet,0, 0, 47, 36, 4, .5,0,false,true);
+    }
+	update(){
+		if (this.game.click) {
+            if (this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571) {
+            this.open = true;
+			}
+        }
+    };
+	draw(ctx){   
+		if(this.open){
+			this.openAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+			ctx.fillStyle = "Grey";
+        	ctx.fillRect(465,0, 300, 300);
+			ctx.fillStyle = "Black";
+			ctx.fillText("ITEM SHOP", 590,10);
+			this.open = false;
+		}
+		else{
+		this.animations[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+		}
+	};
+};
