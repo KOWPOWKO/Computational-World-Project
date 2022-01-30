@@ -219,9 +219,15 @@ class Hero {
 
         var that = this;
         this.game.entities.forEach(function (entity) {
+            if (!that.ATTACKING) {
+                entity.hasBeenAttacked = false;
+            }
             if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) {
-                if ((entity instanceof Mage) && !entity.dead) {
-                    entity.dead = true;
+                if ((entity instanceof Mage) && !entity.dead && !entity.hasBeenAttacked) {
+                    if (entity.health > 0) {
+                        entity.health -= 25;
+                        entity.hasBeenAttacked = true;
+                    } 
                 }
             }
         })

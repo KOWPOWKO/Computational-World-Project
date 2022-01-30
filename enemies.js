@@ -56,6 +56,8 @@ class Mage {
     constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies.png");
+        this.healthbar = ASSET_MANAGER.getAsset("./resources/healthgreen.jpg");
+        this.healthbarred = ASSET_MANAGER.getAsset("./resources/healthred.jpg");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         
         this.loadProperties();
@@ -81,6 +83,9 @@ class Mage {
 
         //states
         this.dead = false;
+        this.MAX_HEALTH = 50;
+        this.health = this.MAX_HEALTH;
+        this.hasBeenAttacked = false;
 
     }
 
@@ -102,6 +107,10 @@ class Mage {
                     this.x += this.SPEED;
                 }
             }
+            if (this.health <= 0) {
+                this.health = 0;
+                this.dead = true;
+            }
             this.updateBB();
         }
 
@@ -120,6 +129,8 @@ class Mage {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(this.BB.x, this.BB.y + 3, this.BB.width, this.BB.height);
             }
+            ctx.drawImage(this.healthbarred, this.x+5, this.y-10, this.MAX_HEALTH, 5);
+            ctx.drawImage(this.healthbar, this.x+5, this.y-10, this.health, 5);
         }
     };
 };

@@ -14,6 +14,8 @@ ASSET_MANAGER.queueDownload("./resources/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
 ASSET_MANAGER.queueDownload("./resources/background.jpg");
+ASSET_MANAGER.queueDownload("./resources/healthgreen.jpg");
+ASSET_MANAGER.queueDownload("./resources/healthred.jpg");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
