@@ -1,7 +1,7 @@
 class Castle {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background.jpg");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/background.jpg");
 
         this.SCALE = 3;
     };

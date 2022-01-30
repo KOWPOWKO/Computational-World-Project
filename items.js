@@ -1,7 +1,7 @@
 class Coin {
     constructor(game,x,y,spritesheet) {
         Object.assign(this,{game,x,y,spritesheet});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/coin.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;
@@ -27,7 +27,7 @@ class Coin {
 class SmallFireBall {
     constructor(game,x,y,spritesheet) {
         Object.assign(this,{game,x,y,spritesheet});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/boss.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/boss.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;
@@ -51,7 +51,7 @@ class SmallFireBall {
 class FireBall {
     constructor(game,x,y,spritesheet) {
         Object.assign(this,{game,x,y,spritesheet});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/boss.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/boss.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;
@@ -75,7 +75,7 @@ class FireBall {
 class BirdBrown {
     constructor(game,x,facing) {
         Object.assign(this,{game,x, facing});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/bird.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/bird.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
 

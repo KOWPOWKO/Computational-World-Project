@@ -1,7 +1,7 @@
 class Hero {
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/defender.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/hero/defender.png");
 
         this.loadProperties();
         this.updateBB();
@@ -274,7 +274,7 @@ class Hero {
 class Character_2 {
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/character2.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/hero/character2.png");
 
         this.loadProperties();
         this.animations = [];

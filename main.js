@@ -1,23 +1,34 @@
 var gameEngine = new GameEngine();
 var ASSET_MANAGER = new AssetManager();
 
-ASSET_MANAGER.queueDownload("./resources/bird.png");
-ASSET_MANAGER.queueDownload("./resources/boss.png");
-ASSET_MANAGER.queueDownload("./resources/castle.png");
-ASSET_MANAGER.queueDownload("./resources/castlefull.png");
-ASSET_MANAGER.queueDownload("./resources/coin.png");
-ASSET_MANAGER.queueDownload("./resources/defender.png");
-ASSET_MANAGER.queueDownload("./resources/character2.png");
-ASSET_MANAGER.queueDownload("./resources/monstor2.png");
-ASSET_MANAGER.queueDownload("./resources/monstor2rev.png");
-ASSET_MANAGER.queueDownload("./resources/enemies.png");
-ASSET_MANAGER.queueDownload("./resources/skeleton.png");
-ASSET_MANAGER.queueDownload("./resources/ground.png");
-ASSET_MANAGER.queueDownload("./resources/sun.png");
-ASSET_MANAGER.queueDownload("./resources/chest.png");
-ASSET_MANAGER.queueDownload("./resources/background.jpg");
-ASSET_MANAGER.queueDownload("./resources/healthgreen.jpg");
-ASSET_MANAGER.queueDownload("./resources/healthred.jpg");
+//hero images
+ASSET_MANAGER.queueDownload("./resources/hero/defender.png");
+ASSET_MANAGER.queueDownload("./resources/hero/character2.png");
+ASSET_MANAGER.queueDownload("./resources/hero/greenguy.png");
+
+//enemies images
+ASSET_MANAGER.queueDownload("./resources/enemies/monstor2.png");
+ASSET_MANAGER.queueDownload("./resources/enemies/monstor2rev.png");
+ASSET_MANAGER.queueDownload("./resources/enemies/enemies.png");
+ASSET_MANAGER.queueDownload("./resources/enemies/skeleton.png");
+
+//Power Up images
+ASSET_MANAGER.queueDownload("./resources/powerUps/coin.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/powerUp1.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/spike.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/arrow.png");
+
+//Background images
+ASSET_MANAGER.queueDownload("./resources/background/bird.png");
+ASSET_MANAGER.queueDownload("./resources/background/boss.png");
+ASSET_MANAGER.queueDownload("./resources/background/castle.png");
+ASSET_MANAGER.queueDownload("./resources/background/castlefull.png");
+ASSET_MANAGER.queueDownload("./resources/background/ground.png");
+ASSET_MANAGER.queueDownload("./resources/background/sun.png");
+ASSET_MANAGER.queueDownload("./resources/background/chest.png");
+ASSET_MANAGER.queueDownload("./resources/background/background.jpg");
+ASSET_MANAGER.queueDownload("./resources/background/healthgreen.jpg");
+ASSET_MANAGER.queueDownload("./resources/background/healthred.jpg");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");

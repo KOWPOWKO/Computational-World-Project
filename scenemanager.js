@@ -13,9 +13,9 @@ class SceneManager {
 
         //player
         
-             //   this.game.addEntity(new Character_2(this.game,0,0));
+        //this.game.addEntity(new Character_2(this.game,0,0));
 
-                this.game.addEntity(new Hero(this.game,0,0));
+        this.game.addEntity(new Hero(this.game,0,0));
    
         //enemies
         this.game.addEntity(new Mage(this.game,0,RIGHT));

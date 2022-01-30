@@ -1,7 +1,7 @@
 class DragonBoss {
     constructor(game,x,y,spritesheet) {
         Object.assign(this,{game,x,y,spritesheet});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/boss.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/boss.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;

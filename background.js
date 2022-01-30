@@ -1,7 +1,7 @@
 class Sun {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/sun.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/sun.png");
 
     };
     
@@ -14,7 +14,7 @@ class Sun {
 class Ground {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/ground.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/ground.png");
 
     };
 
@@ -50,7 +50,7 @@ class Ground {
 class Fire {
 	constructor(game){
 		this.game = game;
-		this.animator = new Animator(ASSET_MANAGER.getAsset("./resources/fire.png"), 0, 0, 22.2, 12, 6, 1.5);
+		this.animator = new Animator(ASSET_MANAGER.getAsset("./resources/background/fire.png"), 0, 0, 22.2, 12, 6, 1.5);
 	};
 
 	update(){
@@ -65,7 +65,7 @@ class Fire {
 class chest {
 	constructor(game,x,y,open){
         Object.assign(this,{game,x,y,open});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/chest.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/chest.png");
         this.animations = [];
         this.loadAnimation();
 		this.open = false;
@@ -89,6 +89,13 @@ class chest {
         	ctx.fillRect(465,0, 300, 300);
 			ctx.fillStyle = "Black";
 			ctx.fillText("ITEM SHOP", 590,10);
+            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png"),470,20);
+            ctx.fillText("Arrow Shooter", 470,100);
+            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/spike.png"),570,20);
+            ctx.fillText("Spike Trap", 592,100);
+            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/arrow.png"), 680,32);
+            ctx.fillText("Double Size", 690,100);
+
 			this.open = false;
 		}
 		else{

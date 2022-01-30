@@ -2,9 +2,9 @@
 class Snake {
     constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies.png");
-        this.healthbar = ASSET_MANAGER.getAsset("./resources/healthgreen.jpg");
-        this.healthbarred = ASSET_MANAGER.getAsset("./resources/healthred.jpg");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/enemies.png");
+        this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
+        this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
 
         this.loadProperties();
@@ -105,9 +105,9 @@ class Snake {
 class Mage {
     constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies.png");
-        this.healthbar = ASSET_MANAGER.getAsset("./resources/healthgreen.jpg");
-        this.healthbarred = ASSET_MANAGER.getAsset("./resources/healthred.jpg");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/enemies.png");
+        this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
+        this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         
         this.loadProperties();
@@ -204,8 +204,8 @@ class Mage {
 class Ogre {
 	constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
-		this.spritesheet = ASSET_MANAGER.getAsset("./resources/monstor2.png");
-        this.spritesheet_2 = ASSET_MANAGER.getAsset("./resources/monstor2rev.png");
+		this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/monstor2.png");
+        this.spritesheet_2 = ASSET_MANAGER.getAsset("./resources/enemies/monstor2rev.png");
 
         this.loadProperties();
         this.animation = [];
@@ -253,7 +253,7 @@ class Ogre {
 class Skeleton {
 	constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
-		this.spritesheet = ASSET_MANAGER.getAsset("./resources/skeleton.png");
+		this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/skeleton.png");
        // this.spritesheet_2 = ASSET_MANAGER.getAsset("./resources/monstor2rev.png");
 
         this.loadProperties();
