@@ -188,7 +188,7 @@ class Mage {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,4); 
             } else {
-                this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,4);   
+                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,4);   
             }
     
             if (PARAMS.DEBUG) { 
@@ -274,7 +274,7 @@ class Skeleton {
 
     loadAnimation() {
         // Walk
-        this.animation[0] = new Animator(this.spritesheet, 7.3, 84, 49, 70, 9, 0.2,0,false,true);
+        this.animation[0] = new Animator(this.spritesheet, 59, 85, 48, 70, 8, 0.25,0.3,false,true);
       //  this.animation[1] = new Animator(this.spritesheet_2, 0, 0, 20, 28, 10, 0.4,0,false,true);
     }
 

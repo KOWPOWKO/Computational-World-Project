@@ -24,8 +24,8 @@ class SceneManager {
         this.game.addEntity(new Snake(this.game,1500, LEFT));
         this.game.addEntity(new Ogre(this.game,-100, RIGHT));
         this.game.addEntity(new Ogre(this.game,1200, LEFT));
-        //this.game.addEntity(new Skeleton(this.game,-100, RIGHT));
-        //this.game.addEntity(new Skeleton(this.game,1200, LEFT));
+        this.game.addEntity(new Skeleton(this.game,-100, RIGHT));
+        this.game.addEntity(new Skeleton(this.game,1200, LEFT));
 
         //background props
         this.game.addEntity(new BirdBrown(this.game,-325,RIGHT));
