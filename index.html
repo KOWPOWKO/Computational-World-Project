@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Game Project Shell</title>
+    <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="./timer.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
     <script type="text/javascript" src="./animator.js"></script>
@@ -21,7 +22,9 @@
     
 </head>
 <body>
-    <canvas id="gameWorld" tabindex="1" width="1280" height="720" style="border: 1px solid brown; background: lightskyblue"></canvas>
+    <div id = "container">
+        <canvas id="gameWorld" tabindex="1" width="1280" height="720" style="border: 1px solid brown; background: lightskyblue "></canvas>
+    </div>
     <div stype = "text-align:center;">
         <p>[W] = JUMP<br>[A] = LEFT<br>[D] = RIGHT<br>[J] = ATTACK<br>[SHIFT] = HOLD TO RUN</p>
     </div>
