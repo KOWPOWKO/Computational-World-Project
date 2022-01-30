@@ -51,6 +51,10 @@ class SceneManager {
     draw(ctx) {
 
     }
+
+    spawnAlgorithm() {
+        
+    }
  
 }
 
