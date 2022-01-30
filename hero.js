@@ -2,12 +2,30 @@ class Hero {
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/defender.png");
-        //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
 
         this.loadProperties();
+        this.updateBB();
         this.animations = [];
         this.loadAnimation();
     };
+
+    
+    updateAttackBB() {
+        this.lastAttackBB = this.attackBB;
+        if(this.facing == this.LEFT) {
+            this.attackBB = new BoundingBox(this.x-50, this.y-3, 50, 119);
+        } else {
+            this.attackBB = new BoundingBox(this.x+75, this.y-3, 50, 119);
+        }
+            
+
+    }
+    
+
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y-3, 75, 119);
+    }
 
     loadAnimation() {
 
@@ -186,6 +204,7 @@ class Hero {
             this.noAttackUpdate();
         } else if (this.ATTACKING) {
             this.attackUpdate();
+            
         }
 
         if (!this.JUMPING) {
@@ -194,28 +213,28 @@ class Hero {
             this.jumpUpdate();
         }
         this.XYupdate(TICK); 
+        this.updateBB();
+        this.updateAttackBB();
+  
+
+        var that = this;
+        this.game.entities.forEach(function (entity) {
+            if (!that.ATTACKING) {
+                entity.hasBeenAttacked = false;
+            }
+            if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) {
+                if ((entity instanceof Mage || entity instanceof Snake) && !entity.dead && !entity.hasBeenAttacked) {
+                    if (entity.health > 0) {
+                        entity.health -= 25;
+                        entity.hasBeenAttacked = true;
+                        entity.knockback = true;
+                    } 
+                }
+            }
+        })
     }
 
     draw(ctx) {
-        /*
-        this.animations[0].drawFrameReverse(this.game.clockTick,ctx,0,0,1);
-        this.animations[1].drawFrameReverse(this.game.clockTick,ctx,0,128*2,1);
-        this.animations[6].drawFrameReverse(this.game.clockTick,ctx,128,128*5,1);
-        this.animations[2].drawFrameReverse(this.game.clockTick,ctx,0,128,1);
-
-        this.animations[3].drawFrameReverse(this.game.clockTick,ctx,0,128*3,1);
-        this.animations[4].drawFrameReverse(this.game.clockTick,ctx,0,128*4,1);
-        this.animations[5].drawFrameReverse(this.game.clockTick,ctx,0,128*5,1);
-        this.animations[7].drawFrameReverse(this.game.clockTick,ctx,0,128*5,1);
-
-        
-        if (this.state == this.ATTACKING) {
-            this.animations[this.ATTACKING].drawFrame(this.game.clockTick,ctx,this.x - 40,this.y - 35,1.5); 
-
-        } else {
-            this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.5); 
-        }
-        */
         if (this.facing == this.LEFT) {
             if (this.JUMPING == true && this.ATTACKING == false) {
                 this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
@@ -232,11 +251,25 @@ class Hero {
             } else {
                 this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
             }
-            
         }
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
 
+            if(this.ATTACKING == true) {
+                ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
+            }
+        }
     };
 };
+
+
+
+
+
+
+
 
 class Character_2 {
     constructor(game,x,y) {
