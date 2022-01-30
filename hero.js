@@ -223,10 +223,11 @@ class Hero {
                 entity.hasBeenAttacked = false;
             }
             if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) {
-                if ((entity instanceof Mage) && !entity.dead && !entity.hasBeenAttacked) {
+                if ((entity instanceof Mage || entity instanceof Snake) && !entity.dead && !entity.hasBeenAttacked) {
                     if (entity.health > 0) {
                         entity.health -= 25;
                         entity.hasBeenAttacked = true;
+                        entity.knockback = true;
                     } 
                 }
             }
