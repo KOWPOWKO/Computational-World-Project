@@ -59,9 +59,15 @@ class Mage {
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         
         this.loadProperties();
+        this.updateBB();
         this.animation = [];
         this.loadAnimation();
     };
+    
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y, 60, 64);
+    }
 
     loadProperties() {
         //facings
@@ -72,6 +78,10 @@ class Mage {
         this.SPEED = 0.4;
         this.GROUND = 507;
         this.y = this.GROUND;
+
+        //states
+        this.dead = false;
+
     }
 
     loadAnimation() {
@@ -80,25 +90,37 @@ class Mage {
     }
 
     update() {
-        if (this.facing == this.LEFT) {
-            if (this.x >= 780) {
-                this.x -= this.SPEED;
+        if (this.dead) {
+            this.removeFromWorld = true;
+        } else {
+            if (this.facing == this.LEFT) {
+                if (this.x >= 780) {
+                    this.x -= this.SPEED;
+                }
+            } else if (this.facing == this.RIGHT) {
+                if (this.x <= 440) {
+                    this.x += this.SPEED;
+                }
             }
-        } else if (this.facing == this.RIGHT) {
-            if (this.x <= 440) {
-                this.x += this.SPEED;
-            }
+            this.updateBB();
         }
+
+        
     };
 
     draw(ctx) {
-        if (this.facing == this.LEFT) {
-            this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,4); 
-        } else {
-            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,4);   
+        if(!this.dead) {
+            if (this.facing == this.LEFT) {
+                this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,4); 
+            } else {
+                this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,4);   
+            }
+    
+            if (PARAMS.DEBUG) { 
+                ctx.strokeStyle = 'Red';
+                ctx.strokeRect(this.BB.x, this.BB.y + 3, this.BB.width, this.BB.height);
+            }
         }
-
-            
     };
 };
 
