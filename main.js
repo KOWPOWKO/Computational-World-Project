@@ -11,6 +11,7 @@ ASSET_MANAGER.queueDownload("./resources/character2.png");
 ASSET_MANAGER.queueDownload("./resources/monstor2.png");
 ASSET_MANAGER.queueDownload("./resources/monstor2rev.png");
 ASSET_MANAGER.queueDownload("./resources/enemies.png");
+ASSET_MANAGER.queueDownload("./resources/skeleton.png");
 ASSET_MANAGER.queueDownload("./resources/ground.png");
 ASSET_MANAGER.queueDownload("./resources/sun.png");
 ASSET_MANAGER.queueDownload("./resources/chest.png");

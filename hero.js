@@ -488,24 +488,24 @@ class Character_2 {
             this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.5); 
         }
         */
-        // if (this.facing == this.LEFT) {
-        //     if (this.JUMPING == true && this.ATTACKING == false) {
-        //         this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
-        //     } else if (this.ATTACKING == true) {
-        //         this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
-        //     } else {
-        //         this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
-        //     }
-        // } else if (this.facing == this.RIGHT){
-        //     if (this.JUMPING == true && this.ATTACKING == false) {
-        //         this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
-        //     } else if (this.ATTACKING == true) {
-        //         this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x + 1 ,this.y - 25,1.2); 
-        //     } else {
-        //         this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
-        //     }
+        if (this.facing == this.LEFT) {
+            if (this.JUMPING == true && this.ATTACKING == false) {
+                this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+            } else if (this.ATTACKING == true) {
+                this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
+            } else {
+                this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+            }
+        } else if (this.facing == this.RIGHT){
+            if (this.JUMPING == true && this.ATTACKING == false) {
+                this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+            } else if (this.ATTACKING == true) {
+                this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x + 1 ,this.y - 25,1.2); 
+            } else {
+                this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+            }
             
-        // }
+        }
 
     };
 };
