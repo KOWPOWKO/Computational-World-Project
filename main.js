@@ -11,6 +11,7 @@ ASSET_MANAGER.queueDownload("./resources/enemies/monstor2.png");
 ASSET_MANAGER.queueDownload("./resources/enemies/monstor2rev.png");
 ASSET_MANAGER.queueDownload("./resources/enemies/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/enemies/skeleton.png");
+ASSET_MANAGER.queueDownload("./resources/enemies/boss.png");
 
 //Power Up images
 ASSET_MANAGER.queueDownload("./resources/powerUps/coin.png");
@@ -20,7 +21,6 @@ ASSET_MANAGER.queueDownload("./resources/powerUps/arrow.png");
 
 //Background images
 ASSET_MANAGER.queueDownload("./resources/background/bird.png");
-ASSET_MANAGER.queueDownload("./resources/background/boss.png");
 ASSET_MANAGER.queueDownload("./resources/background/castle.png");
 ASSET_MANAGER.queueDownload("./resources/background/castlefull.png");
 ASSET_MANAGER.queueDownload("./resources/background/ground.png");

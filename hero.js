@@ -218,7 +218,7 @@ class Hero {
   
 
         var that = this;
-        this.game.entities.forEach(function (entity) {
+        this.game.entities[1].forEach(function (entity) {
             if (!that.ATTACKING) {
                 entity.hasBeenAttacked = false;
             }

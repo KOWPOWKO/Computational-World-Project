@@ -86,7 +86,7 @@ class Snake {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,3); 
             } else {
-                this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,3);   
+                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x+20,this.y,3);   
             }   
             if (PARAMS.DEBUG) { 
                 ctx.strokeStyle = 'Red';

@@ -7,7 +7,7 @@ class GameEngine {
         this.ctx = null;
 
         // Everything that will be updated and drawn each frame
-        this.entities = [];
+        this.entities = [[],[],[]];//0 = player, 1 = enemies, 2 = background
 
         // Information on the input
         /*
@@ -24,6 +24,9 @@ class GameEngine {
        this.left = null;
        this.run = null;
        this.attack = null;
+
+       this.elapsedTime = 0;
+       this.totalTime = 90;
 
         // THE KILL SWITCH
         this.running = false;
@@ -163,9 +166,16 @@ class GameEngine {
         });
         */
     
+    addEntityForeground(entity) {
+        this.entities[0].push(entity);
+    };
 
-    addEntity(entity) {
-        this.entities.push(entity);
+    addEntityEnemies(entity) {
+        this.entities[1].push(entity);
+    };
+
+    addEntityBackground(entity) {
+        this.entities[2].push(entity);
     };
 
     draw() {
@@ -173,25 +183,55 @@ class GameEngine {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         // Draw latest things first
-        for (let i = this.entities.length - 1; i >= 0; i--) {
-            this.entities[i].draw(this.ctx, this);
+        for (let i = this.entities[2].length - 1; i >= 0; i--) {
+            this.entities[2][i].draw(this.ctx, this);
         }
+        for (let i = this.entities[1].length - 1; i >= 0; i--) {
+            this.entities[1][i].draw(this.ctx, this);
+        }
+        for (let i = this.entities[0].length - 1; i >= 0; i--) {
+            this.entities[0][i].draw(this.ctx, this);
+        }
+
+
     };
 
     update() {
-        let entitiesCount = this.entities.length;
+        let entitiesHeroCount = this.entities[0].length;
+        let entitiesEnemiesCount = this.entities[1].length;
+        let entitiesBackgroundCount = this.entities[2].length;
 
-        for (let i = 0; i < entitiesCount; i++) {
-            let entity = this.entities[i];
+        for (let i = 0; i < entitiesHeroCount; i++) {
+            let entity = this.entities[0][i];
+            if (!entity.removeFromWorld) {
+                entity.update();
+            }
+        }
+        for (let i = 0; i < entitiesEnemiesCount; i++) {
+            let entity = this.entities[1][i];
 
             if (!entity.removeFromWorld) {
                 entity.update();
             }
         }
 
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if (this.entities[i].removeFromWorld) {
-                this.entities.splice(i, 1);
+        for (let i = 0; i < entitiesBackgroundCount; i++) {
+            let entity = this.entities[2][i];
+
+            if (!entity.removeFromWorld) {
+                entity.update();
+            }
+        }
+
+        this.removeFromWorldSplice(0);
+        this.removeFromWorldSplice(1);
+        this.removeFromWorldSplice(2);
+    };
+
+    removeFromWorldSplice(level) {
+        for (let i = this.entities[level].length - 1; i >= 0; --i) {
+            if (this.entities[level][i].removeFromWorld) {
+                this.entities[level].splice(i, 1);
             }
         }
     };
@@ -200,6 +240,14 @@ class GameEngine {
         this.clockTick = this.timer.tick();
         this.update();
         this.draw();
+        if(this.elapsedTime >= this.totalTime) {
+            console.log(this.elapsedTime);
+            this.elapsedTime = 0;
+            this.camera.spawnEnemy();
+            console.log(this.entities);
+        }
+
+        this.elapsedTime += 1;
     };
 
 };
