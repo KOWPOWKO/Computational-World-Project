@@ -18,6 +18,7 @@ ASSET_MANAGER.queueDownload("./resources/powerUps/coin.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/powerUp1.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/spike.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/arrow.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/airSlash.png");
 
 //Background images
 ASSET_MANAGER.queueDownload("./resources/background/bird.png");

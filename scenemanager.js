@@ -19,7 +19,7 @@ class SceneManager {
         
         //this.game.addEntity(new Character_2(this.game,0,0));
         this.game.addEntityForeground(new Hero(this.game,0,0));
-        
+        this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
         //enemies
         this.setRoundMonters();
         //background props
@@ -48,6 +48,10 @@ class SceneManager {
     }
 
     setRoundMonters() {
+        this.roundMonster.push([2,1]);
+        this.roundMonster.push([2,0]);
+        this.roundMonster.push([3,1]);
+        this.roundMonster.push([3,0]);
         while(this.monsters[0] > 0 || this.monsters[1] > 0 ) {
             let enemy = Math.round(Math.random());
             if(enemy === 0 && this.monsters[0] > 0) {
@@ -58,6 +62,7 @@ class SceneManager {
                 this.roundMonster.push([1,Math.round(Math.random())]);
             }
         }
+
         this.roundMonterProgress = this.roundMonster.length-1;
     }
 
@@ -69,6 +74,10 @@ class SceneManager {
                 this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
             } else if (currentMonster[0] === 1) {
                 this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+            } else if (currentMonster[0] === 2) {
+                this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+            } else if (currentMonster[0] === 3) {
+                this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
             }
             this.roundMonterProgress--;
         }

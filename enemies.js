@@ -206,9 +206,8 @@ class Ogre {
         Object.assign(this,{game,x,facing});
 		this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/monstor2.png");
         this.spritesheet_2 = ASSET_MANAGER.getAsset("./resources/enemies/monstor2rev.png");
-
-        this.loadProperties();
         this.animation = [];
+        this.loadProperties();
         this.loadAnimation();
     };
 
@@ -255,9 +254,8 @@ class Skeleton {
         Object.assign(this,{game,x,facing});
 		this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/skeleton.png");
        // this.spritesheet_2 = ASSET_MANAGER.getAsset("./resources/monstor2rev.png");
-
-        this.loadProperties();
         this.animation = [];
+        this.loadProperties();
         this.loadAnimation();
     };
 
