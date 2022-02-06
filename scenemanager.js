@@ -27,9 +27,12 @@ class SceneManager {
         this.game.addEntityEnemies(new BirdBrown(this.game,1412,this.LEFT));
 
         //background
+        this.game.addEntityBackground(new Ground(this.game, 0, 0));
+        this.game.addEntityBackground(new CastleBounds(this.game, 0, 0));
         this.game.addEntityBackground(new chest(this.game,530,535));
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));
+        
 
     }
     update(){
