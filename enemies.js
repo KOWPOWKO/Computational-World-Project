@@ -24,17 +24,17 @@ class Snake {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.75;
+        this.SPEED = 0.3;
         this.GROUND = 525;
         this.y = this.GROUND;
 
         //states
         this.dead = false;
-        this.MAX_HEALTH = 25;
+        this.MAX_HEALTH = 50;
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
-        this.MAX_KNOCKBACK = 25;
+        this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
     }
     
@@ -44,42 +44,72 @@ class Snake {
         this.animation[0] = new Animator(this.spritesheet,34,314,16,16,2,0.2,15,false,true);
     }
 
+    knockbackUpdate() {
+        if(this.knockbackCounter < this.MAX_KNOCKBACK) {
+            if (this.facing == this.RIGHT) {
+                this.x -= 10;
+                this.y -= 2;
+            } else if (this.facing == this.LEFT) {
+                this.x += 10;
+                this.y -= 2;
+            }
+            this.knockbackCounter += 10;
+        } else if (this.knockbackCounter >= this.MAX_KNOCKBACK) {
+            this.knockbackCounter = 0;
+            this.knockback = false;
+        }
+    }
+
+    horizontalUpdate() {
+        if (this.facing == this.LEFT && !this.knockback) {
+                this.x -= this.SPEED;
+
+        } else if (this.facing == this.RIGHT && !this.knockback) {
+                this.x += this.SPEED;
+
+        }
+    }
+
+    collisionUpdate() {
+        var that = this;
+        this.game.entities[2].forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top && !that.knockback) {
+                    that.y = entity.BB.top - that.BB.height;
+                }
+                if (entity instanceof CastleBounds) {
+                    if (that.facing == that.RIGHT) {
+                        that.x = entity.BB.left - (that.BB.width * 3);
+                    } else if (that.facing == that.LEFT) {
+                        that.x = entity.BB.right + that.BB.width;
+                    }
+                    entity.health -= 10;
+                }
+            }
+            
+        })
+    }
+
     update() {
+        this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
         } else {
-            if (this.facing == this.LEFT) {
-                if (this.x >= 780) {
-                    this.x -= this.SPEED;
-                }
-            } else if (this.facing == this.RIGHT) {
-                if (this.x <= 440) {
-                    this.x += this.SPEED;
-                }
-            }
+            this.horizontalUpdate();
         }
         
         if (this.knockback) {
-            if(this.knockbackCounter < this.MAX_KNOCKBACK) {
-                if (this.facing == this.RIGHT) {
-                    this.x -= 10;
-                } else if (this.facing == this.LEFT) {
-                    this.x += 10;
-                }
-                
-                this.knockbackCounter += 10;
-            } else if (this.knockbackCounter >= this.MAX_KNOCKBACK) {
-                this.knockbackCounter = 0;
-                this.knockback = false;
-            }
+            this.knockbackUpdate();
         }
 
-        if (this.health <= 0) {
+        if (this.health <= 0 && !this.knockback) {
             this.health = 0;
             this.dead = true;
         }
+
         this.updateBB();
-    }; 
+        this.collisionUpdate();
+    };
 
     draw(ctx) {
         if(!this.dead) {
@@ -93,11 +123,10 @@ class Snake {
                 ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
             }
     
-            ctx.drawImage(this.healthbarred, this.x+21, this.y-7, this.MAX_HEALTH, 5);
-            ctx.drawImage(this.healthbar, this.x+21, this.y-7, this.health, 5);
+            
+            ctx.drawImage(this.healthbarred, this.BB.x, this.y-7, this.BB.width, 5);
+            ctx.drawImage(this.healthbar, this.BB.x, this.y-7, this.BB.width * (this.health / this.MAX_HEALTH), 5);
         }
-
-        
     };
 };
 
@@ -127,13 +156,13 @@ class Mage {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.4;
+        this.SPEED = 0.2;
         this.GROUND = 507;
         this.y = this.GROUND;
 
         //states
         this.dead = false;
-        this.MAX_HEALTH = 50;
+        this.MAX_HEALTH = 100;
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
@@ -147,40 +176,72 @@ class Mage {
         this.animation[0] = new Animator(this.spritesheet,278,74,16,16,2,0.2,14,false,true);
     }
 
+    knockbackUpdate() {
+        if(this.knockbackCounter < this.MAX_KNOCKBACK) {
+            if (this.facing == this.RIGHT) {
+                this.x -= 10;
+                this.y -= 2;
+            } else if (this.facing == this.LEFT) {
+                this.x += 10;
+                this.y -= 2;
+            }
+            this.knockbackCounter += 10;
+        } else if (this.knockbackCounter >= this.MAX_KNOCKBACK) {
+            this.knockbackCounter = 0;
+            this.knockback = false;
+        }
+    }
+
+    horizontalUpdate() {
+        if (this.facing == this.LEFT && !this.knockback) {
+            if (this.x >= 780) {
+                this.x -= this.SPEED;
+            }
+        } else if (this.facing == this.RIGHT && !this.knockback) {
+            if (this.x <= 440) {
+                this.x += this.SPEED;
+            }
+        }
+    }
+    collisionUpdate() {
+        var that = this;
+        this.game.entities[2].forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top && !that.knockback) {
+                    that.y = entity.BB.top - that.BB.height;
+                }
+                if (entity instanceof CastleBounds) {
+                    if (that.facing == that.RIGHT) {
+                        that.x = entity.BB.left - (that.BB.width);
+                    } else if (that.facing == that.LEFT) {
+                        that.x = entity.BB.right + that.BB.width;
+                    }
+                }
+            }
+            
+        })
+    }
+
     update() {
+        this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
         } else {
-            if (this.facing == this.LEFT) {
-                if (this.x >= 780) {
-                    this.x -= this.SPEED;
-                }
-            } else if (this.facing == this.RIGHT) {
-                if (this.x <= 440) {
-                    this.x += this.SPEED;
-                }
-            }
-            if (this.knockback) {
-                if(this.knockbackCounter < this.MAX_KNOCKBACK) {
-                    if (this.facing == this.RIGHT) {
-                        this.x -= 10;
-                    } else if (this.facing == this.LEFT) {
-                        this.x += 10;
-                    }
-                    
-                    this.knockbackCounter += 10;
-                } else if (this.knockbackCounter >= this.MAX_KNOCKBACK) {
-                    this.knockbackCounter = 0;
-                    this.knockback = false;
-                }
-            }
-
-            if (this.health <= 0) {
-                this.health = 0;
-                this.dead = true;
-            }
-            this.updateBB();
+            this.horizontalUpdate();
         }
+        
+        if (this.knockback) {
+            this.knockbackUpdate();
+        }
+
+        if (this.health <= 0 && !this.knockback) {
+            this.health = 0;
+            this.dead = true;
+        }
+
+        this.updateBB();
+
+        this.collisionUpdate();
     };
 
     draw(ctx) {
@@ -195,8 +256,9 @@ class Mage {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
             }
-            ctx.drawImage(this.healthbarred, this.x+5, this.y-10, this.MAX_HEALTH, 5);
-            ctx.drawImage(this.healthbar, this.x+5, this.y-10, this.health, 5);
+
+            ctx.drawImage(this.healthbarred, this.BB.x, this.y-10, this.BB.width, 5);
+            ctx.drawImage(this.healthbar, this.BB.x, this.y-10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
         }
     };
 };
@@ -265,7 +327,7 @@ class Skeleton {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.4;
+        this.SPEED = 0.1;
         this.GROUND = 235;
         this.y = this.GROUND;
     }

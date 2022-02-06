@@ -30,7 +30,7 @@ class DragonBoss {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.4;
+        this.SPEED = 0.2;
         this.GROUND = 440;
         this.y = this.GROUND;
     };

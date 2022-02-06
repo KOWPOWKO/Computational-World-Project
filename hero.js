@@ -153,9 +153,9 @@ class Hero {
     jumpUpdate() {
         this.horizontalUpdate();
         if (!this.HITMAXPEAK) {
-            this.velocity.y -= 400;
-            if (Math.abs(this.velocity.y) >= 1200) {
-                this.velocity.y = -1200;
+            this.velocity.y -= 50;
+            if (Math.abs(this.velocity.y) >= 1000) {
+                this.HITMAXPEAK = true;
             } 
             if (this.y <= 220) {
                 this.velocity.y = 0;
@@ -217,7 +217,7 @@ class Hero {
         var that = this;
         this.game.entities[2].forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB)) {
-                if (entity instanceof Ground && that.lastBB.bottom <= entity.BB.top ) {
+                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) {
                     that.y = entity.BB.top - that.BB.height;
                     that.velocity.y = 0;
                     that.GRAVITY = 0;
