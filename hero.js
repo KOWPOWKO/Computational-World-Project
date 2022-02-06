@@ -156,6 +156,9 @@ class Hero {
             this.velocity.y -= 400;
             if (Math.abs(this.velocity.y) >= 1200) {
                 this.velocity.y = -1200;
+            } 
+            if (this.y <= 220) {
+                this.velocity.y = 0;
                 this.HITMAXPEAK = true;
             }
         } else {
@@ -275,6 +278,9 @@ class Hero {
             ctx.strokeStyle = 'Red';
             //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
             ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "red"
+            ctx.fillText("Height: " + this.y + "px", 10, 20);
 
             if(this.ATTACKING == true) {
                 ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
