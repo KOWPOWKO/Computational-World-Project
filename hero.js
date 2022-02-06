@@ -70,7 +70,7 @@ class Hero {
         this.ATTACKING = false;
 
         //jumpingState
-        this.JUMPING = false;
+        this.JUMPING = true;
         this.HITMAXPEAK = false;
 
         //basic restrictions
@@ -140,10 +140,9 @@ class Hero {
        // if (!this.game.down) {
             this.horizontalUpdate();
             if (this.game.up) {
-                this.velocity.y -= this.GRAVITY;
                 this.JUMPING = true;
                 this.jumpAnim.elapsedTime = 0;
-                this.game.up = false;
+                
             } 
       //  }
         //else if (this.game.down && !this.game.up) {
@@ -154,18 +153,19 @@ class Hero {
     jumpUpdate() {
         this.horizontalUpdate();
         if (!this.HITMAXPEAK) {
-            this.velocity.y -= 100;
-            if (Math.abs(this.velocity.y) >= 2750) {
+            this.velocity.y -= 50;
+            if (Math.abs(this.velocity.y) >= 1000) {
+                this.HITMAXPEAK = true;
+            } 
+            if (this.y <= 220) {
                 this.velocity.y = 0;
                 this.HITMAXPEAK = true;
             }
         } else {
-            if (this.y >= this.GROUND) {
-                this.velocity.y = 0;
-                this.y = this.GROUND;
-                this.JUMPING = false;
-                this.HITMAXPEAK = false;
-            } else this.velocity.y += 10;
+            if (this.velocity.y <= 0) {
+                this.velocity.y += 21;
+            } else this.velocity.y += 20;
+            
         }
     }
 
@@ -191,14 +191,11 @@ class Hero {
     }
 
     gravityUpdate(TICK) {
-        if (this.y < this.GROUND) {
-            this.y += this.GRAVITY * TICK;
-        } 
+        this.y += this.GRAVITY * TICK;
     }
 
     update() {
         const TICK = this.game.clockTick;
-        this.gravityUpdate(TICK);
 
         if(!this.ATTACKING) {
             this.noAttackUpdate();
@@ -218,6 +215,18 @@ class Hero {
   
 
         var that = this;
+        this.game.entities[2].forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) {
+                    that.y = entity.BB.top - that.BB.height;
+                    that.velocity.y = 0;
+                    that.GRAVITY = 0;
+                    that.JUMPING = false;
+                    that.HITMAXPEAK = false;
+                    that.game.up = false;
+                } 
+            }
+        })
         this.game.entities[1].forEach(function (entity) {
             if (!that.ATTACKING) {
                 entity.hasBeenAttacked = false;
@@ -256,6 +265,10 @@ class Hero {
             ctx.strokeStyle = 'Red';
             //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
             ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+            
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "red"
+            ctx.fillText("Height: " + this.y + "px", 10, 20);
 
             if(this.ATTACKING == true) {
                 ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
@@ -474,16 +487,13 @@ class Character_2 {
         this.animations[1].drawFrameReverse(this.game.clockTick,ctx,0,128*2,1);
         this.animations[6].drawFrameReverse(this.game.clockTick,ctx,128,128*5,1);
         this.animations[2].drawFrameReverse(this.game.clockTick,ctx,0,128,1);
-
         this.animations[3].drawFrameReverse(this.game.clockTick,ctx,0,128*3,1);
         this.animations[4].drawFrameReverse(this.game.clockTick,ctx,0,128*4,1);
         this.animations[5].drawFrameReverse(this.game.clockTick,ctx,0,128*5,1);
         this.animations[7].drawFrameReverse(this.game.clockTick,ctx,0,128*5,1);
-
         
         if (this.state == this.ATTACKING) {
             this.animations[this.ATTACKING].drawFrame(this.game.clockTick,ctx,this.x - 40,this.y - 35,1.5); 
-
         } else {
             this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.5); 
         }

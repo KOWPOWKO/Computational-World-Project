@@ -12,21 +12,6 @@ class Sun {
         ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/title.png"), 100,100,320,320);
     };
 }
-class Ground {
-    constructor(game, x, y) {
-        Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/ground.png");
-
-    };
-
-    update () {
-
-    };
-
-    draw(ctx) {
-        ctx.drawImage(this.spritesheet, 0, 570, 1280, 150);
-    };
-}
 
 // class Bird { 
 //     constructor(game,x,y,spritesheet) {

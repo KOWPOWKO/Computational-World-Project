@@ -21,6 +21,7 @@ ASSET_MANAGER.queueDownload("./resources/powerUps/spike.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/arrow.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/healthIncrease.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/title.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/airSlash.png");
 
 //Background images
 ASSET_MANAGER.queueDownload("./resources/background/bird.png");
@@ -42,7 +43,7 @@ ASSET_MANAGER.downloadAll(function() {
 	var ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
     gameEngine.init(ctx);
-
+    
     /*
     ---IMPORTANT-----------------------------------------------------------------------
     PROTOTYPE Version 1.0
@@ -78,8 +79,9 @@ ASSET_MANAGER.downloadAll(function() {
     
     
     gameEngine.init(ctx);
-		
+    
 	new SceneManager(gameEngine);
-
+ 
 	gameEngine.start();
+
 });
