@@ -5,12 +5,20 @@ class Coin {
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;
+        this.game.camera.score += this.score;
         this.animation = [];
         this.loadAnimation(spritesheet);
+        this.updateBB();
     };
     update() {
 
     };
+
+    updateBB(){
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x+50, this.y , 64,64);
+
+    }
     loadAnimation(spritesheet) {
         // Coin
         this.animation[0] = new Animator(this.spritesheet,58,50,64,64,11,0.15,11.2,false,true);
@@ -19,8 +27,42 @@ class Coin {
     }
 
     draw(ctx) {
-        this.animation[0].drawFrame(this.game.clockTick,ctx,250,100,1);      
-        
+        this.animation[0].drawFrame(this.game.clockTick,ctx,50,0,1);
+        //ctx.lineWidth = 6; 
+        ctx.fillStyle = "White";
+       // ctx.lineWidth = 2;
+		ctx.fillText("=", 150, 40);     
+        ctx.fillText(this.score, 170, 40);     
+
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+    };
+};
+class Score {
+    constructor(game, x, y, score) {
+        Object.assign(this, { game, x, y, score });
+
+        this.game.camera.score += this.score;
+
+        this.velocity = -2 * PARAMS.BITWIDTH;
+        this.elapsed = 0;
+    };
+
+    update() {
+        this.elapsed += this.game.clockTick;
+        if (this.elapsed > 1) this.removeFromWorld = true;
+
+        this.y += this.game.clockTick * this.velocity * PARAMS.SCALE;
+    };
+
+    drawMinimap(ctx, mmX, mmY) {
+    }
+
+   draw(ctx) {
+        ctx.fillStyle = "White";
+        ctx.fillText(this.score, this.x + (this.score < 1000 ? PARAMS.BLOCKWIDTH / 8 : 0), this.y);    
     };
 };
 

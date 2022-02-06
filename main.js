@@ -15,9 +15,12 @@ ASSET_MANAGER.queueDownload("./resources/enemies/boss.png");
 
 //Power Up images
 ASSET_MANAGER.queueDownload("./resources/powerUps/coin.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/coinDisplay.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/powerUp1.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/spike.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/arrow.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/healthIncrease.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/title.png");
 
 //Background images
 ASSET_MANAGER.queueDownload("./resources/background/bird.png");

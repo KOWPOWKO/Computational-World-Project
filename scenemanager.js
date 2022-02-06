@@ -7,6 +7,8 @@ class SceneManager {
         this.monsters = [20,10];
         this.roundMonster = [];
         this.roundMonterProgress = 0;
+        this.title = true;
+        this.loadGame = false;
         this.loadWorld();
     };
     clearEntities() {
@@ -17,7 +19,15 @@ class SceneManager {
 
         //player
         
-        //this.game.addEntity(new Character_2(this.game,0,0));
+        //this.game.addEntityForeground(new Character_2(this.game,0,0));
+        if(this.title){
+        this.game.addEntityBackground(new Castle(this.game, 0, 0));
+        this.title = false;
+        if(this.game.click){
+        this.loadGame = true;
+        }
+        }
+        if(this.loadGame){
         this.game.addEntityForeground(new Hero(this.game,0,0));
         
         //enemies
@@ -28,23 +38,19 @@ class SceneManager {
 
         //background
         this.game.addEntityBackground(new chest(this.game,530,535));
+        
+        this.game.addEntityBackground(new Coin(this.game));
+        this.game.addEntityBackground(new Score(this.game));
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));
+        }
 
     }
     update(){
         
-        if(this.game.click){
-            if(this.game.click && this.game.click.x > 100 && this.game.click.x > 200){
-                this.game.addEntity(new Character_2(this.game,0,0));
-            }
-            else{
-                this.game.addEntity(new Hero(this.game,0,0));
-            }
-        }
     }
     draw(ctx) {
-
+               
     }
 
     setRoundMonters() {

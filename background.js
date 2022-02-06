@@ -9,6 +9,7 @@ class Sun {
 
     draw(ctx) {
         ctx.drawImage(this.spritesheet, 1100, 0, this.x, this.y);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/title.png"), 100,100,320,320);
     };
 }
 class Ground {
@@ -69,7 +70,9 @@ class chest {
         this.animations = [];
         this.loadAnimation();
 		this.open = false;
-		
+        this.powerUp = false;
+        this.specialAbil = true;
+		this.skillP = true;
 	};
     loadAnimation(){
         this.animations[0] = new Animator(this.spritesheet,0, 0, 47, 36, 1, .5,0,false,true);
@@ -78,26 +81,78 @@ class chest {
 	update(){
 		if (this.game.click) {
             if (this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571) {
-            this.open = true;
-			}
+                if(this.game.click && this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90){
+                    this.powerUp = true;
+                }
+                this.open = true;
+            }
+            // if(this.game.click && this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90){
+            //     this.powerUp = true;
+            //     this.open = true;
+            
+            if(this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 90){
+                this.specialAbil = true;
+                this.open = true;
+            }
+            if(this.game.click && this.game.click.x > 720 && this.game.click.x < 795&& this.game.click.y > 15 && this.game.click.y < 90){
+                this.skillP = true;
+                this.open = true;
+            }
         }
     };
 	draw(ctx){   
+        ctx.fillStyle = "Black";
+		ctx.fillText("ITEM SHOP", 526,585);
+
 		if(this.open){
 			this.openAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
-			ctx.fillStyle = "Grey";
-        	ctx.fillRect(465,0, 300, 300);
-			ctx.fillStyle = "Black";
-			ctx.fillText("ITEM SHOP", 590,10);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png"),470,20);
-            ctx.fillText("Arrow Shooter", 470,100);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/spike.png"),570,20);
-            ctx.fillText("Spike Trap", 592,100);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/arrow.png"), 680,32);
-            ctx.fillText("Double Size", 690,100);
+			ctx.fillStyle = rgba(0, 0, 0, 0.5);
+        	ctx.fillRect(410,0, 400, 150);
+            ctx.fillStyle = "Red";
+            ctx.fillRect(420,15, 75, 75);
+            ctx.fillStyle = "Blue";
+            ctx.fillRect(570,15, 75, 75);
+            ctx.fillStyle = "Green";
+            ctx.fillRect(720,15, 75, 75);
+            ctx.fillStyle = "White";
+			ctx.fillText("ITEM SHOP", 580,10);
+            ctx.fillText("Power-ups", 430,110);
+            ctx.fillText("Special Abilities", 575,110);
+            ctx.fillText("Skill Point", 735,110);
+            if(this.powerUp){
+                this.powerUp = false;
+                ctx.fillStyle = "Red";
+        	    ctx.fillRect(410,0, 400, 150);
+                ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png"),420,5);
+            }
 
-			this.open = false;
+            if(this.specialAbil){
+                this.specialAbil = false;
+                ctx.fillStyle = "Blue";
+        	    ctx.fillRect(410,0, 400, 150);
+              //  ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png"),420,5);
+            }
+            
+            // ctx.fillText("Health Increase", 440,110);
+            // ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),440,120);
+            // ctx.fillText("=  50", 480,140);
+            // //ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png"),590,20);
+            // ctx.fillText("Arrow Shooter", 590,110);
+            // ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),580,120);
+            // ctx.fillText("=  100", 620,140);
+            // ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/arrow.png"), 710,32);
+            // ctx.fillText("Double Size", 720,110);
+            // ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),705,120);
+            // ctx.fillText("=  300", 745,140);
+                 
+                this.open = false;
+			
 		}
+        // if(this.powerUp1){
+        //     ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png"),300,20);
+        //     ctx.fillText("Arrow Shooter", 470,100);
+        //     this.powerUp1 = false;
+        // }
 		else{
 		this.animations[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
 		}
