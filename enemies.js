@@ -66,7 +66,6 @@ class Snake {
 
         } else if (this.facing == this.RIGHT && !this.knockback) {
                 this.x += this.SPEED;
-
         }
     }
 

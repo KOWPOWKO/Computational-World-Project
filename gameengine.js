@@ -244,6 +244,7 @@ class GameEngine {
             console.log(this.elapsedTime);
             this.elapsedTime = 0;
             this.camera.spawnEnemy();
+            this.camera.update();
             console.log(this.entities);
         }
 

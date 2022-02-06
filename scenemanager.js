@@ -8,13 +8,15 @@ class SceneManager {
         this.roundMonster = [];
         this.roundMonterProgress = 0;
         this.loadWorld();
+        
+        
     };
     clearEntities() {
         this.game.entities = [this];
     };
     loadWorld() {
-
-
+        
+        
         //player
         
         //this.game.addEntity(new Character_2(this.game,0,0));
@@ -35,19 +37,22 @@ class SceneManager {
         
 
     }
-    update(){
-        
+    update() {
+        PARAMS.DEBUG = document.getElementById("debug").checked;
+        /*
         if(this.game.click){
             if(this.game.click && this.game.click.x > 100 && this.game.click.x > 200){
                 this.game.addEntity(new Character_2(this.game,0,0));
+                
             }
             else{
                 this.game.addEntity(new Hero(this.game,0,0));
             }
         }
+        */
     }
     draw(ctx) {
-
+        
     }
 
     setRoundMonters() {

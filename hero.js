@@ -228,22 +228,9 @@ class Hero {
             }
         })
         this.game.entities[1].forEach(function (entity) {
-            /*
-            if (entity.BB && that.BB.collide(entity.BB)) {
-                if (entity instanceof Ground && that.lastBB.bottom <= entity.BB.top ) {
-                    that.y = entity.BB.top;
-                    that.velocity.y = -500;
-                    that.JUMPING = false;
-                    that.HITMAXPEAK = false;
-                } 
-            }
-            */
-           
             if (!that.ATTACKING) {
                 entity.hasBeenAttacked = false;
-                
             }
-            
             if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) {
                 if ((entity instanceof Mage || entity instanceof Snake) && !entity.dead && !entity.hasBeenAttacked) {
                     if (entity.health > 0) {
@@ -278,6 +265,7 @@ class Hero {
             ctx.strokeStyle = 'Red';
             //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
             ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+            
             ctx.font = "20px Arial";
             ctx.fillStyle = "red"
             ctx.fillText("Height: " + this.y + "px", 10, 20);

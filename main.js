@@ -40,7 +40,7 @@ ASSET_MANAGER.downloadAll(function() {
 	var ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
     gameEngine.init(ctx);
-
+    
     /*
     ---IMPORTANT-----------------------------------------------------------------------
     PROTOTYPE Version 1.0
@@ -76,8 +76,9 @@ ASSET_MANAGER.downloadAll(function() {
     
     
     gameEngine.init(ctx);
-		
+    
 	new SceneManager(gameEngine);
-
+ 
 	gameEngine.start();
+
 });
