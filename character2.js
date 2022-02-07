@@ -1,33 +1,16 @@
-class Hero {
+
+
+
+
+class Character_2 {
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/hero/defender.png");
-        this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
-        this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/hero/character2.png");
+
         this.loadProperties();
-        this.updateBB();
         this.animations = [];
         this.loadAnimation();
     };
-
-    
-    updateAttackBB() {
-        this.lastAttackBB = this.attackBB;
-        if(this.facing == this.LEFT) {
-            this.attackBB = new BoundingBox(this.x-50, this.y-3, 50, 119);
-        } else {
-            this.attackBB = new BoundingBox(this.x+75, this.y-3, 50, 119);
-        }
-            
-
-    }
-
-
-
-    updateBB() {
-        this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y-3, 75, 119);
-    }
 
     loadAnimation() {
 
@@ -36,22 +19,20 @@ class Hero {
         }
 
         // Idle
-        this.animations[0] = new Animator(this.spritesheet,88,1200,80,104,10,0.1,0,false,true);
+        this.animations[0] = new Animator(this.spritesheet, 0, 0, 180, 128, 1,0.1,0,false,true);
         // Walking
-        this.animations[1] = new Animator(this.spritesheet,88,907,96,104,10,0.1,1.5,true,true);
+        this.animations[1] = new Animator(this.spritesheet,0, 0, 180, 128, 2,0.1,1.5,true,true);
         // Run
-        this.animations[2] = new Animator(this.spritesheet,88,811,104,96,10,0.1,-5.2,true,true);
-        // Damaged
-        this.knockbackAnim = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
+        this.animations[2] = new Animator(this.spritesheet,0, 0, 180, 128, 2,0.1,1.5,true,true);
         // Attacking
-        this.attackAnim = new Animator(this.spritesheet,88,315,128,120,10,0.03,0.5,false,false);
+        this.attackAnim = new Animator(this.spritesheet,600, 0, 170, 128, 3,0.1,0.5,false,false);
         // Jumping
-        this.jumpAnim = new Animator(this.spritesheet,89,1098,96,104,10,0.05,-0.5,false,true);
+        this.jumpAnim = new Animator(this.spritesheet, 1230, 0, 178, 128,3,0.2,-0.5,false,true);
         /*
         // Blocking
         this.animations[4] = new Animator(this.spritesheet,631,575,88,104,1,0.15,18,false,true);
         // Die
-        this.animations[5] = new Animator(this.spritesheet,84,178,144,120,9,0.15,-1,false,true);
+        this.animations[5] = new Animator(this.spritesheet,1220,720,166,48,3,0.2, 1,false,true);
         // Damaged
         this.animations[6] = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
         // Jump
@@ -64,7 +45,7 @@ class Hero {
         this.LEFT = 0;
         this.RIGHT = 1;
 
-        //states
+       //states
         this.IDLE = 0;
         this.WALKING = 1;
         this.RUNNING = 2;
@@ -74,18 +55,16 @@ class Hero {
         this.ATTACKING = false;
 
         //jumpingState
-        this.JUMPING = true;
+        this.JUMPING = false;
         this.HITMAXPEAK = false;
 
         //basic restrictions
-        this.GROUND = 452;
+        this.GROUND = 420;
         this.MAX_RUN = 600;
         this.MAX_WALK = 200;
         this.ACCELERATION = 20;
-        this.GRAVITY = 400;
-        this.MAX_HEALTH = 500;
-        this.MAX_KNOCKBACK = 100;
-        
+        this.GRAVITY = 300;
+
         //initial
         this.dead = false;
         this.x = 585;
@@ -93,12 +72,8 @@ class Hero {
         this.state = this.IDLE;
         this.facing = this.RIGHT;
         this.velocity = {x: 0,y: 0};
-        this.health = this.MAX_HEALTH;
-        this.hasBeenAttacked = false;
-        this.knockback = false;
-        this.knockbackCounter = 0;
+        
     }
-    
 
     horizontalUpdate() { //Updates left and right movement
         if (this.game.left && !this.game.right) {
@@ -151,9 +126,10 @@ class Hero {
        // if (!this.game.down) {
             this.horizontalUpdate();
             if (this.game.up) {
+                this.velocity.y -= this.GRAVITY;
                 this.JUMPING = true;
                 this.jumpAnim.elapsedTime = 0;
-                
+                this.game.up = false;
             } 
       //  }
         //else if (this.game.down && !this.game.up) {
@@ -164,19 +140,18 @@ class Hero {
     jumpUpdate() {
         this.horizontalUpdate();
         if (!this.HITMAXPEAK) {
-            this.velocity.y -= 50;
-            if (Math.abs(this.velocity.y) >= 1000) {
-                this.HITMAXPEAK = true;
-            } 
-            if (this.y <= 220) {
+            this.velocity.y -= 100;
+            if (Math.abs(this.velocity.y) >= 2750) {
                 this.velocity.y = 0;
                 this.HITMAXPEAK = true;
             }
         } else {
-            if (this.velocity.y <= 0) {
-                this.velocity.y += 21;
-            } else this.velocity.y += 20;
-            
+            if (this.y >= this.GROUND) {
+                this.velocity.y = 0;
+                this.y = this.GROUND;
+                this.JUMPING = false;
+                this.HITMAXPEAK = false;
+            } else this.velocity.y += 10;
         }
     }
 
@@ -201,18 +176,20 @@ class Hero {
         this.y += this.velocity.y * TICK;
     }
 
-    gravityUpdate() {
-            
+    gravityUpdate(TICK) {
+        if (this.y < this.GROUND) {
+            this.y += this.GRAVITY * TICK;
+        } 
     }
 
     update() {
         const TICK = this.game.clockTick;
-        if(!this.JUMPING)this.gravityUpdate();
+        this.gravityUpdate(TICK);
+
         if(!this.ATTACKING) {
             this.noAttackUpdate();
         } else if (this.ATTACKING) {
             this.attackUpdate();
-            
         }
 
         if (!this.JUMPING) {
@@ -221,85 +198,30 @@ class Hero {
             this.jumpUpdate();
         }
         this.XYupdate(TICK); 
-        this.updateBB();
-        this.updateAttackBB();
-  
-
-        var that = this;
-        this.game.entities[2].forEach(function (entity) {
-            if (entity.BB && that.BB.collide(entity.BB)) {
-                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) {
-                    that.y = entity.BB.top - that.BB.height;
-                    that.velocity.y = 0;
-                    that.GRAVITY = 0;
-                    that.JUMPING = false;
-                    that.HITMAXPEAK = false;
-                    that.game.up = false;
-                }             
-            }
-        })
-        this.game.entities[1].forEach(function (entity) {
-            if (!that.ATTACKING) {
-                entity.hasBeenAttacked = false;
-            }
-            if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) {
-                if ((entity instanceof Mage || entity instanceof Snake) && !entity.dead && !entity.hasBeenAttacked) {
-                    if (entity.health > 0) {
-                        entity.health -= 25;
-                        entity.hasBeenAttacked = true;
-                        entity.knockback = true;
-                    } 
-                }
-            }
-        })
     }
 
     draw(ctx) {
+
+
         if (this.facing == this.LEFT) {
             if (this.JUMPING == true && this.ATTACKING == false) {
                 this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
             } else if (this.ATTACKING == true) {
                 this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
-
-            } 
-            else if (this.knockback) {
-                this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x-20,this.y,1.2);
-            }            
-            else {
+            } else {
                 this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
             }
         } else if (this.facing == this.RIGHT){
             if (this.JUMPING == true && this.ATTACKING == false) {
-                this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-28,this.y,1.2);
-            } 
-            else if (this.ATTACKING == true) {
-                this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x - 40 ,this.y - 25,1.2); 
-            } 
-            else if (this.knockback) {
-                this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);
+                this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+            } else if (this.ATTACKING == true) {
+                this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x + 1 ,this.y - 25,1.2); 
+            } else {
+                this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
             }
-            else {
-                this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);
-            }
-        }
-        if (PARAMS.DEBUG) { 
-            ctx.strokeStyle = 'Red';
-            //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
-            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
             
-            ctx.font = "20px Arial";
-            ctx.fillStyle = "red"
-            ctx.fillText("Height: " + this.y + "px", 10, 20);
-
-            if(this.ATTACKING == true) {
-                ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
-            }
         }
-        ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
-        ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
+
+
     };
 };
-
-
-
-
