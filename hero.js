@@ -43,13 +43,14 @@ class Hero {
         this.animations[2] = new Animator(this.spritesheet,88,811,104,96,10,0.1,-5.2,true,true);
         // Damaged
         this.knockbackAnim = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
+        // Blocking
+        this.blockAnim = new Animator(this.spritesheet,631,575,88,104,1,0.15,18,false,true);
         // Attacking
         this.attackAnim = new Animator(this.spritesheet,88,315,128,120,10,0.03,0.5,false,false);
         // Jumping
         this.jumpAnim = new Animator(this.spritesheet,89,1098,96,104,10,0.05,-0.5,false,true);
         /*
-        // Blocking
-        this.animations[4] = new Animator(this.spritesheet,631,575,88,104,1,0.15,18,false,true);
+
         // Die
         this.animations[5] = new Animator(this.spritesheet,84,178,144,120,9,0.15,-1,false,true);
         // Damaged
@@ -63,6 +64,7 @@ class Hero {
         //facing
         this.LEFT = 0;
         this.RIGHT = 1;
+        this.MIDDLE = 640;
 
         //states
         this.IDLE = 0;
@@ -72,6 +74,7 @@ class Hero {
 
         //attackingState
         this.ATTACKING = false;
+        this.BLOCK = false;
 
         //jumpingState
         this.JUMPING = true;
@@ -96,7 +99,8 @@ class Hero {
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
-        this.knockbackCounter = 0;
+        this.knockbackCounter = this.MAX_KNOCKBACK;
+        
     }
     
 
@@ -195,32 +199,46 @@ class Hero {
             this.attackAnim.elapsedTime = 0;
         }
     }
+    blockUpdate() {
+        if(this.game.down) {
+            this.BLOCK = true;
+        } 
+        else {
+            this.BLOCK = false;
+        }
+    }
 
     XYupdate(TICK) {
         this.x += this.velocity.x * TICK;
         this.y += this.velocity.y * TICK;
     }
 
-    gravityUpdate() {
-            
-    }
-
     update() {
         const TICK = this.game.clockTick;
-        if(!this.JUMPING)this.gravityUpdate();
+        if(this.y <= this.GROUND || this.JUMPING) {
+            this.velocity.y += 20;
+        } else {
+            this.velocity.y = 0;
+            this.y = this.GROUND;
+        }
+        if(this.knockback) {
+            this.knockbackUpdate();
+        }
+        this.blockUpdate(); 
         if(!this.ATTACKING) {
             this.noAttackUpdate();
-        } else if (this.ATTACKING) {
-            this.attackUpdate();
-            
+        }
+        else if (this.ATTACKING) {
+            this.attackUpdate();    
         }
 
         if (!this.JUMPING) {
             this.noJumpUpdate();
-        } else if (this.JUMPING) {
+        } 
+        else if (this.JUMPING) {
             this.jumpUpdate();
         }
-        this.XYupdate(TICK); 
+        this.XYupdate(TICK);
         this.updateBB();
         this.updateAttackBB();
   
@@ -249,35 +267,79 @@ class Hero {
                         entity.hasBeenAttacked = true;
                         entity.knockback = true;
                     } 
+
+                }
+            }
+            if(entity.BB && that.BB.collide(entity.BB)) {
+                if((entity instanceof Mage || entity instanceof Snake) && ! entity.dead && ! entity.hasBeenAttackked) {
+                    if(that.BLOCK) {
+                        that.knockback = true;
+                    } else {
+                        if (that.health <= 0) {
+                            that.health = 0;
+                            that.dead = true;
+                        } 
+                        else {
+                            that.hasBeenAttacked = true;
+                            that.knockback = true;
+                            that.health -= 25
+                        }
+                    }
                 }
             }
         })
+    }
+
+    knockbackUpdate() {
+        if(this.knockbackCounter > 0) {
+            if(this.x >= this.MIDDLE) {
+                this.x -= (this.knockbackCounter/2)/8;
+                this.y -= (this.knockbackCounter/2)/8;
+            }
+            else if (this.x <= this.MIDDLE) {
+                this.x +=(this.knockbackCounter/2)/8;;
+                this.y -=(this.knockbackCounter/2)/8;;
+            }
+            this.knockbackCounter -=5;
+        }
+        else if (this.knockbackCounter <= 0) {
+            this.knockbackCounter = this.MAX_KNOCKBACK;
+            this.knockback = false;
+        }
     }
 
     draw(ctx) {
         if (this.facing == this.LEFT) {
             if (this.JUMPING == true && this.ATTACKING == false) {
                 this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
-            } else if (this.ATTACKING == true) {
+            } 
+            else if (this.ATTACKING == true) {
                 this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
 
             } 
             else if (this.knockback) {
-                this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x-20,this.y,1.2);
+                this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
+            } 
+            else if (this.BLOCK) {
+                this.blockAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
             }            
             else {
                 this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
             }
-        } else if (this.facing == this.RIGHT){
+        } 
+        else if (this.facing == this.RIGHT){
             if (this.JUMPING == true && this.ATTACKING == false) {
                 this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-28,this.y,1.2);
             } 
             else if (this.ATTACKING == true) {
-                this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x - 40 ,this.y - 25,1.2); 
+                this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x ,this.y - 25,1.2); 
             } 
             else if (this.knockback) {
-                this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);
+                this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
             }
+            else if (this.BLOCK) {
+                this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+            } 
             else {
                 this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);
             }
