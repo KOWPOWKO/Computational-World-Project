@@ -18,7 +18,7 @@ class SceneManager {
         
         
         //player
-        
+        this.game.addEntityForeground(new Coin(this.game,0,0));
         //this.game.addEntity(new Character_2(this.game,0,0));
         this.game.addEntityForeground(new Hero(this.game,0,0));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
