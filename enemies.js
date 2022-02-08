@@ -26,7 +26,7 @@ class Snake {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.3;
+        this.SPEED = 0.9;
         this.GROUND = 525;
         this.y = this.GROUND;
 
@@ -44,7 +44,6 @@ class Snake {
     loadAnimation() {
         // Walk
         this.animation[0] = new Animator(this.spritesheet,34,314,16,16,2,0.2,15,false,true);
-        this.coinAnim = new Animator(this.coin,58,50,64,64,11,0.15,11.2,false,true);
     }
 
     knockbackUpdate() {
@@ -96,6 +95,7 @@ class Snake {
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
+            this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
         } else {
             this.horizontalUpdate();
         }
@@ -116,9 +116,7 @@ class Snake {
     };
 
     draw(ctx) {
-        if(this.dead){
-        this.game.addEntityBackground(new Coin(this.game, this.x, this.y)); 
-        }
+        
         if(!this.dead) {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,3); 
@@ -187,7 +185,6 @@ class Mage {
     loadAnimation() {
         // Walk
         this.animation[0] = new Animator(this.spritesheet,278,74,16,16,2,0.2,14,false,true);
-        this.coinAnim = new Animator(this.coin,58,50,64,64,11,0.15,11.2,false,true);
     }
 
     knockbackUpdate() {
@@ -240,6 +237,7 @@ class Mage {
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
+            this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
         } else {
             this.horizontalUpdate();
         }
@@ -260,7 +258,6 @@ class Mage {
 
     draw(ctx) {
 
-            this.coinAnim.drawFrame(this.game.clockTick, ctx, this.x, this.GROUND,1); 
         if(!this.dead) {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,4); 
