@@ -1,39 +1,83 @@
 class Coin {
     constructor(game,x,y) {
-        Object.assign(this,{game,x,facing});
+        Object.assign(this,{game,x,y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
-        this.y = 0;
-        this.x = 0;
-        this.animation = [];
+
         this.loadProperties();
         this.loadAnimation();
+        this.score = 0;
     };
     loadAnimation() {
         // Coin
-        this.animation[0] = new Animator(this.spritesheet,58,50,64,64,11,0.15,11.2,false,true);
+        this.animation = new Animator(this.spritesheet,58,50,64,64,11,0.15,11.2,false,true);
 
         
     };
     loadProperties() {
-        //facings
-        this.LEFT = 0;
-        this.RIGHT = 1;
 
-        //restrictions
-        this.SPEED = 0.4;
-        this.HEIGHT = 5;
     };
     update() {
-        if (this.facing == this.LEFT) {
-            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,0.5); 
-        } else {
-            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,0.5);   
-        } 
     };
     draw(ctx) {
-        this.animation[0].drawFrame(this.game.clockTick,ctx,250,100,1);      
+        this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+        //ctx.lineWidth = 6; 
+        ctx.fillStyle = "White";
+       // ctx.lineWidth = 2;
+		ctx.fillText("=", 150, 40);     
+        ctx.fillText(this.score, 170, 40);       
         
+    };
+};
+// class Coin {
+//     constructor(game,x,y,spritesheet) {
+//         Object.assign(this,{game,x,y,spritesheet});
+//         this.spritesheet = ASSET_MANAGER.getAsset("./resources/coin.png");
+//         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
+//         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
+//         this.y = 0;
+//         this.x = 0;
+//         this.animation = [];
+//         this.loadAnimation(spritesheet);
+//     };
+//     update() {
+
+//     };
+//     loadAnimation(spritesheet) {
+//         // Coin
+//         this.animation[0] = new Animator(this.spritesheet,58,50,64,64,11,0.15,11.2,false,true);
+
+        
+//     }
+
+//     draw(ctx) {
+//         this.animation[0].drawFrame(this.game.clockTick,ctx,50,10,1);      
+        
+//     };
+// };
+class Score {
+    constructor(game, x, y, score) {
+        Object.assign(this, { game, x, y, score });
+
+        this.game.camera.score += this.score;
+
+        this.velocity = -2 * PARAMS.BITWIDTH;
+        this.elapsed = 0;
+    };
+
+    update() {
+        this.elapsed += this.game.clockTick;
+        if (this.elapsed > 1) this.removeFromWorld = true;
+
+        this.y += this.game.clockTick * this.velocity * PARAMS.SCALE;
+    };
+
+    drawMinimap(ctx, mmX, mmY) {
+    }
+
+   draw(ctx) {
+        ctx.fillStyle = "White";
+        ctx.fillText(this.score, this.x + (this.score < 1000 ? PARAMS.BLOCKWIDTH / 8 : 0), this.y);    
     };
 };
 
@@ -81,13 +125,12 @@ class FireBall {
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;
-        this.animation = []
         this.loadProperties();
         this.loadAnimation();
     };
     loadAnimation() {
         // Coin
-        this.animation[0] = new Animator(this.spritesheet,58,300,56,32,3,0.15,7,false,true);
+        this.animation = new Animator(this.spritesheet,58,300,56,32,3,0.15,7,false,true);
     };
     loadProperties() {
         //facings
@@ -99,14 +142,10 @@ class FireBall {
         this.HEIGHT = 5;
     };
     update() {
-        if (this.facing == this.LEFT) {
-            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,0.5); 
-        } else {
-            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,0.5);   
-        } 
+
     };
     draw(ctx) {
-        this.animation[0].drawFrame(this.game.clockTick,ctx,350,0,1);      
+        this.animation.drawFrame(this.game.clockTick,ctx,350,0,1);      
         
     };
 };

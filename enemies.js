@@ -5,12 +5,14 @@ class Snake {
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/enemies.png");
         this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
         this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
+        this.coin = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
 
         this.loadProperties();
         this.updateBB();
         this.animation = [];
         this.loadAnimation();
+        this.score = 0;
     };
 
     updateBB() {
@@ -42,6 +44,7 @@ class Snake {
     loadAnimation() {
         // Walk
         this.animation[0] = new Animator(this.spritesheet,34,314,16,16,2,0.2,15,false,true);
+        this.coinAnim = new Animator(this.coin,58,50,64,64,11,0.15,11.2,false,true);
     }
 
     knockbackUpdate() {
@@ -99,11 +102,13 @@ class Snake {
         
         if (this.knockback) {
             this.knockbackUpdate();
+            this.game.addEntityBackground(new Coin(this.game, 300, 300));
         }
 
         if (this.health <= 0 && !this.knockback) {
             this.health = 0;
             this.dead = true;
+            this.coinX = this.x+10;
         }
 
         this.updateBB();
@@ -111,6 +116,9 @@ class Snake {
     };
 
     draw(ctx) {
+        if(this.dead){
+        this.game.addEntityBackground(new Coin(this.game, this.x, this.y)); 
+        }
         if(!this.dead) {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,3); 
@@ -134,14 +142,19 @@ class Mage {
     constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/enemies.png");
+        this.coin = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
         this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
         this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
+       // this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         
         this.loadProperties();
         this.updateBB();
         this.animation = [];
         this.loadAnimation();
+        this.elapsed = 0;
+        
+
     };
     
     updateBB() {
@@ -158,6 +171,7 @@ class Mage {
         this.SPEED = 0.2;
         this.GROUND = 507;
         this.y = this.GROUND;
+        this.x;
 
         //states
         this.dead = false;
@@ -174,6 +188,7 @@ class Mage {
 
         this.animation[0] = new Animator(this.spritesheet,278,74,16,16,2,0.2,14,false,true);
         this.animation[1] = new Animator(this.spritesheet,369,15,13,13,1,0.2,0,false,true);
+        this.coinAnim = new Animator(this.coin,58,50,64,64,11,0.15,11.2,false,true);
     }
 
     knockbackUpdate() {
@@ -253,11 +268,13 @@ class Mage {
     };
 
     draw(ctx) {
+
+            this.coinAnim.drawFrame(this.game.clockTick, ctx, this.x, this.GROUND,1); 
         if(!this.dead) {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,4); 
             } else {
-                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,4);   
+                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,4);  
             }
 
             if (PARAMS.DEBUG) { 
