@@ -171,8 +171,9 @@ class Mage {
     }
 
     loadAnimation() {
-        // Walk
+
         this.animation[0] = new Animator(this.spritesheet,278,74,16,16,2,0.2,14,false,true);
+        this.animation[1] = new Animator(this.spritesheet,369,15,13,13,1,0.2,0,false,true);
     }
 
     knockbackUpdate() {
@@ -222,11 +223,19 @@ class Mage {
     }
 
     update() {
+        const TICK = this.game.clockTick;
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
         } else {
             this.horizontalUpdate();
+
+            if (this.timeElapsed < 0.5) {
+                this.timeElapsed += TICK;
+            } else {
+                this.timeElapsed = 0;
+                this.state = this.ATTACKING;
+            }
         }
         
         if (this.knockback) {
@@ -250,7 +259,7 @@ class Mage {
             } else {
                 this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,4);   
             }
-    
+
             if (PARAMS.DEBUG) { 
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
