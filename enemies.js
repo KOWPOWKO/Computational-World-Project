@@ -12,6 +12,7 @@ class Snake {
         this.updateBB();
         this.animation = [];
         this.loadAnimation();
+        this.score = 0;
     };
 
     updateBB() {
@@ -101,6 +102,7 @@ class Snake {
         
         if (this.knockback) {
             this.knockbackUpdate();
+            this.game.addEntityBackground(new Coin(this.game, 300, 300));
         }
 
         if (this.health <= 0 && !this.knockback) {
@@ -114,7 +116,9 @@ class Snake {
     };
 
     draw(ctx) {
-        this.coinAnim.drawFrame(this.game.clockTick, ctx, this.x, this.GROUND,1); 
+        if(this.dead){
+        this.game.addEntityBackground(new Coin(this.game, this.x, this.y)); 
+        }
         if(!this.dead) {
             if (this.facing == this.LEFT) {
                 this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,3); 

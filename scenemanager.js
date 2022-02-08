@@ -9,27 +9,20 @@ class SceneManager {
         this.roundMonterProgress = 0;
         this.title = true;
         this.loadGame = false;
+        //this.game.click = false;
+        //this.update();
         this.loadWorld();
-        
         
     };
     clearEntities() {
         this.game.entities = [this];
     };
+
     loadWorld() {
+        //player        
+       // this.startingScreen();
+       this.game.addEntityBackground(new StartingScreen(this.game));
         
-        
-        //player
-        
-        //this.game.addEntityForeground(new Character_2(this.game,0,0));
-        if(this.title){
-        this.game.addEntityBackground(new Castle(this.game, 0, 0));
-        this.title = false;
-        if(this.game.click){
-        this.loadGame = true;
-        }
-        }
-        if(this.loadGame){
         this.game.addEntityForeground(new Hero(this.game,0,0));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
         //enemies
@@ -43,7 +36,7 @@ class SceneManager {
         this.game.addEntityBackground(new CastleBounds(this.game, 0, 0));
         this.game.addEntityBackground(new chest(this.game,530,535));
         
-        this.game.addEntityBackground(new Coin(this.game));
+        this.game.addEntityBackground(new Coin(this.game,50,0));
         this.game.addEntityBackground(new Score(this.game));
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));
@@ -52,21 +45,21 @@ class SceneManager {
     }
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
-        /*
-        if(this.game.click){
-            if(this.game.click && this.game.click.x > 100 && this.game.click.x > 200){
-                this.game.addEntity(new Character_2(this.game,0,0));
-                
-            }
-            else{
-                this.game.addEntity(new Hero(this.game,0,0));
-            }
-        }
-        */
+        
     }
     draw(ctx) {
         
     }
+    // startingScreen(){
+    //     if(this.title){
+    //        this.game.addEntityBackground(new Castle(this.game, 0, 0));
+    //         if(this.game.click){
+    //         this.loadGame = true;
+    //         this.title = false;
+    //         }
+            
+    //     }
+    // }
 
     setRoundMonters() {
         this.roundMonster.push([2,1]);
