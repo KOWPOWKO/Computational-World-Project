@@ -23,9 +23,10 @@ class SceneManager {
        // this.startingScreen();
        this.game.addEntityBackground(new StartingScreen(this.game));
         
+        this.game.addEntityForeground(new Coin(this.game,50,0));
+        //this.game.addEntity(new Character_2(this.game,0,0));
         this.game.addEntityForeground(new Hero(this.game,0,0));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
-        //enemies
         this.setRoundMonters();
         //background props
         this.game.addEntityEnemies(new BirdBrown(this.game,-325,this.RIGHT));
@@ -36,7 +37,7 @@ class SceneManager {
         this.game.addEntityBackground(new CastleBounds(this.game, 0, 0));
         this.game.addEntityBackground(new chest(this.game,530,535));
         
-        this.game.addEntityBackground(new Coin(this.game,50,0));
+        //this.game.addEntityBackground(new Coin(this.game,50,0));
         this.game.addEntityBackground(new Score(this.game));
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));

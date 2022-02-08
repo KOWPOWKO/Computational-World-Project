@@ -125,13 +125,12 @@ class FireBall {
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
         this.y = 0;
         this.x = 0;
-        this.animation = []
         this.loadProperties();
         this.loadAnimation();
     };
     loadAnimation() {
         // Coin
-        this.animation[0] = new Animator(this.spritesheet,58,300,56,32,3,0.15,7,false,true);
+        this.animation = new Animator(this.spritesheet,58,300,56,32,3,0.15,7,false,true);
     };
     loadProperties() {
         //facings
@@ -143,14 +142,10 @@ class FireBall {
         this.HEIGHT = 5;
     };
     update() {
-        if (this.facing == this.LEFT) {
-            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,0.5); 
-        } else {
-            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,0.5);   
-        } 
+
     };
     draw(ctx) {
-        this.animation[0].drawFrame(this.game.clockTick,ctx,350,0,1);      
+        this.animation.drawFrame(this.game.clockTick,ctx,350,0,1);      
         
     };
 };
