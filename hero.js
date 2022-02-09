@@ -271,7 +271,7 @@ class Hero {
                 }
             }
             if(entity.BB && that.BB.collide(entity.BB)) {
-                if((entity instanceof Mage || entity instanceof Snake) && ! entity.dead && ! entity.hasBeenAttackked) {
+                if((entity instanceof Mage || entity instanceof Snake) && ! entity.dead && ! entity.hasBeenAttacked) {
                     if(that.BLOCK) {
                         that.knockback = true;
                     } else {
@@ -279,7 +279,7 @@ class Hero {
                             that.health = 0;
                             that.dead = true;
                         } 
-                        else {
+                        else if (!that.hasBeenAttacked) {
                             that.hasBeenAttacked = true;
                             that.knockback = true;
                             that.health -= 25
@@ -305,6 +305,7 @@ class Hero {
         else if (this.knockbackCounter <= 0) {
             this.knockbackCounter = this.MAX_KNOCKBACK;
             this.knockback = false;
+            this.hasBeenAttacked = false;
         }
     }
 
