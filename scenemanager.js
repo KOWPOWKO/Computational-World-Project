@@ -37,6 +37,7 @@ class SceneManager {
         this.game.addEntityBackground(new CastleBounds(this.game, 0, 0));
         this.game.addEntityBackground(new chest(this.game,530,535));
         
+        
         //this.game.addEntityBackground(new Coin(this.game,50,0));
         this.game.addEntityBackground(new Score(this.game));
         this.game.addEntityBackground(new Sun(this.game, 180, 150));

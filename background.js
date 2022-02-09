@@ -33,7 +33,7 @@ class StartingScreen {
         if(!this.loadGame){
             ctx.fillStyle = "White";
             ctx.fillRect(0,0, 1280, 720);
-            ctx.font = ctx.font.replace(/\d+px/, "24px");
+            ctx.font = ctx.font.replace(/\d+px/, "18px");
             ctx.fillStyle = "black";
 		    ctx.fillText("START GAME", 100,150);
             this.game.addEntityBackground(new Castle(this.game, 0, 0));
@@ -149,12 +149,14 @@ class chest {
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
-            ctx.font = ctx.font.replace(/\d+px/, "18px");
+            //TIME WATCH powerUP
             ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png"),240,20);
+            //this.game.addEntityForeground(new TimeStop(this.game,240,20));
             ctx.fillText("Slow Enemies", 240,130);
             ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),240,130);
             ctx.fillText("=  100", 285,154)
-
+ 
+            //Increase Damage powerUP
             ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/damageIncrease.gif"),400,15);
             ctx.fillText("Increase Damage", 400,130);
             ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),400,130);
