@@ -17,9 +17,7 @@ class Hero {
             this.attackBB = new BoundingBox(this.x-50, this.y-3, 50, 119);
         } else {
             this.attackBB = new BoundingBox(this.x+75, this.y-3, 50, 119);
-        }
-            
-
+        }   
     }
 
 
@@ -213,6 +211,63 @@ class Hero {
         this.y += this.velocity.y * TICK;
     }
 
+    collisionUpdate() {
+        var that = this;
+
+       
+        this.game.entities[2].forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) { //ground logic
+                    that.y = entity.BB.top - that.BB.height;
+                    that.velocity.y = 0;
+                    that.GRAVITY = 0;
+                    that.JUMPING = false;
+                    that.HITMAXPEAK = false;
+                    that.game.up = false;
+                }             
+            }
+        })
+
+        this.game.entities[1].forEach(function (entity) {
+            if (!that.ATTACKING) {
+                entity.hasBeenAttacked = false;
+            }
+            if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) { //attacking enemies
+                if ((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                    if (entity.health > 0) {
+                        entity.health -= 25;
+                        entity.hasBeenAttacked = true;
+                        entity.knockback = true;
+                    } 
+
+                }
+            }
+            if(entity.BB && that.BB.collide(entity.BB)) { //enemies attacking
+                if((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                    if(that.BLOCK) {
+                        that.knockback = true;
+                    } else {
+                        if (that.health <= 0) {
+                            that.health = 0;
+                            that.dead = true;
+                        } 
+                        else if (!that.hasBeenAttacked) {
+                            that.hasBeenAttacked = true;
+                            that.knockback = true;
+                            that.health -= 25
+                        }
+                    }
+                }
+                if ((entity instanceof Coin) && (entity.hasBeenCollected == false)) {
+                    entity.hasBeenCollected = true;
+                    PARAMS.SCORE += 1;
+                }
+            }
+        })
+
+        
+    }
+
     update() {
         const TICK = this.game.clockTick;
         if(this.y <= this.GROUND || this.JUMPING) {
@@ -241,53 +296,9 @@ class Hero {
         this.XYupdate(TICK);
         this.updateBB();
         this.updateAttackBB();
-  
+        this.collisionUpdate();
 
-        var that = this;
-        this.game.entities[2].forEach(function (entity) {
-            if (entity.BB && that.BB.collide(entity.BB)) {
-                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) {
-                    that.y = entity.BB.top - that.BB.height;
-                    that.velocity.y = 0;
-                    that.GRAVITY = 0;
-                    that.JUMPING = false;
-                    that.HITMAXPEAK = false;
-                    that.game.up = false;
-                }             
-            }
-        })
-        this.game.entities[1].forEach(function (entity) {
-            if (!that.ATTACKING) {
-                entity.hasBeenAttacked = false;
-            }
-            if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) {
-                if ((entity instanceof Mage || entity instanceof Snake) && !entity.dead && !entity.hasBeenAttacked) {
-                    if (entity.health > 0) {
-                        entity.health -= 25;
-                        entity.hasBeenAttacked = true;
-                        entity.knockback = true;
-                    } 
-
-                }
-            }
-            if(entity.BB && that.BB.collide(entity.BB)) {
-                if((entity instanceof Mage || entity instanceof Snake) && ! entity.dead && ! entity.hasBeenAttacked) {
-                    if(that.BLOCK) {
-                        that.knockback = true;
-                    } else {
-                        if (that.health <= 0) {
-                            that.health = 0;
-                            that.dead = true;
-                        } 
-                        else if (!that.hasBeenAttacked) {
-                            that.hasBeenAttacked = true;
-                            that.knockback = true;
-                            that.health -= 25
-                        }
-                    }
-                }
-            }
-        })
+        
     }
 
     knockbackUpdate() {
@@ -360,6 +371,11 @@ class Hero {
         }
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
+        //ctx.lineWidth = 6; 
+        ctx.fillStyle = "White";
+       // ctx.lineWidth = 2;
+		ctx.fillText("=", 150, 40);     
+        ctx.fillText(PARAMS.SCORE, 170, 40);   
     };
 };
 

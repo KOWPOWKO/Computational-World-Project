@@ -95,7 +95,7 @@ class Snake {
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
-            this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
+            this.game.addEntityEnemies(new Coin(this.game, this.x, this.y-18)); 
         } else {
             this.horizontalUpdate();
         }
@@ -140,7 +140,7 @@ class Mage {
     constructor(game,x,facing) {
         Object.assign(this,{game,x,facing});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/enemies.png");
-        this.coin = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
+    
         this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
         this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
        // this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
@@ -186,7 +186,6 @@ class Mage {
 
         this.animation[0] = new Animator(this.spritesheet,278,74,16,16,2,0.2,14,false,true);
         this.animation[1] = new Animator(this.spritesheet,369,15,13,13,1,0.2,0,false,true);
-        this.coinAnim = new Animator(this.coin,58,50,64,64,11,0.15,11.2,false,true);
     }
 
     knockbackUpdate() {
@@ -240,7 +239,7 @@ class Mage {
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
-            this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
+            this.game.addEntityEnemies(new Coin(this.game, this.x, this.y)); 
         } else {
             this.horizontalUpdate();
 
