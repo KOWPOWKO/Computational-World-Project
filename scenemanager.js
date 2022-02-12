@@ -10,7 +10,7 @@ class SceneManager {
         this.title = true;
         this.loadGame = false;
         //this.game.click = false;
-        //this.update();
+        this.update();
         this.loadWorld();
         
     };
@@ -21,7 +21,7 @@ class SceneManager {
     loadWorld() {
         //player        
        // this.startingScreen();
-       this.game.addEntityBackground(new StartingScreen(this.game));
+       
         
         this.game.addEntityForeground(new Coin(this.game,50,0));
         //this.game.addEntity(new Character_2(this.game,0,0));
@@ -46,7 +46,8 @@ class SceneManager {
 
     }
     update() {
-        PARAMS.DEBUG = document.getElementById("debug").checked;
+        this.game.addEntityBackground(new StartingScreen(this.game));
+       // PARAMS.DEBUG = document.getElementById("debug").checked;
         
     }
     draw(ctx) {

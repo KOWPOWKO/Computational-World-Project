@@ -25,6 +25,7 @@ class StartingScreen {
         if(this.game.click){
             //if (this.game.click && this.game.click.x > 100 && this.game.click.x < 150 && this.game.click.y > 100 && this.game.click.y < 110) {
                this.loadGame =true;
+              // this.game.loadWorld();
            // }
         }
     };
@@ -36,8 +37,12 @@ class StartingScreen {
             ctx.font = ctx.font.replace(/\d+px/, "18px");
             ctx.fillStyle = "black";
 		    ctx.fillText("START GAME", 100,150);
-            this.game.addEntityBackground(new Castle(this.game, 0, 0));
+           // this.game.addEntityBackground(new Castle(this.game, 0, 0));
             ctx.drawImage(this.title, 463, 0,320,320);
+        }
+        if(this.loadGame){
+           // this.game.camera.loadWorld();
+           
         }
     };
 }
@@ -99,7 +104,6 @@ class chest {
             }
             if(this.game.click && this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90){
                 this.powerUp = true;
-                //this.open = true;
             }
             if(this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 90){
                 this.specialAbil = true;
@@ -151,7 +155,11 @@ class chest {
             ctx.fillStyle = "White";
             //TIME WATCH powerUP
             ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png"),240,20);
-            //this.game.addEntityForeground(new TimeStop(this.game,240,20));
+ 
+                if (this.game.click) {
+                    this.game.addEntityForeground(new TimeStop(this.game,500,500));
+                }
+            
             ctx.fillText("Slow Enemies", 240,130);
             ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),240,130);
             ctx.fillText("=  100", 285,154)
