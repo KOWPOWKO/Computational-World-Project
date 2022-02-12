@@ -7,7 +7,7 @@ class GameEngine {
         this.ctx = null;
 
         // Everything that will be updated and drawn each frame
-        this.entities = [[],[],[]];//0 = player, 1 = enemies, 2 = background
+        this.entities = [[],[],[],[]];//0 = player, 1 = enemies, 2 = background, 3 = inventory
 
         // Information on the input
         /*
@@ -178,11 +178,18 @@ class GameEngine {
         this.entities[2].push(entity);
     };
 
+    addEntityInventory(entity) {
+        this.entities[3].push(entity);
+    }
+
     draw() {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         // Draw latest things first
+        for (let i = this.entities[3].length - 1; i >= 0; i--) {
+            this.entities[3][i].draw(this.ctx, this);
+        }
         for (let i = this.entities[2].length - 1; i >= 0; i--) {
             this.entities[2][i].draw(this.ctx, this);
         }

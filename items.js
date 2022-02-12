@@ -4,28 +4,41 @@ class Coin {
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/coin.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
 
+        
         this.loadProperties();
+        this.updateBB();
         this.loadAnimation();
-        this.score = 0;
     };
+
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y, 64, 64);
+    }
+
     loadAnimation() {
         // Coin
         this.animation = new Animator(this.spritesheet,58,50,64,64,11,0.15,11.2,false,true);
-
-        
     };
+
     loadProperties() {
+        this.hasBeenCollected = false;
+    };
 
-    };
     update() {
+        if (this.hasBeenCollected) {
+            this.removeFromWorld = true;
+        }
     };
+
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
-        //ctx.lineWidth = 6; 
-        ctx.fillStyle = "White";
-       // ctx.lineWidth = 2;
-		ctx.fillText("=", 150, 40);     
-        ctx.fillText(this.score, 170, 40);       
+        if (!this.hasBeenCollected) {
+            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+        }
+        
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
         
     };
 };

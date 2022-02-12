@@ -18,6 +18,8 @@ class StartingScreen {
        // this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/background.png");
         this.title = ASSET_MANAGER.getAsset("./resources/background/castledefenderlogo.png");
         this.loadGame = false;
+        this.loaded = false;
+        this.removeFromWorld = false;
 
     };
     
@@ -35,15 +37,11 @@ class StartingScreen {
             ctx.fillStyle = "White";
             ctx.fillRect(0,0, 1280, 720);
             ctx.font = ctx.font.replace(/\d+px/, "18px");
-            ctx.fillStyle = "black";
-		    ctx.fillText("START GAME", 100,150);
-           // this.game.addEntityBackground(new Castle(this.game, 0, 0));
+            ctx.fillStyle = "Red";
+		    ctx.fillText("CLICK TO START GAME", 535,700);
+            this.game.addEntityBackground(new Castle(this.game, 0, 0));
             ctx.drawImage(this.title, 463, 0,320,320);
-        }
-        if(this.loadGame){
-           // this.game.camera.loadWorld();
-           
-        }
+        } 
     };
 }
 
@@ -82,10 +80,63 @@ class Fire {
 
 	};
 };
+
+class GameOver {
+    constructor(game) {
+        this.game = game;
+        this.restart = false;
+    }
+
+    update() {
+        if (this.game.click) {
+            if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 730 
+                && this.game.click.y >= 350 && this.game.click.y <= 410) {
+                this.restart = true;
+                this.game.click = false;
+            }
+        }
+    }
+
+    draw(ctx) {
+        if (this.restart == false) {
+            ctx.font = ctx.font.replace(/\d+px/, "60px");
+            ctx.fillStyle = rgba(0, 0, 0, 0.5);
+            ctx.fillRect(0,0, 1280, 720);
+    
+            ctx.fillStyle = "Red";
+            ctx.fillText("GAME OVER", 450,60);
+    
+            ctx.fillStyle = "Black";
+            ctx.fillRect(530,350, 200, 60);
+    
+      
+
+            ctx.font = ctx.font.replace(/\d+px/, "40px");
+            ctx.fillStyle = "Red";
+            ctx.fillText("RESTART", 540,400);
+        } 
+        
+        
+    }
+}
+
+class ItemAssets {
+    constructor() {
+        this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
+        this.slowEnemies = ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png");
+        this.damageIncrease = ASSET_MANAGER.getAsset("./resources/powerUps/damageIncrease.gif");
+        this.doubleSpeed = ASSET_MANAGER.getAsset("./resources/powerUps/times2.png");
+        this.doubleSize = ASSET_MANAGER.getAsset("./resources/powerUps/arrow.png");
+        this.invincibility = ASSET_MANAGER.getAsset("./resources/powerUps/star.png");
+    }
+
+}
+
 class chest {
 	constructor(game,x,y,open){
         Object.assign(this,{game,x,y,open});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/chest.png");
+        this.itemAssets = new ItemAssets();
         this.animations = [];
         this.loadAnimation();
 		this.open = false;
@@ -117,6 +168,7 @@ class chest {
     };
 	draw(ctx){   
         ctx.fillStyle = "Black";
+        ctx.font.replace(/\d+px/, "10px");
 		ctx.fillText("ITEM SHOP", 500,595);
 
 		if(this.open){
@@ -154,38 +206,36 @@ class chest {
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
             //TIME WATCH powerUP
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png"),240,20);
- 
-                if (this.game.click) {
-                    this.game.addEntityForeground(new TimeStop(this.game,500,500));
-                }
-            
+            ctx.drawImage(this.itemAssets.slowEnemies,240,20);
+            //this.game.addEntityForeground(new TimeStop(this.game,240,20));
             ctx.fillText("Slow Enemies", 240,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),240,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,240,130);
             ctx.fillText("=  100", 285,154)
  
             //Increase Damage powerUP
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/damageIncrease.gif"),400,15);
+            ctx.drawImage(this.itemAssets.damageIncrease,400,15);
             ctx.fillText("Increase Damage", 400,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),400,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,400,130);
             ctx.fillText("=  100", 440,154)
             ctx.fillStyle = "White";
 			ctx.fillText("POWER UPS", 570,20);
 
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/times2.png"),575,25);
+            
+
+            ctx.drawImage(this.itemAssets.doubleSpeed,575,25);
             ctx.fillText("Double speed", 560,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),560,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,560,130);
             ctx.fillText("=  100", 600,154)
             ctx.fillStyle = "White";
 
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/arrow.png"), 710,20);
+            ctx.drawImage(this.itemAssets.doubleSize, 710,20);
             ctx.fillText("Double Size", 710,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),710,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,710,130);
             ctx.fillText("=  300", 747,154);
 
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/star.png"), 860,20);
+            ctx.drawImage(this.itemAssets.invincibility, 860,20);
             ctx.fillText("Invincibility", 860,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),860,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,860,130);
             ctx.fillText("=  300", 900,154);
         }
 
