@@ -95,7 +95,7 @@ class Snake {
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
-            this.game.addEntityEnemies(new Coin(this.game, this.x, this.y-18)); 
+            this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
         } else {
             this.horizontalUpdate();
         }
@@ -239,7 +239,7 @@ class Mage {
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
-            this.game.addEntityEnemies(new Coin(this.game, this.x, this.y)); 
+            this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
         } else {
             this.horizontalUpdate();
 

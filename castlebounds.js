@@ -10,6 +10,7 @@ class CastleBounds {
     loadProperties() {
         this.MAX_HEALTH = 1000;
         this.health = this.MAX_HEALTH;
+        this.dead = false;
     }
 
     updateBB() {
@@ -20,6 +21,7 @@ class CastleBounds {
     update () {
         if (this.health <= 0) {
             this.health = 0;
+            this.dead = true;
         }
     };
 

@@ -11,23 +11,46 @@ class SceneManager {
         this.loadGame = false;
         //this.game.click = false;
         //this.update();
-        this.loadWorld();
+        this.mainMenu();
+        
         
     };
     clearEntities() {
-        this.game.entities = [this];
+        this.game.entities[0].forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+        this.game.entities[1].forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+        this.game.entities[2].forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+        this.game.entities[3].forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+
     };
+
+    mainMenu() {
+        this.game.addEntityBackground(new StartingScreen(this.game, 0, 0));
+    }
+
+    gameOver() {
+        this.game.addEntityBackground(new GameOver(this.game, 0, 0));
+    }
 
     loadWorld() {
         //player        
        // this.startingScreen();
-       this.game.addEntityBackground(new StartingScreen(this.game));
-        
+      
+        this.clearEntities();
         this.game.addEntityForeground(new Coin(this.game,50,0));
         //this.game.addEntity(new Character_2(this.game,0,0));
         this.game.addEntityForeground(new Hero(this.game,0,0));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
         this.setRoundMonters();
+
+        
         //background props
         this.game.addEntityEnemies(new BirdBrown(this.game,-325,this.RIGHT));
         this.game.addEntityEnemies(new BirdBrown(this.game,1412,this.LEFT));
@@ -43,11 +66,48 @@ class SceneManager {
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));
         
+        
 
     }
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
+        /*
+        if (this.loadGame == false) {
+            this.loadWorld();
+            this.loadGame = true;
+        }
+        */
+        var that = this;
         
+        this.game.entities[2].forEach(function (entity) {
+            if(entity instanceof StartingScreen && (entity.loadGame == true) && (entity.loaded == false)) {
+                that.loadGame = true;
+                
+                that.loadWorld();
+                that.setRoundMonters();
+                entity.loaded = true;
+                entity.removeFromWorld = true;
+            }
+            if(entity instanceof CastleBounds && (entity.dead == true)) {
+                that.loadGame = false;
+                that.clearEntities();
+                that.gameOver();
+            }
+            if(entity instanceof GameOver && (entity.restart == true)) {
+                that.loadGame = true;
+                that.loadWorld();
+                that.setRoundMonters();
+                entity.removeFromWorld = true;
+            }
+        })
+
+        this.game.entities[0].forEach(function (entity) {
+            if (entity instanceof Hero && (entity.finishDead == true)) {
+                that.loadGame = false;
+                that.clearEntities();
+                that.gameOver();
+            }
+        })
     }
     draw(ctx) {
         
@@ -83,20 +143,23 @@ class SceneManager {
     }
 
     spawnEnemy(){
-        console.log(this.roundMonterProgress);
-        if (this.roundMonterProgress >= 0) {
-            var currentMonster = this.roundMonster[this.roundMonterProgress];
-            if (currentMonster[0] === 0) {
-                this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
-            } else if (currentMonster[0] === 1) {
-                this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
-            } else if (currentMonster[0] === 2) {
-                //this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
-            } else if (currentMonster[0] === 3) {
-                //this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+        if (this.loadGame == true) {
+            console.log(this.roundMonterProgress);
+            if (this.roundMonterProgress >= 0) {
+                var currentMonster = this.roundMonster[this.roundMonterProgress];
+                if (currentMonster[0] === 0) {
+                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                } else if (currentMonster[0] === 1) {
+                    this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                } else if (currentMonster[0] === 2) {
+                    //this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                } else if (currentMonster[0] === 3) {
+                    //this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                }
+                this.roundMonterProgress--;
             }
-            this.roundMonterProgress--;
         }
+        
         
     } 
 }

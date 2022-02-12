@@ -47,10 +47,12 @@ class Hero {
         this.attackAnim = new Animator(this.spritesheet,88,315,128,120,10,0.03,0.5,false,false);
         // Jumping
         this.jumpAnim = new Animator(this.spritesheet,89,1098,96,104,10,0.05,-0.5,false,true);
-        /*
 
         // Die
-        this.animations[5] = new Animator(this.spritesheet,84,178,144,120,9,0.15,-1,false,true);
+        this.deadAnim= new Animator(this.spritesheet,84,178,144,120,9,0.15,-1,false,false);
+        /*
+
+        
         // Damaged
         this.animations[6] = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
         // Jump
@@ -89,6 +91,7 @@ class Hero {
         
         //initial
         this.dead = false;
+        this.finishDead = false;
         this.x = 585;
         this.y = this.GROUND - 600;
         this.state = this.IDLE;
@@ -214,7 +217,6 @@ class Hero {
     collisionUpdate() {
         var that = this;
 
-       
         this.game.entities[2].forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB)) {
                 if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) { //ground logic
@@ -258,45 +260,61 @@ class Hero {
                         }
                     }
                 }
-                if ((entity instanceof Coin) && (entity.hasBeenCollected == false)) {
+                
+            }
+        })
+
+        this.game.entities[0].forEach(function (entity) {
+            if(entity.BB && that.BB.collide(entity.BB)) {
+            if ((entity instanceof Coin) && (entity.hasBeenCollected == false)) {
                     entity.hasBeenCollected = true;
                     PARAMS.SCORE += 1;
                 }
             }
         })
-
         
     }
 
     update() {
         const TICK = this.game.clockTick;
-        if(this.y <= this.GROUND || this.JUMPING) {
-            this.velocity.y += 20;
-        } else {
-            this.velocity.y = 0;
-            this.y = this.GROUND;
+        if (this.dead == false) {
+            if(this.y <= this.GROUND || this.JUMPING) {
+                this.velocity.y += 20;
+            } else {
+                this.velocity.y = 0;
+                this.y = this.GROUND;
+            }
+            if(this.knockback) {
+                this.knockbackUpdate();
+            }
+            this.blockUpdate(); 
+            if(!this.ATTACKING) {
+                this.noAttackUpdate();
+            }
+            else if (this.ATTACKING) {
+                this.attackUpdate();    
+            }
+    
+            if (!this.JUMPING) {
+                this.noJumpUpdate();
+            } 
+            else if (this.JUMPING) {
+                this.jumpUpdate();
+            }
+            this.XYupdate(TICK);
+            this.updateBB();
+            this.updateAttackBB();
+            this.collisionUpdate();
+    
+            if(this.health <= 0) {
+                this.health = 0;
+                this.dead = true;
+            }
+        } else if (this.dead == true) {
+            if(this.deadAnim.isDone()) {
+                this.finishDead = true;
+            }
         }
-        if(this.knockback) {
-            this.knockbackUpdate();
-        }
-        this.blockUpdate(); 
-        if(!this.ATTACKING) {
-            this.noAttackUpdate();
-        }
-        else if (this.ATTACKING) {
-            this.attackUpdate();    
-        }
-
-        if (!this.JUMPING) {
-            this.noJumpUpdate();
-        } 
-        else if (this.JUMPING) {
-            this.jumpUpdate();
-        }
-        this.XYupdate(TICK);
-        this.updateBB();
-        this.updateAttackBB();
-        this.collisionUpdate();
 
         
     }
@@ -321,41 +339,47 @@ class Hero {
     }
 
     draw(ctx) {
-        if (this.facing == this.LEFT) {
-            if (this.JUMPING == true && this.ATTACKING == false) {
-                this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+        if (this.dead == false) {
+            if (this.facing == this.LEFT) {
+                if (this.JUMPING == true && this.ATTACKING == false) {
+                    this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+                } 
+                else if (this.ATTACKING == true) {
+                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
+    
+                } 
+                else if (this.knockback) {
+                    this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
+                } 
+                else if (this.BLOCK) {
+                    this.blockAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+                }            
+                else {
+                    this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+                }
             } 
-            else if (this.ATTACKING == true) {
-                this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
-
-            } 
-            else if (this.knockback) {
-                this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
-            } 
-            else if (this.BLOCK) {
-                this.blockAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
-            }            
-            else {
-                this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+            else if (this.facing == this.RIGHT){
+                if (this.JUMPING == true && this.ATTACKING == false) {
+                    this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-28,this.y,1.2);
+                } 
+                else if (this.ATTACKING == true) {
+                    this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x ,this.y - 25,1.2); 
+                } 
+                else if (this.knockback) {
+                    this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
+                }
+                else if (this.BLOCK) {
+                    this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+                } 
+                else {
+                    this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);
+                }
             }
-        } 
-        else if (this.facing == this.RIGHT){
-            if (this.JUMPING == true && this.ATTACKING == false) {
-                this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-28,this.y,1.2);
-            } 
-            else if (this.ATTACKING == true) {
-                this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x ,this.y - 25,1.2); 
-            } 
-            else if (this.knockback) {
-                this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
-            }
-            else if (this.BLOCK) {
-                this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
-            } 
-            else {
-                this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);
-            }
+        } else if (this.dead == true) {
+            this.deadAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
         }
+        
+
         if (PARAMS.DEBUG) { 
             ctx.strokeStyle = 'Red';
             //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
