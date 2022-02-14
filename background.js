@@ -101,6 +101,49 @@ class GameOver {
     }
 }
 
+class Win {
+    constructor(game,camera) {
+        this.game = game;
+        this.camera = camera;
+        this.restart = false;
+    }
+
+    update() {
+        if (this.game.click) {
+            if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 730 
+                && this.game.click.y >= 350 && this.game.click.y <= 410) {
+                this.restart = true;
+                this.game.click = false;
+                this.camera.roundNumber = 0;
+                this.camera.END = false;
+            }
+        }
+    }
+
+    draw(ctx) {
+        if (this.restart == false) {
+            ctx.font = ctx.font.replace(/\d+px/, "60px");
+            ctx.fillStyle = rgba(0, 0, 0, 0.5);
+            ctx.fillRect(0,0, 1280, 720);
+    
+            ctx.fillStyle = "Blue";
+            ctx.fillText("Winner!", 540,60);
+    
+            ctx.fillStyle = "White";
+            ctx.fillRect(530,350, 200, 60);
+    
+      
+
+            ctx.font = ctx.font.replace(/\d+px/, "40px");
+            ctx.fillStyle = "Blue";
+            ctx.fillText("RESTART", 540,400);
+            ctx.font = ctx.font.replace(/\d+px/, "10px");
+        } 
+        
+        
+    }
+}
+
 class ItemAssets {
     constructor() {
         this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
