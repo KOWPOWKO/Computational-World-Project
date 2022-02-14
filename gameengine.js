@@ -248,13 +248,11 @@ class GameEngine {
         this.update();
         this.draw();
         if(this.elapsedTime >= this.totalTime) {
-            console.log(this.elapsedTime);
-            this.elapsedTime = 0;
             this.camera.spawnEnemy();
+            this.elapsedTime = 0;
+            
             this.camera.update();
-            console.log(this.entities);
         }
-
         this.elapsedTime += 1;
     };
 

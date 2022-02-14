@@ -10,10 +10,20 @@ class Snake {
 
         this.loadProperties();
         this.updateBB();
+        this.updateAttackBB();
         this.animation = [];
         this.loadAnimation();
         this.score = 0;
     };
+    
+    updateAttackBB() {
+        this.lastAttackBB = this.attackBB;
+        if(this.facing == this.LEFT) {
+            this.attackBB = new BoundingBox(this.BB.x-10, this.BB.y, 10, 48);
+        } else {
+            this.attackBB = new BoundingBox(this.BB.x+this.BB.width, this.BB.y, 10, 48);
+        }   
+    }
 
     updateBB() {
         this.lastBB = this.BB;
@@ -28,6 +38,7 @@ class Snake {
         //restrictions
         this.SPEED = 0.9;
         this.GROUND = 525;
+        this.ATTACK_SPEED = 3;
         this.y = this.GROUND;
 
         //states
@@ -38,6 +49,7 @@ class Snake {
         this.knockback = false;
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
+        this.previousAttack = 0;
     }
     
 
@@ -71,13 +83,21 @@ class Snake {
         }
     }
 
-    collisionUpdate() {
+    collisionUpdate(TICK) {
         var that = this;
+        that.previousAttack += TICK;
         this.game.entities[2].forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB)) {
                 if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top && !that.knockback) {
                     that.y = entity.BB.top - that.BB.height;
                 }
+                if (entity instanceof CastleBounds) {
+                    that.SPEED = 0;
+                } else {
+                    that.SPEED = 0.9;
+                }
+            } 
+            if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
                     if (that.facing == that.RIGHT) {
                         that.x = entity.BB.left - (that.BB.width * 3);
@@ -85,13 +105,15 @@ class Snake {
                         that.x = entity.BB.right + that.BB.width;
                     }
                     entity.health -= 10;
+                    that.previousAttack = 0;
                 }
-            }
-            
+            }    
+       
         })
     }
 
     update() {
+        const TICK = this.game.clockTick;
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
@@ -112,7 +134,8 @@ class Snake {
         }
 
         this.updateBB();
-        this.collisionUpdate();
+        this.updateAttackBB();
+        this.collisionUpdate(TICK);
     };
 
     draw(ctx) {
@@ -126,6 +149,12 @@ class Snake {
             if (PARAMS.DEBUG) { 
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+                if(this.previousAttack >= this.ATTACK_SPEED) {
+                    ctx.strokeStyle = 'Red';
+                    ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
+                }
+
+                
             }
     
             

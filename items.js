@@ -81,7 +81,6 @@ class Score {
     update() {
         this.elapsed += this.game.clockTick;
         if (this.elapsed > 1) this.removeFromWorld = true;
-
         this.y += this.game.clockTick * this.velocity * PARAMS.SCALE;
     };
 
