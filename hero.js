@@ -102,7 +102,7 @@ class Hero {
         this.knockback = false;
         this.knockbackCounter = this.MAX_KNOCKBACK;
         this.previousAttack = 0;
-        this.attackSpeed = 1;
+        this.attackSpeed = 0.5;
         
     }
     

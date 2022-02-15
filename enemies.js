@@ -36,9 +36,9 @@ class Snake {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.9;
+        this.SPEED = 75;
         this.GROUND = 525;
-        this.ATTACK_SPEED = 3;
+        this.ATTACK_SPEED = 1;
         this.y = this.GROUND;
 
         //states
@@ -76,10 +76,10 @@ class Snake {
 
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
-                this.x -= this.SPEED;
+                this.x -= this.SPEED * this.game.clockTick;
 
         } else if (this.facing == this.RIGHT && !this.knockback) {
-                this.x += this.SPEED;
+                this.x += this.SPEED * this.game.clockTick;
         }
     }
 
@@ -92,10 +92,12 @@ class Snake {
                     that.y = entity.BB.top - that.BB.height;
                 }
                 if (entity instanceof CastleBounds) {
-                    that.SPEED = 0;
-                } else {
-                    that.SPEED = 0.9;
+                if (that.facing == that.RIGHT) {
+                    that.x = entity.BB.left - (that.BB.width * 3);
+                } else if (that.facing == that.LEFT) {
+                    that.x = entity.BB.right + that.BB.width;
                 }
+            }
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
@@ -123,7 +125,7 @@ class Snake {
         }
         
         if (this.knockback) {
-            this.knockbackUpdate();
+            this.knockbackUpdate(TICK);
             this.game.addEntityBackground(new Coin(this.game, 300, 300));
         }
 
@@ -195,7 +197,7 @@ class Mage {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.2;
+        this.SPEED = 35;
         this.GROUND = 507;
         this.y = this.GROUND;
         this.x;
@@ -236,11 +238,11 @@ class Mage {
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
             if (this.x >= 780) {
-                this.x -= this.SPEED;
+                this.x -= this.SPEED * this.game.clockTick;
             }
         } else if (this.facing == this.RIGHT && !this.knockback) {
             if (this.x <= 440) {
-                this.x += this.SPEED;
+                this.x += this.SPEED * this.game.clockTick;
             }
         }
     }
