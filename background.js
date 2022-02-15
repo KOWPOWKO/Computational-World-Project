@@ -62,6 +62,20 @@ class Fire {
 	};
 };
 
+class Inventory {
+    constructor(game) {
+
+    }
+
+    update() {
+
+    }
+
+    draw(ctx) {
+        
+    }
+}
+
 class GameOver {
     constructor(game) {
         this.game = game;

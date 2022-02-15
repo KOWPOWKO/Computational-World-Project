@@ -38,6 +38,7 @@ class SceneManager {
     }
 
     gameOver() {
+        PARAMS.SCORE = 0;
         this.game.addEntityBackground(new GameOver(this.game, 0, 0));
     }
 
@@ -67,9 +68,6 @@ class SceneManager {
         //this.game.addEntityBackground(new Score(this.game));
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));
-        
-        
-
     }
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
