@@ -60,5 +60,7 @@ const getDistance = (p1, p2) => {
 const PARAMS = {
     DEBUG: false,
     SCALE: 3,
-    SCORE: 0
+    SCORE: 0,
+    ROUND: 1,
+    SKILL_POINTS:0
 };

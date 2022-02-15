@@ -87,7 +87,6 @@ class SceneManager {
         this.game.entities[2].forEach(function (entity) {
             if(entity instanceof StartingScreen && (entity.loadGame == true) && (entity.loaded == false)) {
                 that.loadGame = true;
-                
                 that.loadWorld();
                 that.setRoundMonters();
                 entity.loaded = true;
@@ -97,6 +96,7 @@ class SceneManager {
                 that.loadGame = false;
                 that.clearEntities();
                 that.roundNumber = 0;
+                that.loadGame
                 that.gameOver();
             }
             if(entity instanceof GameOver && (entity.restart == true)) {
@@ -115,8 +115,9 @@ class SceneManager {
                 that.gameOver();
             }
         })
-        
-        if (this.game.entities[1].length <= 0 && this.roundMonterProgress <= 0 && !this.END) {
+        console.log(this.game.entities[1].length <= 0)
+        console.log(this.roundMonterProgress <= 0)
+        if (this.game.entities[1].length <= 0 && this.roundMonterProgress <= 0 && !this.END && this.loadGame) {
             console.log(this.game.entities[1]);
             this.roundNumber += 1;
             this.setRoundMonters();
@@ -128,7 +129,6 @@ class SceneManager {
 
 
     setRoundMonters() {
-        console.log(this.roundNumber <= this.monsters.length-1);
         if(this.roundNumber <= this.monsters.length-1) {
             var snakeCount = this.monsters[this.roundNumber][0];
             var mageCount = this.monsters[this.roundNumber][1];
@@ -142,7 +142,6 @@ class SceneManager {
                     this.roundMonster.push([1,Math.round(Math.random())]);
                 }
             }
-            console.log(this.monsters);
             this.roundMonterProgress = this.roundMonster.length-1;
         } else {
             this.loadGame = false;
@@ -156,7 +155,6 @@ class SceneManager {
     spawnEnemy(){
         if (this.loadGame == true) {
             if (this.roundMonterProgress >= 0) {
-                console.log(this.roundMonster);
                 var currentMonster = this.roundMonster[this.roundMonterProgress];
                 this.roundMonster.splice(this.roundMonterProgress, 1);
                 if (currentMonster[0] === 0) {
