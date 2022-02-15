@@ -25,9 +25,11 @@ class StartingScreen {
     
     update () {
         if(this.game.click){
-            //if (this.game.click && this.game.click.x > 100 && this.game.click.x < 150 && this.game.click.y > 100 && this.game.click.y < 110) {
+            if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 750
+                && this.game.click.y >= 680 && this.game.click.y <= 705) {
                this.loadGame =true;
-           // }
+               this.game.click = false;
+            }
         }
     };
 
@@ -38,31 +40,11 @@ class StartingScreen {
             ctx.font = ctx.font.replace(/\d+px/, "18px");
             ctx.fillStyle = "Red";
 		    ctx.fillText("CLICK TO START GAME", 535,700);
-            this.game.addEntityBackground(new Castle(this.game, 0, 0));
+            //this.game.addEntityBackground(new Castle(this.game, 0, 0));
             ctx.drawImage(this.title, 463, 0,320,320);
         } 
     };
 }
-
-// class Bird { 
-//     constructor(game,x,y,spritesheet) {
-//         this.game = game;
-//         this.spritesheet = ASSET_MANAGER.getAsset("./resources/bird.PNG");
-//         this.animator = new Animator(this.spritesheet, 0, 0, 86, 68, 6, 0.4);
-//         this.x = 0;
-// 		this.y = 0;
-//         this.speed = 200;
-//     };
-
-//     update() {
-//         this.x += -this.speed * this.game.clockTick;
-// 		if(this.x < -250) this.x = 1024;
-//     };
-
-//     draw(ctx) {
-//         this.animator.drawFrame(this.game.clockTick, ctx, this.x, this.y);
-//     };
-// };
 
 class Fire {
 	constructor(game){
@@ -133,6 +115,49 @@ class GameOver {
     }
 }
 
+class Win {
+    constructor(game,camera) {
+        this.game = game;
+        this.camera = camera;
+        this.restart = false;
+    }
+
+    update() {
+        if (this.game.click) {
+            if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 730 
+                && this.game.click.y >= 350 && this.game.click.y <= 410) {
+                this.restart = true;
+                this.game.click = false;
+                this.camera.roundNumber = 0;
+                this.camera.END = false;
+            }
+        }
+    }
+
+    draw(ctx) {
+        if (this.restart == false) {
+            ctx.font = ctx.font.replace(/\d+px/, "60px");
+            ctx.fillStyle = rgba(0, 0, 0, 0.5);
+            ctx.fillRect(0,0, 1280, 720);
+    
+            ctx.fillStyle = "Blue";
+            ctx.fillText("Winner!", 540,60);
+    
+            ctx.fillStyle = "White";
+            ctx.fillRect(530,350, 200, 60);
+    
+      
+
+            ctx.font = ctx.font.replace(/\d+px/, "40px");
+            ctx.fillStyle = "Blue";
+            ctx.fillText("RESTART", 540,400);
+            ctx.font = ctx.font.replace(/\d+px/, "10px");
+        } 
+        
+        
+    }
+}
+
 class ItemAssets {
     constructor() {
         this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
@@ -141,6 +166,9 @@ class ItemAssets {
         this.doubleSpeed = ASSET_MANAGER.getAsset("./resources/powerUps/times2.png");
         this.doubleSize = ASSET_MANAGER.getAsset("./resources/powerUps/arrow.png");
         this.invincibility = ASSET_MANAGER.getAsset("./resources/powerUps/star.png");
+        this.arrowShooter = ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png");
+        this.airSlash = ASSET_MANAGER.getAsset("./resources/powerUps/slash.png");
+        this.healthIncrease = ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png");
     }
 
 }
@@ -163,12 +191,18 @@ class chest {
     }
 	update(){
 		if (this.game.click) {
+            this.screen = true;
             if (this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571) {
                 this.open = true;
             }
-            if(this.game.click && this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90){
+            if(this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90 ){
                 this.powerUp = true;
-                //this.open = true;
+                    if (this.game.click && this.game.click.x >= 100 && this.game.click.x <= 400 
+                        && this.game.click.y >= 0 && this.game.click.y <= 100) {
+                            this.timePower = true;
+                    }
+                
+                //this.game.click = false;
             }
             if(this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 90){
                 this.specialAbil = true;
@@ -199,19 +233,9 @@ class chest {
 			ctx.fillText("ITEM SHOP", 570,20);
             ctx.fillText("Power-ups", 420,120);
             ctx.fillText("Special Abilities", 560,120);
-            ctx.fillText("Skill Point", 720,120);
-            
-            // ctx.fillText("Health Increase", 440,110);
-            // ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),440,120);
-            // ctx.fillText("=  50", 480,140);
-            // //ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png"),590,20);
-            // ctx.fillText("Arrow Shooter", 590,110);
-            // ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),580,120);
-            // ctx.fillText("=  100", 620,140);
-            
+            ctx.fillText("Skill Point", 720,120);       
                  
                 this.open = false;
-			
 		}
 
         if(this.powerUp){
@@ -225,7 +249,10 @@ class chest {
             ctx.fillText("Slow Enemies", 240,130);
             ctx.drawImage(this.itemAssets.coinDisplay,240,130);
             ctx.fillText("=  100", 285,154)
- 
+            if(this.timePower){
+                ctx.drawImage(this.itemAssets.slowEnemies,400,400);
+            }
+            
             //Increase Damage powerUP
             ctx.drawImage(this.itemAssets.damageIncrease,400,15);
             ctx.fillText("Increase Damage", 400,130);
@@ -233,8 +260,6 @@ class chest {
             ctx.fillText("=  100", 440,154)
             ctx.fillStyle = "White";
 			ctx.fillText("POWER UPS", 570,20);
-
-            
 
             ctx.drawImage(this.itemAssets.doubleSpeed,575,25);
             ctx.fillText("Double speed", 560,130);
@@ -258,13 +283,15 @@ class chest {
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png"),240,15);
+            //Arrow shooter powerup
+            ctx.drawImage(this.itemAssets.arrowShooter,240,15);
             ctx.fillText("Arrow Shooter", 240,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),240,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,240,130);
             ctx.fillText("=  100", 285,154);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/slash.png"),400,15);
+
+            ctx.drawImage(this.itemAssets.airSlash,400,15);
             ctx.fillText("Air Slash", 400,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),400,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,400,130);
             ctx.fillText("=  100", 440,154);
 			ctx.fillText("SPECIAL ABILITY", 570,20);
         }
@@ -274,11 +301,19 @@ class chest {
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png"),240,10);
+            //Increase health powerup
+            ctx.drawImage(this.itemAssets.healthIncrease,240,10);
             ctx.fillText("Health Increase", 240,130);
-            ctx.drawImage(ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png"),240,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,240,130);
             ctx.fillText("=  100", 285,154)
             ctx.fillText("SKILL POINT", 570,20);
+
+            //Increase Damage powerUP
+            ctx.drawImage(this.itemAssets.damageIncrease,400,15);
+            ctx.fillText("Increase Damage", 400,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,400,130);
+            ctx.fillText("=  100", 440,154)
+
         }
 		if(!this.open){
 		this.animations[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
