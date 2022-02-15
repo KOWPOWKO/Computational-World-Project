@@ -38,7 +38,7 @@ class Hero {
         // Walking
         this.animations[1] = new Animator(this.spritesheet,88,907,96,104,10,0.1,1.5,true,true);
         // Run
-        this.animations[2] = new Animator(this.spritesheet,88,811,104,96,10,0.1,-5.2,true,true);
+        this.animations[2] = new Animator(this.spritesheet,88,811,104,96,8,0.1,-5.2,true,true);
         // Damaged
         this.knockbackAnim = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
         // Blocking
@@ -51,7 +51,6 @@ class Hero {
         // Die
         this.deadAnim= new Animator(this.spritesheet,84,178,144,120,9,0.15,-1,false,false);
         /*
-
         
         // Damaged
         this.animations[6] = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
@@ -73,6 +72,7 @@ class Hero {
         this.BLOCKING = 4;
 
         //attackingState
+        this.canAttack = true;
         this.ATTACKING = false;
         this.BLOCK = false;
 
@@ -81,10 +81,10 @@ class Hero {
         this.HITMAXPEAK = false;
 
         //basic restrictions
-        this.GROUND = 452;
-        this.MAX_RUN = 600;
-        this.MAX_WALK = 200;
-        this.ACCELERATION = 20;
+        this.GROUND = 455;
+        this.MAX_RUN = 200;
+        this.MAX_WALK = 100;
+        this.ACCELERATION = 10;
         this.GRAVITY = 400;
         this.MAX_HEALTH = 500;
         this.MAX_KNOCKBACK = 100;
@@ -101,15 +101,19 @@ class Hero {
         this.hasBeenAttacked = false;
         this.knockback = false;
         this.knockbackCounter = this.MAX_KNOCKBACK;
+        this.previousAttack = 0;
+        this.attackSpeed = 1;
         
     }
     
 
-    horizontalUpdate() { //Updates left and right movement
-        if (this.game.left && !this.game.right) {
+    horizontalUpdate() { 
+        var actionCheck = (this.knockbackCounter == this.MAX_KNOCKBACK && !this.BLOCK);
+        if (this.game.left && !this.game.right && actionCheck) {
             this.facing = this.LEFT;
-            if (this.game.run) {
+            if (this.game.run ) {
                 this.state = this.RUNNING;
+                this.game.attack = false;
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x -= this.ACCELERATION; 
                 } else {
@@ -125,10 +129,11 @@ class Hero {
             }
  
            
-        } else if (this.game.right && !this.game.left) {
+        } else if (this.game.right && !this.game.left && actionCheck) {
             this.facing = this.RIGHT;
             if (this.game.run) {
                 this.state = this.RUNNING;
+                this.game.attack = false;
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x += this.ACCELERATION; 
                 } else {
@@ -143,9 +148,6 @@ class Hero {
                 }
             }
         } 
-        //else if (this.game.down) {
-        //    this.dead = true;
-        //} 
         else {
             this.velocity.x = 0;
             this.state = this.IDLE;
@@ -155,7 +157,7 @@ class Hero {
     noJumpUpdate() {
        // if (!this.game.down) {
             this.horizontalUpdate();
-            if (this.game.up) {
+            if (this.game.up && (this.knockbackCounter == this.MAX_KNOCKBACK && !this.BLOCK)) {
                 this.JUMPING = true;
                 this.jumpAnim.elapsedTime = 0;
                 
@@ -190,6 +192,7 @@ class Hero {
             this.attackAnim.elapsedTime = 0;
             this.ATTACKING = true;
             this.game.attack = false;
+            this.canAttack = false;
         }
 
     }
@@ -198,6 +201,7 @@ class Hero {
         if (this.attackAnim.isDone()) {
             this.ATTACKING = false;
             this.attackAnim.elapsedTime = 0;
+            this.previousAttack = 0; 
         }
     }
     blockUpdate() {
@@ -244,7 +248,16 @@ class Hero {
 
                 }
             }
-            if(entity.BB && that.BB.collide(entity.BB)) { //enemies attacking
+            if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
+                if ((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                    if (entity.health > 0) {
+                        entity.hasBeenAttacked = true;
+                        entity.knockback = true;
+                    } 
+
+                }
+            }
+            if(entity.attackBB && that.BB.collide(entity.attackBB) && entity.previousAttack >= entity.ATTACK_SPEED) { //enemies attacking
                 if((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if(that.BLOCK) {
                         that.knockback = true;
@@ -258,6 +271,7 @@ class Hero {
                             that.knockback = true;
                             that.health -= 25
                         }
+                        entity.previousAttack = 0;
                     }
                 }
                 
@@ -277,7 +291,9 @@ class Hero {
 
     update() {
         const TICK = this.game.clockTick;
+        this.previousAttack += TICK;
         if (this.dead == false) {
+            this.blockUpdate(); 
             if(this.y <= this.GROUND || this.JUMPING) {
                 this.velocity.y += 20;
             } else {
@@ -285,14 +301,24 @@ class Hero {
                 this.y = this.GROUND;
             }
             if(this.knockback) {
+                this.JUMPING = false;
                 this.knockbackUpdate();
             }
-            this.blockUpdate(); 
-            if(!this.ATTACKING) {
-                this.noAttackUpdate();
+
+            if (this.previousAttack > this.attackSpeed) {
+                this.canAttack = true;
+                
+            } else {
+                this.game.attack = false;
+            }
+
+            
+            if(!this.ATTACKING && (this.state != this.RUNNING) && (this.canAttack == true)) {                    
+                this.noAttackUpdate(); 
             }
             else if (this.ATTACKING) {
                 this.attackUpdate();    
+                this.previousAttack = 0;
             }
     
             if (!this.JUMPING) {
@@ -355,7 +381,13 @@ class Hero {
                     this.blockAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                 }            
                 else {
-                    this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+                    if (this.state == this.WALKING) {
+                        this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x-20,this.y,1.2);
+                    } 
+                    else {
+                        this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+                    }
+                    
                 }
             } 
             else if (this.facing == this.RIGHT){
@@ -363,7 +395,7 @@ class Hero {
                     this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-28,this.y,1.2);
                 } 
                 else if (this.ATTACKING == true) {
-                    this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x ,this.y - 25,1.2); 
+                    this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y - 25,1.2); 
                 } 
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
@@ -402,7 +434,3 @@ class Hero {
         ctx.fillText(PARAMS.SCORE, 170, 40);   
     };
 };
-
-
-
-
