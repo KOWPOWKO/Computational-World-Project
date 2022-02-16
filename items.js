@@ -117,8 +117,7 @@ class AirSlash {
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/airSlash.png");
-        this.y = 0;
-        this.x = 0;
+        
         this.loadProperties();
         this.loadAnimation();
     };
@@ -135,11 +134,7 @@ class AirSlash {
         this.HEIGHT = 5;
     };
     update() {
-        if (this.facing == this.LEFT) {
-            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,0.5); 
-        } else {
-            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,0.5);   
-        } 
+        
     };
     draw(ctx) {  
         if (this.facing == this.LEFT) {

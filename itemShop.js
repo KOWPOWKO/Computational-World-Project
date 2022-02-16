@@ -2,13 +2,16 @@ class TimeStop {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png");
-
+        this.elapsed = 0;
     };
     
-    update () {};
+    update () {
+        this.elapsed += this.game.clockTick;
+
+    };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
+        if(this.elapsed < 15) ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
 class DamageIncrease {
@@ -89,7 +92,7 @@ class HealthIncrease {
         ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
-class SpeedIncrease {
+class SpeedSKiilP{
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/speedDisplay.png");
