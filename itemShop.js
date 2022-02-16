@@ -8,7 +8,7 @@ class TimeStop {
     update () {};
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y, 96,96);
+        ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
 class DamageIncrease {
@@ -21,7 +21,7 @@ class DamageIncrease {
     update () {};
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y, 96,96);
+        ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
 class SpeedIncrease {
@@ -34,7 +34,7 @@ class SpeedIncrease {
     update () {};
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y, 96,96);
+        ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
 class SizeIncrease {
@@ -47,7 +47,7 @@ class SizeIncrease {
     update () {};
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y, 96,96);
+        ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
 class Invincibility {
@@ -60,6 +60,97 @@ class Invincibility {
     update () {};
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y, 96,96);
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class ArrowShooter {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class HealthIncrease {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class SpeedIncrease {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/speedDisplay.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class CoolDown {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/cooldown.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class Shield {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/shield.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class SonicWave {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class Lazer {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };

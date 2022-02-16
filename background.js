@@ -155,6 +155,15 @@ class ItemAssets {
         this.arrowShooter = ASSET_MANAGER.getAsset("./resources/powerUps/powerUp1.png");
         this.airSlash = ASSET_MANAGER.getAsset("./resources/powerUps/slash.png");
         this.healthIncrease = ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png");
+        this.speedIncrease = ASSET_MANAGER.getAsset("./resources/powerUps/speedDisplay.png");
+        this.coolDown = ASSET_MANAGER.getAsset("./resources/powerUps/cooldown.png");
+        this.shield = ASSET_MANAGER.getAsset("./resources/powerUps/shield.png");
+        this.sonicWave = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.lazerBeam = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
+
+
+
+
     }
 
 }
@@ -168,36 +177,74 @@ class chest {
         this.loadAnimation();
 		this.open = false;
         this.powerUp = false;
-        this.specialAbil = true;
-		this.skillP = true;
+        this.specialAbil = false;
+		this.skillP = false;
+        this.elapsed = 0;
+
+        //this.test = 0;
+        //this.count = 0;
 	};
     loadAnimation(){
         this.animations[0] = new Animator(this.spritesheet,0, 0, 47, 36, 1, .5,0,false,true);
         this.openAnim = new Animator(this.spritesheet,0, 0, 47, 36, 4, .5,0,false,true);
     }
 	update(){
+        this.elapsed += this.game.clockTick;
 		if (this.game.click) {
             this.screen = true;
             if (this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571) {
                 this.open = true;
+                this.p1 = true;
+                this.p2 = true;
+                this.p3 = true;
+                this.test = 0;
             }
-            if(this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90 ){
+            if(this.p1 && this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 110 ){
+                this.test = 1;
                 this.powerUp = true;
-                    if (this.game.click && this.game.click.x >= 100 && this.game.click.x <= 400 
-                        && this.game.click.y >= 0 && this.game.click.y <= 100) {
-                            this.timePower = true;
-                    }
+                this.p2 = false;
+                this.p3 = false;
                 
-                //this.game.click = false;
             }
-            if(this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 90){
+            if(this.p2 && this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 110){
+                this.test = 1;
                 this.specialAbil = true;
-                //this.open = true;
+                this.p1 = false;
+                this.p3 = false;
             }
-            if(this.game.click && this.game.click.x > 720 && this.game.click.x < 795&& this.game.click.y > 15 && this.game.click.y < 90){
+            if(this.p3 && this.game.click.x > 720 && this.game.click.x < 795&& this.game.click.y > 15 && this.game.click.y < 110){
+                this.test = 1;
                 this.skillP = true;
-                //this.open = true;
+                this.p1 = false;
+                this.p2 = false;
             }
+            
+            
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 400 
+                && this.game.click.y >= 20 && this.game.click.y <= 100 ) {
+                    this.timePower = true;
+                    this.count1 = 0;
+                    this.game.click = false;
+            }  
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 575 && this.game.click.x <= 700
+                && this.game.click.y >= 20 && this.game.click.y <= 100) {
+                    this.dSpeed = true;
+                    this.count2 = 0;
+                    this.game.click = false;
+                }  
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 840
+                && this.game.click.y >= 0 && this.game.click.y <= 100) {
+                    this.dSize = true;
+                    this.count3 = 0;
+                    this.game.click = false;
+                }
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 920
+                && this.game.click.y >= 0 && this.game.click.y <= 100) {
+                    this.star = true;
+                    this.count4 = 0;
+                    this.game.click = false;
+                }      
+            
         }
     };
 	draw(ctx){   
@@ -221,47 +268,46 @@ class chest {
             ctx.fillText("Special Abilities", 560,120);
             ctx.fillText("Skill Point", 720,120);       
                  
-                this.open = false;
+           this.open = false;
 		}
-
+        //powerup 
         if(this.powerUp){
+            this.elapsed = 0
+            const tick = this.game.clockTick;
             this.powerUp = false;
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
             //TIME WATCH powerUP
             ctx.drawImage(this.itemAssets.slowEnemies,240,20);
-            //this.game.addEntityForeground(new TimeStop(this.game,240,20));
             ctx.fillText("Slow Enemies", 240,130);
             ctx.drawImage(this.itemAssets.coinDisplay,240,130);
-            ctx.fillText("=  100", 285,154)
-            if(this.timePower){
-                ctx.drawImage(this.itemAssets.slowEnemies,400,400);
-            }
-            
-            //Increase Damage powerUP
-            ctx.drawImage(this.itemAssets.damageIncrease,400,15);
-            ctx.fillText("Increase Damage", 400,130);
+            ctx.fillText("=  25", 285,154)
+        
+            //Arrow shooter powerup
+            ctx.drawImage(this.itemAssets.arrowShooter,400,15);
+            ctx.fillText("Arrow Shooter", 400,130);
             ctx.drawImage(this.itemAssets.coinDisplay,400,130);
-            ctx.fillText("=  100", 440,154)
-            ctx.fillStyle = "White";
-			ctx.fillText("POWER UPS", 570,20);
+            ctx.fillText("=  100", 440,154);
 
             ctx.drawImage(this.itemAssets.doubleSpeed,575,25);
             ctx.fillText("Double speed", 560,130);
             ctx.drawImage(this.itemAssets.coinDisplay,560,130);
-            ctx.fillText("=  100", 600,154)
-            ctx.fillStyle = "White";
-
+            ctx.fillText("=  75", 600,154)
+            
             ctx.drawImage(this.itemAssets.doubleSize, 710,20);
             ctx.fillText("Double Size", 710,130);
             ctx.drawImage(this.itemAssets.coinDisplay,710,130);
-            ctx.fillText("=  300", 747,154);
+            ctx.fillText("=  100", 747,154);
+            
 
             ctx.drawImage(this.itemAssets.invincibility, 860,20);
             ctx.fillText("Invincibility", 860,130);
             ctx.drawImage(this.itemAssets.coinDisplay,860,130);
-            ctx.fillText("=  300", 900,154);
+            ctx.fillText("=  150", 900,154);
+
+            ctx.fillText("POWER UPS", 570,20);
+            
         }
 
         if(this.specialAbil){
@@ -269,17 +315,30 @@ class chest {
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
-            //Arrow shooter powerup
-            ctx.drawImage(this.itemAssets.arrowShooter,240,15);
-            ctx.fillText("Arrow Shooter", 240,130);
+            //shield
+            ctx.drawImage(this.itemAssets.shield,240,15);
+            ctx.fillText("Shield Potion", 240,130);
             ctx.drawImage(this.itemAssets.coinDisplay,240,130);
             ctx.fillText("=  100", 285,154);
+
 
             ctx.drawImage(this.itemAssets.airSlash,400,15);
             ctx.fillText("Air Slash", 400,130);
             ctx.drawImage(this.itemAssets.coinDisplay,400,130);
             ctx.fillText("=  100", 440,154);
 			ctx.fillText("SPECIAL ABILITY", 570,20);
+
+            //laser beam special ability
+            ctx.drawImage(this.itemAssets.lazerBeam,685,40);
+            ctx.fillText("Laser Beam", 710,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,710,130);
+            ctx.fillText("=  100", 747,154)
+
+            //sonic wave special ability
+            ctx.drawImage(this.itemAssets.sonicWave,860,16);
+            ctx.fillText("Sonic wave", 880,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,880,130);
+            ctx.fillText("=  100", 920,154)
         }
 
         if(this.skillP){
@@ -300,7 +359,46 @@ class chest {
             ctx.drawImage(this.itemAssets.coinDisplay,400,130);
             ctx.fillText("=  100", 440,154)
 
+            //Increase speed powerUP
+            ctx.drawImage(this.itemAssets.speedIncrease,710,20);
+            ctx.fillText("Increase Speed", 710,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,710,130);
+            ctx.fillText("=  100", 747,154)
+
+            //cooldown powerUP
+            ctx.drawImage(this.itemAssets.coolDown,860,20);
+            ctx.fillText("Cool Down", 860,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,860,130);
+            ctx.fillText("=  100", 900,154)
+
         }
+        if(this.timePower && PARAMS.SCORE >= 0 && this.count1 === 0){
+            this.game.addEntityForeground(new TimeStop(this.game,80,80));
+            this.count1++;
+            if (this.elapsed > 2) ctx.drawImage(this.itemAssets.damageIncrease,400,15);
+            PARAMS.SCORE = PARAMS.SCORE-2;
+            
+        }
+        if(this.dSpeed && PARAMS.SCORE  >= 1  && this.count2 === 0){
+            this.game.addEntityForeground(new SpeedIncrease(this.game,80,80));
+            this.count2++;
+            //this.star = false;
+            PARAMS.SCORE = PARAMS.SCORE-1;
+        }
+        if(this.dSize && PARAMS.SCORE  >= 3 && this.count3 === 0){
+            this.game.addEntityForeground(new SizeIncrease(this.game,80,80));
+            this.count3++;
+            //this.star = false;
+            PARAMS.SCORE = PARAMS.SCORE-3;
+        }
+        if(this.star && PARAMS.SCORE  >= 5 && this.count4 === 0){
+            this.count4++;
+            this.game.addEntityForeground(new Invincibility(this.game,80,80));
+            //this.star = false;
+            PARAMS.SCORE = PARAMS.SCORE-5;
+        }
+
+        
 		if(!this.open){
 		this.animations[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
 		}
