@@ -45,12 +45,10 @@ class Coin {
 
 
 class SmallFireBall {
-    constructor(game,x,y) {
-        Object.assign(this,{game,x,y});
+    constructor(game,x,y,facing) {
+        Object.assign(this,{game,x,y,facing});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/boss.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
-        this.y = 0;
-        this.x = 0;
         this.animation = [];
         this.loadProperties();
         this.loadAnimation();
@@ -65,19 +63,24 @@ class SmallFireBall {
         this.RIGHT = 1;
 
         //restrictions
-        this.SPEED = 0.4;
+        this.SPEED = 120;
         this.HEIGHT = 5;
     };
     update() {
         if (this.facing == this.LEFT) {
-            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,0.5); 
+            const TICK = this.game.clockTick;
+            this.x -= this.SPEED * TICK;
         } else {
-            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,0.5);   
+            this.x += this.SPEED * TICK; 
         } 
     };
     draw(ctx) {
-        this.animation[0].drawFrame(this.game.clockTick,ctx,300,0,1);      
-        
+            
+        if (this.facing == this.RIGHT) {
+            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,2); 
+        } else {
+            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,2);   
+        } 
     };
 };
 

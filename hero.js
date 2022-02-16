@@ -51,7 +51,6 @@ class Hero {
         // Die
         this.deadAnim= new Animator(this.spritesheet,84,178,144,120,9,0.15,-1,false,false);
         /*
-
         
         // Damaged
         this.animations[6] = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
@@ -73,6 +72,7 @@ class Hero {
         this.BLOCKING = 4;
 
         //attackingState
+        this.canAttack = true;
         this.ATTACKING = false;
         this.BLOCK = false;
 
@@ -102,7 +102,7 @@ class Hero {
         this.knockback = false;
         this.knockbackCounter = this.MAX_KNOCKBACK;
         this.previousAttack = 0;
-        this.attackSpeed = 1;
+        this.attackSpeed = 0.5;
         
     }
     
@@ -191,7 +191,8 @@ class Hero {
         if(this.game.attack) {
             this.attackAnim.elapsedTime = 0;
             this.ATTACKING = true;
-                  
+            this.game.attack = false;
+            this.canAttack = false;
         }
 
     }
@@ -200,7 +201,6 @@ class Hero {
         if (this.attackAnim.isDone()) {
             this.ATTACKING = false;
             this.attackAnim.elapsedTime = 0;
-            this.game.attack = false;
             this.previousAttack = 0; 
         }
     }
@@ -304,10 +304,17 @@ class Hero {
                 this.JUMPING = false;
                 this.knockbackUpdate();
             }
+
+            if (this.previousAttack > this.attackSpeed) {
+                this.canAttack = true;
+                
+            } else {
+                this.game.attack = false;
+            }
+
             
-            if(!this.ATTACKING && this.velocity.x <= this.MAX_WALK && this.previousAttack > this.attackSpeed) {                    
+            if(!this.ATTACKING && (this.state != this.RUNNING) && (this.canAttack == true)) {                    
                 this.noAttackUpdate(); 
-                    
             }
             else if (this.ATTACKING) {
                 this.attackUpdate();    
@@ -427,7 +434,3 @@ class Hero {
         ctx.fillText(PARAMS.SCORE, 170, 40);   
     };
 };
-
-
-
-
