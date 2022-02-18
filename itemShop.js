@@ -17,7 +17,7 @@ class TimeStop {
 class DamageIncrease {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/damageIncrease.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/damageIncrease.gif");
 
     };
     

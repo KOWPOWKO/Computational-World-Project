@@ -25,6 +25,21 @@ class Chest {
         this.itemAssets = new ItemAssets();
         this.animations = [];
         this.loadAnimation();
+
+        this.reset1 = false;
+        this.reset2 = false;
+        this.reset3 = false;
+        this.reset4 = false;
+        this.reset5 = false;
+        this.reset6 = false;
+        this.reset7 = false;
+        this.reset8 = false;
+        this.reset9 = false;
+        this.reset10 = false;
+        this.reset11 = false;
+        this.reset12 = false;
+        this.reset13 = false;
+
 		this.open = false;
         this.powerUp = false;
         this.specialAbil = false;
@@ -72,6 +87,9 @@ class Chest {
             //USER SELECTED TIME STOP
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
                 && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
+                    if(PARAMS.SCORE < 1) this.reset1 = true;
+                    if(PARAMS.SCORE >= 1) this.reset1 = false;
+
                     this.timePower = true;
                     this.count1 = 0;
                     this.game.click = false;
@@ -79,6 +97,8 @@ class Chest {
             //USER SELECTED ARROW SHOOTER
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
                 && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
+                    if(PARAMS.SCORE < 2) this.reset2 = true;
+                    if(PARAMS.SCORE >= 2) this.reset2 = false;
                     this.arrowShooter = true;
                     this.count2 = 0;
                     this.game.click = false;
@@ -86,6 +106,8 @@ class Chest {
             //USER SELECTED DOUBLE SPEED
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 575 && this.game.click.x <= 700
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 3) this.reset3 = true;
+                    if(PARAMS.SCORE >= 3) this.reset3 = false;
                     this.dSpeed = true;
                     this.count3 = 0;
                     this.game.click = false;
@@ -93,6 +115,8 @@ class Chest {
             //USER SELECTED DOUBLE SIZE
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 840
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 4) this.reset4 = true;
+                    if(PARAMS.SCORE >= 4) this.reset4 = false;
                     this.dSize = true;
                     this.count4 = 0;
                     this.game.click = false;
@@ -100,6 +124,8 @@ class Chest {
             //USER SELECTED INVINCIBILITY
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 920
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 5) this.reset5 = true;
+                    if(PARAMS.SCORE >= 5) this.reset5 = false;
                     this.star = true;
                     this.count5 = 0;
                     this.game.click = false;
@@ -108,6 +134,8 @@ class Chest {
              //USER SELECTED SHIELD POTION
              if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
                 && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
+                    if(PARAMS.SCORE < 1) this.reset6 = true;
+                    if(PARAMS.SCORE >= 1) this.reset6 = false;
                     this.shieldAbility = true;
                     this.count6 = 0;
                     this.game.click = false;
@@ -115,6 +143,8 @@ class Chest {
             //USER SELECTED AIR SLASH   
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 2) this.reset7 = true;
+                    if(PARAMS.SCORE >= 2) this.reset7 = false;
                     this.slashAbility = true;
                     this.count7 = 0;
                     this.game.click = false;
@@ -122,6 +152,8 @@ class Chest {
             //USER SELECTED LAZER BEAM
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 746
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 3) this.reset8 = true;
+                    if(PARAMS.SCORE >= 3) this.reset8 = false;
                     this.laserB = true;
                     this.count8 = 0;
                     this.game.click = false;
@@ -129,6 +161,8 @@ class Chest {
             //USER SELECTED SONIC WAVE
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 880 && this.game.click.x <= 916
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 4) this.reset9 = true;
+                    if(PARAMS.SCORE >= 4) this.reset9 = false;
                     this.waveS = true;
                     this.count9 = 0;
                     this.game.click = false;
@@ -137,6 +171,8 @@ class Chest {
              //USER SELECTED INCREASE HEALTH
             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 1) this.reset10 = true;
+                    if(PARAMS.SCORE >= 1) this.reset10 = false;
                     this.health =  true;
                     this.count10 = 0;
                     this.game.click = false;
@@ -144,6 +180,8 @@ class Chest {
              //USER SELECTED INCREASE DAMAGE
              if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 2) this.reset11 = true;
+                    if(PARAMS.SCORE >= 2) this.reset11 = false;
                     this.damage =  true;
                     this.count11 = 0;
                     this.game.click = false;
@@ -151,6 +189,8 @@ class Chest {
              //USER SELECTED INCREASE SPEED
              if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 746
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 3) this.reset12 = true;
+                    if(PARAMS.SCORE >= 3) this.reset12 = false;
                     this.speed =  true;
                     this.count12 = 0;
                     this.game.click = false;
@@ -158,10 +198,12 @@ class Chest {
              //USER SELECTED INCREASE COOLDOWN
              if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 896
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 4) this.reset13 = true;
+                    if(PARAMS.SCORE >= 4) this.reset13 = false;
                     this.coolD =  true;
                     this.count13 = 0;
                     this.game.click = false;
-            } 
+            }             
         }
     };
 	draw(ctx){   
@@ -291,67 +333,67 @@ class Chest {
             ctx.fillText("=  4", 900,154)
 
         }
-        if(this.timePower && PARAMS.SCORE >= 1 && this.count1 === 0){
-            this.game.addEntityInventory(new TimeStop(this.game,80,80));
+        if(!this.reset1 && PARAMS.SCORE >= 1 && this.timePower  && this.count1 === 0){
+            this.game.addEntityForeground(new TimeStop(this.game,80,80));
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-1; 
         }
-        if(this.arrowShooter && PARAMS.SCORE >= 2 && this.count2 === 0){
+        if(!this.reset2 && this.arrowShooter && PARAMS.SCORE >= 2 && this.count2 === 0){
             this.game.addEntityForeground(new ArrowShooter(this.game,80,80));
             this.count2++;
             PARAMS.SCORE = PARAMS.SCORE-2;
         }
-        if(this.dSpeed && PARAMS.SCORE  >= 3  && this.count3 === 0){
+        if(!this.reset3 && this.dSpeed && PARAMS.SCORE  >= 3  && this.count3 === 0){
             this.game.addEntityForeground(new SpeedIncrease(this.game,80,80));
             this.count3++;
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
-        if(this.dSize && PARAMS.SCORE  >= 4 && this.count4 === 0){
+        if(!this.reset4 && this.dSize && PARAMS.SCORE  >= 4 && this.count4 === 0){
             this.game.addEntityForeground(new SizeIncrease(this.game,80,80));
             this.count4++;
             PARAMS.SCORE = PARAMS.SCORE-4;
         }
-        if(this.star && PARAMS.SCORE  >= 5 && this.count5 === 0){
+        if(!this.reset5 && this.star && PARAMS.SCORE  >= 5 && this.count5 === 0){
             this.count5++;
             this.game.addEntityForeground(new Invincibility(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-5;
         }
-        if(this.shieldAbility && PARAMS.SCORE  >= 1 && this.count6 === 0){
+        if(!this.reset6 && this.shieldAbility && PARAMS.SCORE  >= 1 && this.count6 === 0){
             this.count6++;
             this.game.addEntityForeground(new Shield(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-1;
         }
-        if(this.slashAbility && PARAMS.SCORE  >= 2 && this.count7 === 0){
+        if(!this.reset7 && this.slashAbility && PARAMS.SCORE  >= 2 && this.count7 === 0){
             this.count7++;
             this.game.addEntityForeground(new AirSlash(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-2;
         }
-        if(this.laserB && PARAMS.SCORE  >= 3 && this.count8 === 0){
+        if(!this.reset8 && this.laserB && PARAMS.SCORE  >= 3 && this.count8 === 0){
             this.count8++;
             this.game.addEntityForeground(new Lazer(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
-        if(this.waveS && PARAMS.SCORE  >= 4 && this.count9 === 0){
+        if(!this.reset9 && this.waveS && PARAMS.SCORE  >= 4 && this.count9 === 0){
             this.count9++;
             this.game.addEntityForeground(new SonicWave(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-4;
         }
-        if(this.health && PARAMS.SCORE  >= 1 && this.count10 === 0){
+        if(!this.reset10 && this.health && PARAMS.SCORE  >= 1 && this.count10 === 0){
             this.count10++;
             this.game.addEntityForeground(new HealthIncrease(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-1;
         }
-        if(this.damage && PARAMS.SCORE  >= 2 && this.count11 === 0){
+        if(!this.reset11 && this.damage && PARAMS.SCORE  >= 2 && this.count11 === 0){
             this.count11++;
             this.game.addEntityForeground(new DamageIncrease(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-2;
         }
-        if(this.speed && PARAMS.SCORE  >= 3 && this.count12 === 0){
+        if(!this.reset12 && this.speed && PARAMS.SCORE  >= 3 && this.count12 === 0){
             this.count12++;
             this.game.addEntityForeground(new SpeedSKiilP(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
-        if(this.coolD && PARAMS.SCORE  >= 4 && this.count13 === 0){
+        if(!this.reset13 && this.coolD && PARAMS.SCORE  >= 4 && this.count13 === 0){
             this.count13++;
             this.game.addEntityForeground(new CoolDown(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-4;
