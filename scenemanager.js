@@ -34,7 +34,9 @@ class SceneManager {
     };
 
     mainMenu() {
+
         this.game.addEntityBackground(new StartingScreen(this.game, 0, 0));
+        
     }
 
     gameOver() {

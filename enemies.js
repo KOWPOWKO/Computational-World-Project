@@ -387,7 +387,7 @@ class Skeleton {
 
     loadAnimation() {
         // Walk
-        this.animation[0] = new Animator(this.spritesheet, 59, 85, 48, 70, 8, 0.25,0.3,false,true);
+        this.animation[0] = new Animator(this.spritesheet, 59, 85, 47.5, 70, 8, 0.25,1.1,false,true);
       //  this.animation[1] = new Animator(this.spritesheet_2, 0, 0, 20, 28, 10, 0.4,0,false,true);
     }
 
@@ -405,9 +405,9 @@ class Skeleton {
 	
 	draw(ctx){
         if (this.facing == this.LEFT) {
-            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,5); 
+            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,3); 
         } else {
-            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,5);   
+            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,3);   
         }
     }
 };

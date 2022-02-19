@@ -49,9 +49,9 @@ class DragonBoss {
 
     draw(ctx) {
         if (this.facing == this.LEFT) {
-            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,3); 
+            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,2); 
         } else {
-            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,3);   
+            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,2);   
         }   
         
     };
