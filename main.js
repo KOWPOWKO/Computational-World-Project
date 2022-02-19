@@ -23,9 +23,14 @@ ASSET_MANAGER.queueDownload("./resources/powerUps/healthIncrease.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/title.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/airSlash.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/slash.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/shield.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/sonicwave.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/star.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/timeWatch.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/times2.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/speedDisplay.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/cooldown.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/lazerbeam.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/damageIncrease.gif");
 
 //Background images
@@ -33,7 +38,6 @@ ASSET_MANAGER.queueDownload("./resources/background/bird.png");
 ASSET_MANAGER.queueDownload("./resources/background/castle.png");
 ASSET_MANAGER.queueDownload("./resources/background/castledefenderlogo.png");
 ASSET_MANAGER.queueDownload("./resources/background/castlefull.png");
-ASSET_MANAGER.queueDownload("./resources/background/ground.png");
 ASSET_MANAGER.queueDownload("./resources/background/sun.png");
 ASSET_MANAGER.queueDownload("./resources/background/chest.png");
 ASSET_MANAGER.queueDownload("./resources/background/background.jpg");

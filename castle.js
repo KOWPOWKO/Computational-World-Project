@@ -9,6 +9,7 @@ class Castle {
     };
 
     draw(ctx) {
+        ctx.font = ctx.font.replace(/\d+px/, "18px");
         ctx.drawImage(this.spritesheet, 0, 0, 1280, 720);
 
     };
