@@ -5,12 +5,12 @@ class SceneManager {
         this.END = false;
         this.LEFT = 0;
         this.RIGHT = 1; 
-        this.monsters = [[5,0],[5,2]];
+        this.monsters = [[5,0,0,0,0],[5,2,0,0,0],[8,2,2,0,0],[10,2,2,1,0],[10,2,0,0,1]];
         this.roundMonster = [];
         this.roundMonterProgress = 0;
-        this.roundNumber = 0;
         this.title = true;
         this.loadGame = false;
+        this.monsterType = 5;
         //this.game.click = false;
         //this.update();
         this.mainMenu();
@@ -47,9 +47,8 @@ class SceneManager {
     loadWorld() {
         //player        
        // this.startingScreen();
-      
+        PARAMS.TOTAL = this.monsters.length;
         this.clearEntities();
-        this.game.addEntityForeground(new Coin(this.game,50,0));
         //this.game.addEntity(new Character_2(this.game,0,0));
         this.game.addEntityForeground(new Hero(this.game,0,0));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
@@ -75,7 +74,7 @@ class SceneManager {
         PARAMS.DEBUG = document.getElementById("debug").checked;
 
     
-        console.log(this.roundNumber);
+
         /*
         if (this.loadGame == false) {
             this.loadWorld();
@@ -95,7 +94,7 @@ class SceneManager {
             if(entity instanceof CastleBounds && (entity.dead == true)) {
                 that.loadGame = false;
                 that.clearEntities();
-                that.roundNumber = 0;
+                PARAMS.ROUND = 1;
                 that.loadGame
                 that.gameOver();
             }
@@ -111,7 +110,7 @@ class SceneManager {
             if (entity instanceof Hero && (entity.finishDead == true)) {
                 that.loadGame = false;
                 that.clearEntities();
-                that.roundNumber = 0;
+                PARAMS.ROUND = 1;
                 that.gameOver();
             }
         })
@@ -119,34 +118,48 @@ class SceneManager {
         console.log(this.roundMonterProgress <= 0)
         if (this.game.entities[1].length <= 0 && this.roundMonterProgress <= 0 && !this.END && this.loadGame) {
             console.log(this.game.entities[1]);
-            this.roundNumber += 1;
+            PARAMS.ROUND += 1;
             this.setRoundMonters();
         }
     }
     draw(ctx) {
-        
+ 
     }
 
 
     setRoundMonters() {
-        if(this.roundNumber <= this.monsters.length-1) {
-            var snakeCount = this.monsters[this.roundNumber][0];
-            var mageCount = this.monsters[this.roundNumber][1];
-            while(snakeCount > 0 || mageCount > 0 ) {
-                let enemy = Math.round(Math.random());
+        if(PARAMS.ROUND <= this.monsters.length) {
+            var snakeCount = this.monsters[PARAMS.ROUND - 1][0];
+            var mageCount = this.monsters[PARAMS.ROUND - 1][1];
+            var ogreCount = this.monsters[PARAMS.ROUND - 1][2];
+            var skeletonCount = this.monsters[PARAMS.ROUND - 1][3];
+            var dragonCount = this.monsters[PARAMS.ROUND - 1][4];
+            while(snakeCount > 0 || mageCount > 0 || ogreCount > 0 || skeletonCount > 0 || dragonCount > 0 ) {
+                let enemy = Math.floor(Math.random()*this.monsterType);
                 if(enemy === 0 && snakeCount > 0) {
                     snakeCount --;
                     this.roundMonster.push([0,Math.round(Math.random())]);
                 } else if (enemy === 1 && mageCount > 0) {
                     mageCount --;
                     this.roundMonster.push([1,Math.round(Math.random())]);
+                } else if (enemy === 2 && ogreCount > 0) {
+                    ogreCount --;
+                    this.roundMonster.push([2,Math.round(Math.random())]);
+                }
+                else if (enemy === 3 && skeletonCount > 0) {
+                    skeletonCount --;
+                    this.roundMonster.push([3,Math.round(Math.random())]);
+                }
+                else if (enemy === 4 && dragonCount > 0) {
+                    dragonCount --;
+                    this.roundMonster.push([4,Math.round(Math.random())]);
                 }
             }
             this.roundMonterProgress = this.roundMonster.length-1;
         } else {
             this.loadGame = false;
             this.clearEntities();
-            this.roundNumber = 0;
+            PARAMS.ROUND = 1;
             this.END = true;
             this.game.addEntityBackground(new Win(this.game,this), 0, 0);
         }
@@ -158,13 +171,15 @@ class SceneManager {
                 var currentMonster = this.roundMonster[this.roundMonterProgress];
                 this.roundMonster.splice(this.roundMonterProgress, 1);
                 if (currentMonster[0] === 0) {
-                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
                 } else if (currentMonster[0] === 1) {
-                    this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
                 } else if (currentMonster[0] === 2) {
-                    //this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
                 } else if (currentMonster[0] === 3) {
-                    //this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
+                } else if (currentMonster[0] === 4) {
+                    this.game.addEntityEnemies(new DragonBoss(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
                 }
                 this.roundMonterProgress -= 1;
             }

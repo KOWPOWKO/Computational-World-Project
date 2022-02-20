@@ -239,7 +239,7 @@ class Hero {
                 entity.hasBeenAttacked = false;
             }
             if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) { //attacking enemies
-                if ((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
                         entity.health -= 25;
                         entity.hasBeenAttacked = true;
@@ -249,7 +249,7 @@ class Hero {
                 }
             }
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
-                if ((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
                         entity.hasBeenAttacked = true;
                         entity.knockback = true;
@@ -258,7 +258,7 @@ class Hero {
                 }
             }
             if(entity.attackBB && that.BB.collide(entity.attackBB) && entity.previousAttack >= entity.ATTACK_SPEED) { //enemies attacking
-                if((entity instanceof Mage || entity instanceof Snake) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                if((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if(that.BLOCK) {
                         that.knockback = true;
                     } else {
@@ -269,7 +269,7 @@ class Hero {
                         else if (!that.hasBeenAttacked) {
                             that.hasBeenAttacked = true;
                             that.knockback = true;
-                            that.health -= 25
+                            that.health -= 25;
                         }
                         entity.previousAttack = 0;
                     }
@@ -428,9 +428,13 @@ class Hero {
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
         //ctx.lineWidth = 6; 
+        PARAMS.TIME += this.game.clockTick;
         ctx.fillStyle = "White";
-       // ctx.lineWidth = 2;
-		ctx.fillText("=", 150, 40);     
-        ctx.fillText(PARAMS.SCORE, 170, 40);   
+        ctx.fillText("Skill Point = " + PARAMS.SCORE, 25, 30);     
+        ctx.fillText("Coins = " + PARAMS.SKILL_POINTS, 25, 50);  
+        ctx.fillStyle = "Black";
+        ctx.fillText("Round", 1164, 70);   
+        ctx.fillText(PARAMS.ROUND + "/" + PARAMS.TOTAL, 1175, 90);  
+        ctx.fillText(Math.round(PARAMS.TIME), 600, 90);  
     };
 };

@@ -199,7 +199,7 @@ class GameEngine {
         for (let i = this.entities[0].length - 1; i >= 0; i--) {
             this.entities[0][i].draw(this.ctx, this);
         }
-
+        this.camera.draw(this.ctx);
 
     };
 
