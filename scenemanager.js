@@ -119,6 +119,7 @@ class SceneManager {
         if (this.game.entities[1].length <= 0 && this.roundMonterProgress <= 0 && !this.END && this.loadGame) {
             console.log(this.game.entities[1]);
             PARAMS.ROUND += 1;
+            PARAMS.SKILL_POINTS +=1;
             this.setRoundMonters();
         }
     }

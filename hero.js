@@ -430,8 +430,8 @@ class Hero {
         //ctx.lineWidth = 6; 
         PARAMS.TIME += this.game.clockTick;
         ctx.fillStyle = "White";
-        ctx.fillText("Skill Point = " + PARAMS.SCORE, 25, 30);     
-        ctx.fillText("Coins = " + PARAMS.SKILL_POINTS, 25, 50);  
+        ctx.fillText("Skill Point = " + PARAMS.SKILL_POINTS, 25, 30);     
+        ctx.fillText("Coins = " +PARAMS.SCORE, 25, 50);  
         ctx.fillStyle = "Black";
         ctx.fillText("Round", 1164, 70);   
         ctx.fillText(PARAMS.ROUND + "/" + PARAMS.TOTAL, 1175, 90);  
