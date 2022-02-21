@@ -103,6 +103,12 @@ class SceneManager {
                 that.setRoundMonters();
                 entity.removeFromWorld = true;
             }
+            if(entity instanceof Win && (entity.restart == true)) {
+                that.loadGame = true;
+                that.loadWorld();
+                that.setRoundMonters();
+                entity.removeFromWorld = true;
+            }
         })
 
         this.game.entities[0].forEach(function (entity) {
@@ -158,7 +164,7 @@ class SceneManager {
                 var currentMonster = this.roundMonster[this.roundMonterProgress];
                 this.roundMonster.splice(this.roundMonterProgress, 1);
                 if (currentMonster[0] === 0) {
-                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]),true);
                 } else if (currentMonster[0] === 1) {
                     this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -50 : 1320,currentMonster[1]));
                 } else if (currentMonster[0] === 2) {

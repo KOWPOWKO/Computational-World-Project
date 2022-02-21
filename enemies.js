@@ -14,6 +14,7 @@ class Snake {
         this.animation = [];
         this.loadAnimation();
         this.score = 0;
+        this.timeStop = new TimeStop();
     };
     
     updateAttackBB() {
@@ -134,6 +135,7 @@ class Snake {
             this.dead = true;
             this.coinX = this.x+10;
         }
+        
 
         this.updateBB();
         this.updateAttackBB();

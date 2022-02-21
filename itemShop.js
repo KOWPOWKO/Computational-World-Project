@@ -3,6 +3,8 @@ class TimeStop {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png");
         this.elapsed = 0;
+        this.tstop = false;
+
     };
     
     update () {
@@ -11,7 +13,12 @@ class TimeStop {
     };
 
     draw(ctx) {
-        if(this.elapsed < 15) ctx.drawImage(this.spritesheet,this.x,this.y);
+        if(this.elapsed < 15) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+        this.tstop = true;
+        }
+        this.tstop = false;
+
     };
 };
 class DamageIncrease {
