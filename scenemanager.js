@@ -47,6 +47,7 @@ class SceneManager {
     loadWorld() {
         //player        
        // this.startingScreen();
+        PARAMS.TIME = 0;
         PARAMS.TOTAL = this.monsters.length;
         this.clearEntities();
         //this.game.addEntity(new Character_2(this.game,0,0));
@@ -70,9 +71,13 @@ class SceneManager {
         this.game.addEntityBackground(new Sun(this.game, 180, 150));
         this.game.addEntityBackground(new Castle(this.game, 0, 0));
     }
+
+    loadProperties() {
+        PARAMS.SLOW = 1;
+    }
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
-
+        this.loadProperties();
     
 
         /*
@@ -82,6 +87,14 @@ class SceneManager {
         }
         */
         var that = this;
+        
+        this.game.entities[3].forEach(function (entity) {
+            if(entity instanceof TimeStop) {
+                entity.startTimer = true;
+                PARAMS.SLOW = 0.1;
+            } 
+        })
+        
         
         this.game.entities[2].forEach(function (entity) {
             if(entity instanceof StartingScreen && (entity.loadGame == true) && (entity.loaded == false)) {
@@ -95,7 +108,6 @@ class SceneManager {
                 that.loadGame = false;
                 that.clearEntities();
                 PARAMS.ROUND = 1;
-                that.loadGame
                 that.gameOver();
             }
             if(entity instanceof GameOver && (entity.restart == true)) {

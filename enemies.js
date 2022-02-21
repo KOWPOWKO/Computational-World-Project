@@ -76,10 +76,10 @@ class Snake {
 
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
-                this.x -= this.SPEED * this.game.clockTick;
+                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
 
         } else if (this.facing == this.RIGHT && !this.knockback) {
-                this.x += this.SPEED * this.game.clockTick;
+                this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
         }
     }
 
@@ -121,7 +121,9 @@ class Snake {
             this.removeFromWorld = true;
             this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
         } else {
-            this.horizontalUpdate();
+            if (PARAMS.PAUSE == false) {
+                this.horizontalUpdate();
+            }
         }
         
         if (this.knockback) {
@@ -236,11 +238,11 @@ class Mage {
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
             if (this.x >= 780) {
-                this.x -= this.SPEED * this.game.clockTick;
+                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
             }
         } else if (this.facing == this.RIGHT && !this.knockback) {
             if (this.x <= 440) {
-                this.x += this.SPEED * this.game.clockTick;
+                this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
             }
         }
     }
@@ -270,13 +272,15 @@ class Mage {
             this.removeFromWorld = true;
             this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
         } else {
-            this.horizontalUpdate();
+            if (PARAMS.PAUSE == false) {
+                this.horizontalUpdate();
 
-            if (this.timeElapsed < 0.5) {
-                this.timeElapsed += TICK;
-            } else {
-                this.timeElapsed = 0;
-                this.state = this.ATTACKING;
+                if (this.timeElapsed < 0.5) {
+                    this.timeElapsed += TICK;
+                } else {
+                    this.timeElapsed = 0;
+                    this.state = this.ATTACKING;
+                }
             }
         }
         
@@ -375,11 +379,11 @@ class Ogre {
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
             if (this.x >= 780) {
-                this.x -= this.SPEED * this.game.clockTick;
+                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
             }
         } else if (this.facing == this.RIGHT && !this.knockback) {
             if (this.x <= 440) {
-                this.x += this.SPEED * this.game.clockTick;
+                this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
             }
         }
     }
@@ -433,7 +437,10 @@ class Ogre {
             this.removeFromWorld = true;
             this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
         } else {
-            this.horizontalUpdate();
+            if (PARAMS.PAUSE == false) {
+                this.horizontalUpdate();
+            }
+            
         }
         
         if (this.knockback) {
@@ -537,11 +544,11 @@ class Skeleton {
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
             if (this.x >= 780) {
-                this.x -= this.SPEED * this.game.clockTick;
+                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
             }
         } else if (this.facing == this.RIGHT && !this.knockback) {
             if (this.x <= 440) {
-                this.x += this.SPEED * this.game.clockTick;
+                this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
             }
         }
     }
@@ -595,7 +602,10 @@ class Skeleton {
             this.removeFromWorld = true;
             this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
         } else {
-            this.horizontalUpdate();
+            if (PARAMS.PAUSE == false) {
+                this.horizontalUpdate();
+            }
+            
         }
         
         if (this.knockback) {

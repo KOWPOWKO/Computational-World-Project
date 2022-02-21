@@ -63,6 +63,8 @@ const PARAMS = {
     SCORE: 0,
     ROUND: 1,
     TOTAL: 0,
-    SKILL_POINTS:0,
-    TIME:0
+    SKILL_POINTS: 0,
+    TIME: 0,
+    PAUSE: false,
+    SLOW: 1
 };

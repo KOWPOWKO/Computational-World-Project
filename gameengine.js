@@ -187,9 +187,7 @@ class GameEngine {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         // Draw latest things first
-        for (let i = this.entities[3].length - 1; i >= 0; i--) {
-            this.entities[3][i].draw(this.ctx, this);
-        }
+        
         for (let i = this.entities[2].length - 1; i >= 0; i--) {
             this.entities[2][i].draw(this.ctx, this);
         }
@@ -199,6 +197,10 @@ class GameEngine {
         for (let i = this.entities[0].length - 1; i >= 0; i--) {
             this.entities[0][i].draw(this.ctx, this);
         }
+
+        for (let i = this.entities[3].length - 1; i >= 0; i--) {
+            this.entities[3][i].draw(this.ctx, this);
+        }
         this.camera.draw(this.ctx);
 
     };
@@ -207,6 +209,15 @@ class GameEngine {
         let entitiesHeroCount = this.entities[0].length;
         let entitiesEnemiesCount = this.entities[1].length;
         let entitiesBackgroundCount = this.entities[2].length;
+        let entitiesInventoryCount = this.entities[3].length;
+
+        for (let i = 0; i < entitiesInventoryCount; i++) {
+            let entity = this.entities[3][i];
+
+            if (!entity.removeFromWorld) {
+                entity.update();
+            }
+        }
 
         for (let i = 0; i < entitiesHeroCount; i++) {
             let entity = this.entities[0][i];
@@ -230,9 +241,13 @@ class GameEngine {
             }
         }
 
+        
+
+        this.removeFromWorldSplice(3);
         this.removeFromWorldSplice(0);
         this.removeFromWorldSplice(1);
         this.removeFromWorldSplice(2);
+        
     };
 
     removeFromWorldSplice(level) {

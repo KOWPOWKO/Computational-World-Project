@@ -334,7 +334,7 @@ class Chest {
 
         }
         if(!this.reset1 && PARAMS.SCORE >= 1 && this.timePower  && this.count1 === 0){
-            this.game.addEntityForeground(new TimeStop(this.game,80,80));
+            this.game.addEntityInventory(new TimeStop(this.game,80,80));
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-1; 
         }

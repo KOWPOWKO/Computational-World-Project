@@ -293,6 +293,7 @@ class Hero {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
         if (this.dead == false) {
+            PARAMS.TIME += this.game.clockTick;
             this.blockUpdate(); 
             if(this.y <= this.GROUND || this.JUMPING) {
                 this.velocity.y += 20;
@@ -428,13 +429,14 @@ class Hero {
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
         //ctx.lineWidth = 6; 
-        PARAMS.TIME += this.game.clockTick;
         ctx.fillStyle = "White";
+        ctx.fillText("Time: " + Math.round(PARAMS.TIME), 25, 70); 
+        
         ctx.fillText("Skill Point = " + PARAMS.SKILL_POINTS, 25, 30);     
         ctx.fillText("Coins = " +PARAMS.SCORE, 25, 50);  
         ctx.fillStyle = "Black";
         ctx.fillText("Round", 1164, 70);   
         ctx.fillText(PARAMS.ROUND + "/" + PARAMS.TOTAL, 1175, 90);  
-        ctx.fillText(Math.round(PARAMS.TIME), 600, 90);  
+         
     };
 };
