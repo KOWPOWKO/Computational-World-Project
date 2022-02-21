@@ -104,6 +104,7 @@ class Hero {
         this.previousAttack = 0;
         this.coolDown = 1;
         this.attackSpeed = 0.5 * this.coolDown;
+       
         
     }
     
@@ -223,8 +224,10 @@ class Hero {
         var that = this;
 
         this.game.entities[3].forEach(function (entity) {
-            if(entity instanceof CoolDown) {
-                that.coolDown -= 0.2;
+            if(entity instanceof CoolDown && entity.removeFromWorld == false) {
+                if (that.coolDown > 0.3) {
+                    that.coolDown -= 0.2;
+                }
                 entity.removeFromWorld = true;
             }
             
@@ -316,7 +319,8 @@ class Hero {
                 this.knockbackUpdate();
             }
 
-            if (this.previousAttack > this.attackSpeed) {
+            
+            if (this.previousAttack > (this.attackSpeed * this.coolDown)) {
                 this.canAttack = true;
                 
             } else {
