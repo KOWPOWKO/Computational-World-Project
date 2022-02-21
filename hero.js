@@ -445,7 +445,7 @@ class Hero {
         ctx.fillText("Time: " + Math.round(PARAMS.TIME), 25, 70); 
 
         ctx.fillStyle = "Green";
-        ctx.fillText("Attack Cooldown: " + Math.round(this.coolDown), 25, 90);
+        ctx.fillText("Attack Cooldown: " + this.coolDown, 25, 90);
 
         ctx.fillStyle = "Black";
         ctx.fillText("Round", 1164, 70);   
