@@ -44,6 +44,7 @@ class Chest {
         this.powerUp = false;
         this.specialAbil = false;
 		this.skillP = false;
+        this.itemShopOpen = false;
         this.elapsed = 0;
 
         //this.test = 0;
@@ -55,6 +56,9 @@ class Chest {
     }
 	update(){
         this.elapsed += this.game.clockTick;
+
+        
+
 		if (this.game.click) {
             this.screen = true;
             if (this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571){
@@ -83,6 +87,13 @@ class Chest {
                 this.p2 = false;
             }
             
+            if (this.open || this.specialAbil || this.powerUp || this.skillP) {
+                this.itemShopOpen = true;
+                PARAMS.PAUSE = true;
+            } else {
+                this.itemShopOpen = false;
+                PARAMS.PAUSE = false;
+            }
             //***POWER UP***
             //USER SELECTED TIME STOP
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
@@ -226,7 +237,6 @@ class Chest {
             ctx.fillText("Power-ups", 420,120);
             ctx.fillText("Special Abilities", 560,120);
             ctx.fillText("Skill Point", 720,120);       
-                 
            this.open = false;
 		}
         //powerup 
@@ -333,8 +343,10 @@ class Chest {
             ctx.fillText("=  4", 900,154)
 
         }
+
+        
         if(!this.reset1 && PARAMS.SCORE >= 1 && this.timePower  && this.count1 === 0){
-            this.game.addEntityForeground(new TimeStop(this.game,80,80));
+            this.game.addEntityInventory(new TimeStop(this.game,80,80));
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-1; 
         }
@@ -395,12 +407,13 @@ class Chest {
         }
         if(!this.reset13 && this.coolD && PARAMS.SCORE  >= 4 && this.count13 === 0){
             this.count13++;
-            this.game.addEntityForeground(new CoolDown(this.game,80,80));
+            this.game.addEntityInventory(new CoolDown(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-4;
         }
         
 		if(!this.open){
 		this.animations[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+        
 		}
 	};
 };

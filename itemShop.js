@@ -1,24 +1,33 @@
 class TimeStop {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
+        this.x = 25;
+        this.y = 600;
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png");
-        this.elapsed = 0;
-        this.tstop = false;
-
+        this.loadProperties();
+        this.removeFromWorld = false;
     };
+
+    loadProperties() {
+        this.duration = 10;
+        this.elapsed = 0;
+        this.startTimer = false;
+    }
     
     update () {
-        this.elapsed += this.game.clockTick;
-
+        if (this.startTimer == true) {this.elapsed += this.game.clockTick;}
+        if(this.elapsed >= this.duration) {
+            this.removeFromWorld = true;
+        }
     };
 
     draw(ctx) {
-        if(this.elapsed < 15) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
-        this.tstop = true;
+        if(this.elapsed < this.duration) {
+            ctx.drawImage(this.spritesheet,this.x,this.y);
+            ctx.fillText("Time: " + Math.round(this.duration - this.elapsed), this.x + 20, this.y + 110); 
+        } else if(this.elapsed >= this.duration) {
+            
         }
-        this.tstop = false;
-
     };
 };
 class DamageIncrease {
@@ -116,7 +125,7 @@ class CoolDown {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/cooldown.png");
-
+        this.removeFromWorld = false;
     };
     
     update () {};

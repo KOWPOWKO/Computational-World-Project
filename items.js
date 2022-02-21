@@ -175,7 +175,8 @@ class BirdBrown {
     };
 
     update() {
-        if (this.facing == this.LEFT) {
+        if (PARAMS.PAUSE == false) {
+            if (this.facing == this.LEFT) {
 
                 this.x -= this.SPEED;
 
@@ -183,6 +184,8 @@ class BirdBrown {
 
                 this.x += this.SPEED;
         }
+        }
+        
     };
     
 
