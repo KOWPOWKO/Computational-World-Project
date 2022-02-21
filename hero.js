@@ -102,7 +102,8 @@ class Hero {
         this.knockback = false;
         this.knockbackCounter = this.MAX_KNOCKBACK;
         this.previousAttack = 0;
-        this.attackSpeed = 0.5;
+        this.coolDown = 1;
+        this.attackSpeed = 0.5 * this.coolDown;
         
     }
     
@@ -221,6 +222,14 @@ class Hero {
     collisionUpdate() {
         var that = this;
 
+        this.game.entities[3].forEach(function (entity) {
+            if(entity instanceof CoolDown) {
+                that.coolDown -= 0.2;
+                entity.removeFromWorld = true;
+            }
+            
+        })
+
         this.game.entities[2].forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB)) {
                 if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) { //ground logic
@@ -292,7 +301,8 @@ class Hero {
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
-        if (this.dead == false) {
+
+        if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
             this.blockUpdate(); 
             if(this.y <= this.GROUND || this.JUMPING) {
@@ -430,10 +440,13 @@ class Hero {
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
         //ctx.lineWidth = 6; 
         ctx.fillStyle = "White";
-        ctx.fillText("Time: " + Math.round(PARAMS.TIME), 25, 70); 
-        
         ctx.fillText("Skill Point = " + PARAMS.SKILL_POINTS, 25, 30);     
         ctx.fillText("Coins = " +PARAMS.SCORE, 25, 50);  
+        ctx.fillText("Time: " + Math.round(PARAMS.TIME), 25, 70); 
+
+        ctx.fillStyle = "Green";
+        ctx.fillText("Attack Cooldown: " + Math.round(this.coolDown), 25, 90);
+
         ctx.fillStyle = "Black";
         ctx.fillText("Round", 1164, 70);   
         ctx.fillText(PARAMS.ROUND + "/" + PARAMS.TOTAL, 1175, 90);  
