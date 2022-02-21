@@ -203,6 +203,7 @@ class Mage {
         this.x;
 
         //states
+        this.attackCoolDown = 3;
         this.dead = false;
         this.MAX_HEALTH = 100;
         this.health = this.MAX_HEALTH;
@@ -275,11 +276,12 @@ class Mage {
             if (PARAMS.PAUSE == false) {
                 this.horizontalUpdate();
 
-                if (this.timeElapsed < 0.5) {
+                if (this.timeElapsed < this.attackCoolDown) {
                     this.timeElapsed += TICK;
                 } else {
                     this.timeElapsed = 0;
                     this.state = this.ATTACKING;
+                    this.game.addEntityEnemies(new SmallFireBall(this.game,this.x,this.y,this.facing));
                 }
             }
         }
