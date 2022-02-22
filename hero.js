@@ -205,6 +205,7 @@ class Hero {
     attackUpdate() {
         if (this.attackAnim.isDone()) {
             this.ATTACKING = false;
+            
             this.attackAnim.elapsedTime = 0;
             this.previousAttack = 0; 
         }
@@ -280,6 +281,10 @@ class Hero {
                 }
             }
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
+                if (entity instanceof SmallFireBall) {
+                    that.health -= 10;
+                    entity.removeFromWorld = true;
+                }
                 if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
                         entity.hasBeenAttacked = true;
@@ -452,10 +457,6 @@ class Hero {
             ctx.strokeStyle = 'Red';
             //ctx.strokeRect(this.BB.x + attackX, this.BB.y + 3, this.BB.width + attackWidth, this.BB.height);
             ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
-            
-            ctx.font = "20px Arial";
-            ctx.fillStyle = "red"
-            ctx.fillText("Height: " + this.y + "px", 10, 20);
 
             if(this.ATTACKING == true) {
                 ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);

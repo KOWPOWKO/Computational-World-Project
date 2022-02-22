@@ -18,11 +18,26 @@ class CastleBounds {
         this.BB = new BoundingBox(480, 185, 290, 395);
     }
 
+    collisionUpdate() {
+        var that = this;
+        this.game.entities[1].forEach(function (entity) {
+            if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
+                if (entity instanceof SmallFireBall) {
+                    that.health -= 10;
+                    entity.removeFromWorld = true;
+                }
+                
+            }
+        })
+    }
+
     update () {
         if (this.health <= 0) {
             this.health = 0;
             this.dead = true;
         }
+
+        this.collisionUpdate();
     };
 
     draw(ctx) {

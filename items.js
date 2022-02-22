@@ -52,7 +52,19 @@ class SmallFireBall {
         this.animation = [];
         this.loadProperties();
         this.loadAnimation();
+        this.updateBB();
     };
+
+    updateBB() {
+        this.lastBB = this.BB;
+        if (this.facing == this.LEFT) {
+            this.BB = new BoundingBox(this.x + 5, this.y + 5, 24, 16);
+        } else if (this.facing == this.RIGHT) {
+            this.BB = new BoundingBox(this.x + 5, this.y + 5, 24, 16);
+        }
+        
+    };
+
     loadAnimation() {
         // Coin
         this.animation[0] = new Animator(this.spritesheet,390,308,24,16,3,0.15,3,false,true);
@@ -61,26 +73,39 @@ class SmallFireBall {
         //facings
         this.LEFT = 0;
         this.RIGHT = 1;
+        this.hasBeenAttacked = false;
+        this.removeFromWorld = false;
 
         //restrictions
         this.SPEED = 120;
         this.HEIGHT = 5;
     };
     update() {
-        if (this.facing == this.LEFT) {
-            const TICK = this.game.clockTick;
-            this.x -= this.SPEED * TICK;
-        } else {
-            this.x += this.SPEED * TICK; 
-        } 
+        this.updateBB();
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.facing == this.LEFT) {
+                this.x -= this.SPEED * TICK;
+            } else {
+                this.x += this.SPEED * TICK; 
+            } 
+        }
+
+        
     };
     draw(ctx) {
-            
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
         if (this.facing == this.RIGHT) {
             this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,2); 
         } else {
             this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,2);   
         } 
+
+        
     };
 };
 
