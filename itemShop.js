@@ -37,7 +37,9 @@ class DamageIncrease {
 
     };
     
-    update () {};
+    update () {
+        this.removeFromWorld = true;
+    };
 
     draw(ctx) {
         ctx.drawImage(this.spritesheet,this.x,this.y);
@@ -45,15 +47,34 @@ class DamageIncrease {
 };
 class SpeedIncrease {
     constructor(game, x, y) {
+        this.x = 25;
+        this.y = 600;
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/times2.png");
-
+        this.loadProperties();
+        this.removeFromWorld = false;
     };
+
+    loadProperties() {
+        this.duration = 10;
+        this.elapsed = 0;
+        this.startTimer = false;
+    }
     
-    update () {};
+    update () {
+        if (this.startTimer == true) {this.elapsed += this.game.clockTick;}
+        if(this.elapsed >= this.duration) {
+            this.removeFromWorld = true;
+        }
+    };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
+        if(this.elapsed < this.duration) {
+            ctx.drawImage(this.spritesheet,this.x,this.y);
+            ctx.fillText("Time: " + Math.round(this.duration - this.elapsed), this.x + 20, this.y + 110); 
+        } else if(this.elapsed >= this.duration) {
+            
+        }
     };
 };
 class SizeIncrease {
@@ -102,7 +123,9 @@ class HealthIncrease {
 
     };
     
-    update () {};
+    update () {
+        this.removeFromWorld = true;
+    };
 
     draw(ctx) {
         ctx.drawImage(this.spritesheet,this.x,this.y);

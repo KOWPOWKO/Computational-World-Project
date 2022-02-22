@@ -4,6 +4,7 @@ class Hero {
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/hero/defender.png");
         this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
         this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
+        this.healthbarblue = ASSET_MANAGER.getAsset("./resources/background/healthblue.png");
         this.loadProperties();
         this.updateBB();
         this.animations = [];
@@ -87,6 +88,7 @@ class Hero {
         this.ACCELERATION = 10;
         this.GRAVITY = 400;
         this.MAX_HEALTH = 500;
+        this.MAX_SHIELD = 500;
         this.MAX_KNOCKBACK = 100;
         
         //initial
@@ -98,6 +100,7 @@ class Hero {
         this.facing = this.RIGHT;
         this.velocity = {x: 0,y: 0};
         this.health = this.MAX_HEALTH;
+        this.shield = 0;
         this.hasBeenAttacked = false;
         this.knockback = false;
         this.knockbackCounter = this.MAX_KNOCKBACK;
@@ -230,7 +233,23 @@ class Hero {
                 }
                 entity.removeFromWorld = true;
             }
-            
+            if(entity instanceof HealthIncrease) {
+                //entity.startTimer = true;
+                if(that.health < that.MAX_HEALTH) that.health += 50;
+                if(that.health > that.MAX_HEALTH) that.health = that.MAX_HEALTH;
+            } 
+            if(entity instanceof SpeedIncrease) {
+                //entity.startTimer = true;
+                that.MAX_WALK = that.MAX_WALK *4;
+                that.MAX_RUN =  that.MAX_RUN *4;
+
+                entity.removeFromWorld = true;
+
+            } 
+            if(entity instanceof Shield) {
+                //entity.startTimer = true;
+                that.shield = that.MAX_SHIELD;
+            } 
         })
 
         this.game.entities[2].forEach(function (entity) {
@@ -304,6 +323,8 @@ class Hero {
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
+       
+
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
@@ -442,6 +463,7 @@ class Hero {
         }
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
+        ctx.drawImage(this.healthbarblue, this.BB.x, this.BB.y - 10, this.BB.width * (this.shield/ this.MAX_SHIELD), 5);
         //ctx.lineWidth = 6; 
         ctx.fillStyle = "White";
         ctx.fillText("Skill Point = " + PARAMS.SKILL_POINTS, 25, 30);     

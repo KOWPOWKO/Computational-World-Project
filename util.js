@@ -66,5 +66,6 @@ const PARAMS = {
     SKILL_POINTS: 0,
     TIME: 0,
     PAUSE: false,
-    SLOW: 1
+    SLOW: 1,
+    HEALTH: 0
 };

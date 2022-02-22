@@ -356,7 +356,7 @@ class Chest {
             PARAMS.SCORE = PARAMS.SCORE-2;
         }
         if(!this.reset3 && this.dSpeed && PARAMS.SCORE  >= 3  && this.count3 === 0){
-            this.game.addEntityForeground(new SpeedIncrease(this.game,80,80));
+            this.game.addEntityInventory(new SpeedIncrease(this.game,80,80));
             this.count3++;
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
@@ -372,7 +372,7 @@ class Chest {
         }
         if(!this.reset6 && this.shieldAbility && PARAMS.SCORE  >= 1 && this.count6 === 0){
             this.count6++;
-            this.game.addEntityForeground(new Shield(this.game,80,80));
+            this.game.addEntityInventory(new Shield(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-1;
         }
         if(!this.reset7 && this.slashAbility && PARAMS.SCORE  >= 2 && this.count7 === 0){
@@ -392,7 +392,7 @@ class Chest {
         }
         if(!this.reset10 && this.health && PARAMS.SCORE  >= 1 && this.count10 === 0){
             this.count10++;
-            this.game.addEntityForeground(new HealthIncrease(this.game,80,80));
+            this.game.addEntityInventory(new HealthIncrease(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-1;
         }
         if(!this.reset11 && this.damage && PARAMS.SCORE  >= 2 && this.count11 === 0){
