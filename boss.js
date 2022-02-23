@@ -71,15 +71,18 @@ class DragonBoss {
     };
 
     horizontalUpdate() {
-        if (this.facing == this.LEFT && !this.knockback) {
-            if (this.x >= 780) {
-                this.x -= this.SPEED * this.game.clockTick;
-            }
-        } else if (this.facing == this.RIGHT && !this.knockback) {
-            if (this.x <= 440) {
-                this.x += this.SPEED * this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.facing == this.LEFT && !this.knockback) {
+                if (this.x >= 780) {
+                    this.x -= this.SPEED * this.game.clockTick;
+                }
+            } else if (this.facing == this.RIGHT && !this.knockback) {
+                if (this.x <= 440) {
+                    this.x += this.SPEED * this.game.clockTick;
+                }
             }
         }
+        
     }
     collisionUpdate(TICK) {
         var that = this;

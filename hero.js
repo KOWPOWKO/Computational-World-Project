@@ -107,6 +107,7 @@ class Hero {
         this.previousAttack = 0;
         this.coolDown = 1;
         this.attackSpeed = 0.5 * this.coolDown;
+        this.speedMultiplier = 1;
        
         
     }
@@ -220,8 +221,8 @@ class Hero {
     }
 
     XYupdate(TICK) {
-        this.x += this.velocity.x * TICK;
-        this.y += this.velocity.y * TICK;
+        this.x += this.velocity.x * this.speedMultiplier * TICK;
+        this.y += this.velocity.y * this.speedMultiplier * TICK;
     }
 
     collisionUpdate() {
@@ -238,11 +239,16 @@ class Hero {
                 //entity.startTimer = true;
                 if(that.health < that.MAX_HEALTH) that.health += 50;
                 if(that.health > that.MAX_HEALTH) that.health = that.MAX_HEALTH;
+                entity.removeFromWorld = true;
             } 
-            if(entity instanceof Shield) {
+            if(entity instanceof SpeedSkill && entity.removeFromWorld == false) {
                 //entity.startTimer = true;
-                that.shield = that.MAX_SHIELD;
+                if (that.speedMultiplier < 5) {
+                    that.speedMultiplier += 1;
+                }
+                entity.removeFromWorld = true;
             } 
+            
         })
 
         this.game.entities[2].forEach(function (entity) {
@@ -274,7 +280,19 @@ class Hero {
             }
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
                 if (entity instanceof SmallFireBall) {
-                    that.health -= 10;
+                    if (that.health <= 0) {
+                        that.health = 0;
+                        that.dead = true;
+                    } 
+                    if (that.BLOCK == false) {
+                        if (that.shield > 0) {
+                            that.shield -= 10;
+                        } else if (that.shield <= 0){
+                            that.shield = 0;
+                            that.health -= 10;
+                        }
+                    }
+                    
                     entity.removeFromWorld = true;
                 }
                 if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
@@ -297,7 +315,13 @@ class Hero {
                         else if (!that.hasBeenAttacked) {
                             that.hasBeenAttacked = true;
                             that.knockback = true;
-                            that.health -= 25;
+
+                            if (that.shield > 0) {
+                                that.shield -= 25;
+                            } else if (that.shield <= 0){
+                                that.shield = 0;
+                                that.health -= 25;
+                            }
                         }
                         entity.previousAttack = 0;
                     }
@@ -454,7 +478,7 @@ class Hero {
         }
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
-        ctx.drawImage(this.healthbarblue, this.BB.x, this.BB.y - 10, this.BB.width * (this.shield/ this.MAX_SHIELD), 5);
+        ctx.drawImage(this.healthbarblue, this.BB.x, this.BB.y - 3, this.BB.width * (this.shield/ this.MAX_SHIELD), 5);
         //ctx.lineWidth = 6; 
         ctx.fillStyle = "White";
         ctx.fillText("Skill Point = " + PARAMS.SKILL_POINTS, 25, 30);     
@@ -463,6 +487,7 @@ class Hero {
 
         ctx.fillStyle = "Green";
         ctx.fillText("Attack Cooldown: " + this.coolDown, 25, 90);
+        ctx.fillText("Speed: " + this.speedMultiplier, 25, 110);
 
         ctx.fillStyle = "Black";
         ctx.fillText("Round", 1164, 70);   
