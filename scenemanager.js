@@ -90,11 +90,16 @@ class SceneManager {
         
         this.game.entities[3].forEach(function (entity) {
             if(entity instanceof TimeStop) {
-                entity.startTimer = true;
-                PARAMS.SLOW = 0.1;
+                if(!PARAMS.PAUSE){
+                    entity.startTimer = true;
+                    PARAMS.SLOW = 0.1;
+                }
             } 
             if(entity instanceof SpeedIncrease) {
-                entity.startTimer = true;
+                if(!PARAMS.PAUSE){
+                    entity.startTimer = true;
+                    PARAMS.SPEED = 4;
+                }
             } 
         })
         

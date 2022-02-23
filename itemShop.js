@@ -49,7 +49,6 @@ class SpeedIncrease {
     constructor(game, x, y) {
         this.x = 25;
         this.y = 600;
-        Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/times2.png");
         this.loadProperties();
         this.removeFromWorld = false;

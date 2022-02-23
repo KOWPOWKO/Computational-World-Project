@@ -122,14 +122,14 @@ class Hero {
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x -= this.ACCELERATION; 
                 } else {
-                    this.velocity.x = this.velocity.x = (this.MAX_RUN) * (-1);
+                    this.velocity.x = this.velocity.x = (this.MAX_RUN*PARAMS.SPEED) * (-1);
                 }
             } else {
                 this.state = this.WALKING;
                 if (Math.abs(this.velocity.x) <= this.MAX_WALK) {
                     this.velocity.x -= this.ACCELERATION; 
                 } else {
-                    this.velocity.x = (this.MAX_WALK) * (-1);
+                    this.velocity.x = (this.MAX_WALK*PARAMS.SPEED) * (-1);
                 }
             }
  
@@ -142,14 +142,14 @@ class Hero {
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x += this.ACCELERATION; 
                 } else {
-                    this.velocity.x = this.velocity.x = (this.MAX_RUN);
+                    this.velocity.x = this.velocity.x = (this.MAX_RUN*PARAMS.SPEED);
                 }
             } else {
                 this.state = this.WALKING;
                 if (Math.abs(this.velocity.x) <= this.MAX_WALK) {
                     this.velocity.x += this.ACCELERATION; 
                 } else {
-                    this.velocity.x = this.MAX_WALK;
+                    this.velocity.x = this.MAX_WALK*PARAMS.SPEED;
                 }
             }
         } 
@@ -239,14 +239,6 @@ class Hero {
                 if(that.health < that.MAX_HEALTH) that.health += 50;
                 if(that.health > that.MAX_HEALTH) that.health = that.MAX_HEALTH;
             } 
-            if(entity instanceof SpeedIncrease) {
-                //entity.startTimer = true;
-                that.MAX_WALK = that.MAX_WALK *4;
-                that.MAX_RUN =  that.MAX_RUN *4;
-
-                entity.removeFromWorld = true;
-
-            } 
             if(entity instanceof Shield) {
                 //entity.startTimer = true;
                 that.shield = that.MAX_SHIELD;
@@ -328,8 +320,6 @@ class Hero {
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
-       
-
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;

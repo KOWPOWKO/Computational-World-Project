@@ -1,6 +1,7 @@
 class ItemAssets {
     constructor() {
         this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
+        this.exit = ASSET_MANAGER.getAsset("./resources/background/exit.png");
         this.slowEnemies = ASSET_MANAGER.getAsset("./resources/powerUps/timeWatch.png");
         this.damageIncrease = ASSET_MANAGER.getAsset("./resources/powerUps/damageIncrease.gif");
         this.doubleSpeed = ASSET_MANAGER.getAsset("./resources/powerUps/times2.png");
@@ -86,7 +87,7 @@ class Chest {
                 this.p1 = false;
                 this.p2 = false;
             }
-            
+
             if (this.open || this.specialAbil || this.powerUp || this.skillP) {
                 this.itemShopOpen = true;
                 PARAMS.PAUSE = true;
@@ -94,6 +95,7 @@ class Chest {
                 this.itemShopOpen = false;
                 PARAMS.PAUSE = false;
             }
+
             //***POWER UP***
             //USER SELECTED TIME STOP
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
@@ -223,6 +225,12 @@ class Chest {
 		ctx.fillText("ITEM SHOP", 500,595);
 
 		if(this.open){
+            ctx.drawImage(this.itemAssets.exit,795,1);
+            if(this.game.click){
+                if(this.game.click && this.game.click.x >= 795 && this.game.click.x <= 817 && this.game.click.y >= 1 && this.game.click.y <= 23 ){
+                    this.open = false;
+                }
+            }
 			this.openAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
 			ctx.fillStyle = rgba(0, 0, 0, 0.5);
         	ctx.fillRect(410,0, 410, 150);
@@ -237,13 +245,21 @@ class Chest {
             ctx.fillText("Power-ups", 420,120);
             ctx.fillText("Special Abilities", 560,120);
             ctx.fillText("Skill Point", 720,120);       
-           this.open = false;
+           //this.open = false;
 		}
         //powerup 
         if(this.powerUp){
-            this.elapsed = 0
-            const tick = this.game.clockTick;
-            this.powerUp = false;
+            this.open = false
+            ctx.drawImage(this.itemAssets.exit,1000,5);
+            if(this.game.click){
+                if(this.game.click && this.game.click.x >= 1000 && this.game.click.x <= 1022 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
+                    this.powerUp = false;
+                    this.open = true;
+                    this.p1 = true;
+                    this.p2 = true;
+                    this.p3 = true;
+                }
+            }
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
@@ -282,7 +298,19 @@ class Chest {
         }
 
         if(this.specialAbil){
-            this.specialAbil = false;
+            this.open = false;
+            ctx.drawImage(this.itemAssets.exit,1000,5);
+            if(this.game.click){
+                if(this.game.click && this.game.click.x >= 1000 && this.game.click.x <= 1022 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
+                    this.specialAbil = false;
+                    this.open = true;
+                    this.p1 = true;
+                    this.p2 = true;
+                    this.p3 = true;
+                }
+            }
+
+           // this.specialAbil = false;
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
@@ -313,7 +341,17 @@ class Chest {
         }
 
         if(this.skillP){
-            this.skillP = false;
+            this.open = false;
+            ctx.drawImage(this.itemAssets.exit,1000,5);
+            if(this.game.click){
+                if(this.game.click && this.game.click.x >= 1000 && this.game.click.x <= 1022 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
+                    this.skillP = false;
+                    this.open = true;
+                    this.p1 = true;
+                    this.p2 = true;
+                    this.p3 = true;
+                }
+            }
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
@@ -345,7 +383,7 @@ class Chest {
         }
 
         
-        if(!this.reset1 && PARAMS.SCORE >= 1 && this.timePower  && this.count1 === 0){
+        if(!this.reset1 && PARAMS.SCORE >= 1 && this.timePower  && this.count1 === 0 ){
             this.game.addEntityInventory(new TimeStop(this.game,80,80));
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-1; 
