@@ -31,6 +31,8 @@ ASSET_MANAGER.queueDownload("./resources/powerUps/times2.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/speedDisplay.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/cooldown.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/lazerbeam.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/nuke.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/healthPotion.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/damageIncrease.gif");
 
 //Background images

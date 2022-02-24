@@ -15,6 +15,8 @@ class ItemAssets {
         this.shield = ASSET_MANAGER.getAsset("./resources/powerUps/shield.png");
         this.sonicWave = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
         this.lazerBeam = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
+        this.healthPotion = ASSET_MANAGER.getAsset("./resources/powerUps/healthPotion.png");
+        this.nuke = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
 
     }
 }
@@ -40,6 +42,7 @@ class Chest {
         this.reset11 = false;
         this.reset12 = false;
         this.reset13 = false;
+        this.reset14 = false;
 
 		this.open = false;
         this.powerUp = false;
@@ -74,18 +77,21 @@ class Chest {
                 this.powerUp = true;
                 this.p2 = false;
                 this.p3 = false;
+                this.game.click.x = 0;
             }
             if(this.p2 && this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 110){
                 this.test = 1;
                 this.specialAbil = true;
                 this.p1 = false;
                 this.p3 = false;
+                this.game.click.x = 0;
             }
             if(this.p3 && this.game.click.x > 720 && this.game.click.x < 795&& this.game.click.y > 15 && this.game.click.y < 110){
                 this.test = 1;
                 this.skillP = true;
                 this.p1 = false;
                 this.p2 = false;
+                this.game.click.x = 0;
             }
 
             if (this.open || this.specialAbil || this.powerUp || this.skillP) {
@@ -107,21 +113,21 @@ class Chest {
                     this.count1 = 0;
                     this.game.click = false;
             }  
-            //USER SELECTED ARROW SHOOTER
+            //USER SELECTED HEALTH POTION
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
                 && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
                     if(PARAMS.SCORE < 2) this.reset2 = true;
                     if(PARAMS.SCORE >= 2) this.reset2 = false;
-                    this.arrowShooter = true;
+                    this.potionH = true;
                     this.count2 = 0;
                     this.game.click = false;
             }  
-            //USER SELECTED DOUBLE SPEED
+            //USER SELECTED SHIELD POTION
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 575 && this.game.click.x <= 700
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
                     if(PARAMS.SCORE < 3) this.reset3 = true;
                     if(PARAMS.SCORE >= 3) this.reset3 = false;
-                    this.dSpeed = true;
+                    this.shieldAbility = true;
                     this.count3 = 0;
                     this.game.click = false;
             } 
@@ -134,87 +140,96 @@ class Chest {
                     this.count4 = 0;
                     this.game.click = false;
             }
-            //USER SELECTED INVINCIBILITY
+            //USER SELECTED ARROW SHOOTER
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 920
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
                     if(PARAMS.SCORE < 5) this.reset5 = true;
                     if(PARAMS.SCORE >= 5) this.reset5 = false;
-                    this.star = true;
+                    this.arrowShooter = true;
                     this.count5 = 0;
                     this.game.click = false;
              }  
              //***SPECIAL ABILITY***
-             //USER SELECTED SHIELD POTION
+             //USER SELECTED AIR SLASH
              if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
                 && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
                     if(PARAMS.SCORE < 1) this.reset6 = true;
                     if(PARAMS.SCORE >= 1) this.reset6 = false;
-                    this.shieldAbility = true;
+                    this.slashAbility = true;
                     this.count6 = 0;
                     this.game.click = false;
             }   
-            //USER SELECTED AIR SLASH   
+            //USER SELECTED LASER BEAM  
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
                     if(PARAMS.SCORE < 2) this.reset7 = true;
                     if(PARAMS.SCORE >= 2) this.reset7 = false;
-                    this.slashAbility = true;
+                    this.laserB = true;
                     this.count7 = 0;
                     this.game.click = false;
             } 
-            //USER SELECTED LAZER BEAM
-            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 746
+            //USER SELECTED SONIC WAVE
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 560 && this.game.click.x <= 596
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
                     if(PARAMS.SCORE < 3) this.reset8 = true;
                     if(PARAMS.SCORE >= 3) this.reset8 = false;
-                    this.laserB = true;
+                    this.waveS = true;
                     this.count8 = 0;
                     this.game.click = false;
             } 
-            //USER SELECTED SONIC WAVE
-            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 880 && this.game.click.x <= 916
+            //USER SELECTED INVINCIBILITY
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 746
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
                     if(PARAMS.SCORE < 4) this.reset9 = true;
                     if(PARAMS.SCORE >= 4) this.reset9 = false;
-                    this.waveS = true;
+                    this.invincibility = true;
                     this.count9 = 0;
+                    this.game.click = false;
+            } 
+            //USER SELECTED NUKE
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 880 && this.game.click.x <= 916
+                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+                    if(PARAMS.SCORE < 4) this.reset10 = true;
+                    if(PARAMS.SCORE >= 4) this.reset10 = false;
+                    this.nuke = true;
+                    this.count10 = 0;
                     this.game.click = false;
             } 
             //***SKILL POINTS***
              //USER SELECTED INCREASE HEALTH
-            if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
-                    if(PARAMS.SCORE < 1) this.reset10 = true;
-                    if(PARAMS.SCORE >= 1) this.reset10 = false;
+            if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 390
+                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+                    if(PARAMS.SCORE < 1) this.reset11 = true;
+                    if(PARAMS.SCORE >= 1) this.reset11 = false;
                     this.health =  true;
-                    this.count10 = 0;
-                    this.game.click = false;
-            } 
-             //USER SELECTED INCREASE DAMAGE
-             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
-                    if(PARAMS.SCORE < 2) this.reset11 = true;
-                    if(PARAMS.SCORE >= 2) this.reset11 = false;
-                    this.damage =  true;
                     this.count11 = 0;
                     this.game.click = false;
             } 
-             //USER SELECTED INCREASE SPEED
-             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 746
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
-                    if(PARAMS.SCORE < 3) this.reset12 = true;
-                    if(PARAMS.SCORE >= 3) this.reset12 = false;
-                    this.speed =  true;
+             //USER SELECTED INCREASE DAMAGE
+             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 520
+                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+                    if(PARAMS.SCORE < 2) this.reset12 = true;
+                    if(PARAMS.SCORE >= 2) this.reset12 = false;
+                    this.damage =  true;
                     this.count12 = 0;
                     this.game.click = false;
             } 
-             //USER SELECTED INCREASE COOLDOWN
-             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 896
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
-                    if(PARAMS.SCORE < 4) this.reset13 = true;
-                    if(PARAMS.SCORE >= 4) this.reset13 = false;
-                    this.coolD =  true;
+             //USER SELECTED INCREASE SPEED
+             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 850
+                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+                    if(PARAMS.SCORE < 3) this.reset13 = true;
+                    if(PARAMS.SCORE >= 3) this.reset13 = false;
+                    this.speed =  true;
                     this.count13 = 0;
+                    this.game.click = false;
+            } 
+             //USER SELECTED INCREASE COOLDOWN
+             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 940
+                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+                    if(PARAMS.SCORE < 4) this.reset14 = true;
+                    if(PARAMS.SCORE >= 4) this.reset14 = false;
+                    this.coolD =  true;
+                    this.count14 = 0;
                     this.game.click = false;
             }             
         }
@@ -270,14 +285,14 @@ class Chest {
             ctx.fillText("=  1", 285,154)
         
             //Arrow shooter powerup
-            ctx.drawImage(this.itemAssets.arrowShooter,400,15);
-            ctx.fillText("Arrow Shooter", 400,130);
+            ctx.drawImage(this.itemAssets.healthPotion,400,15);
+            ctx.fillText("Health Potion", 400,130);
             ctx.drawImage(this.itemAssets.coinDisplay,400,130);
             ctx.fillText("=  2", 440,154);
 
             //DOUBLE SPEED POWERUP
-            ctx.drawImage(this.itemAssets.doubleSpeed,575,25);
-            ctx.fillText("Double speed", 560,130);
+            ctx.drawImage(this.itemAssets.shield,575,21);
+            ctx.fillText("Shield Potion", 560,130);
             ctx.drawImage(this.itemAssets.coinDisplay,560,130);
             ctx.fillText("=  3", 600,154)
             
@@ -288,8 +303,8 @@ class Chest {
             ctx.fillText("=  4", 747,154);
             
             //INVINCIBILITY POWERUP
-            ctx.drawImage(this.itemAssets.invincibility, 860,20);
-            ctx.fillText("Invincibility", 860,130);
+            ctx.drawImage(this.itemAssets.arrowShooter, 860,12);
+            ctx.fillText("Arrow Shooter", 860,130);
             ctx.drawImage(this.itemAssets.coinDisplay,860,130);
             ctx.fillText("=  5", 900,154);
 
@@ -315,29 +330,34 @@ class Chest {
             ctx.fillRect(230 ,0, 800, 165);
             ctx.fillStyle = "White";
             //SHIELD SPECIAL ABILITY
-            ctx.drawImage(this.itemAssets.shield,240,15);
-            ctx.fillText("Shield Potion", 240,130);
+            ctx.drawImage(this.itemAssets.airSlash,250,15);
+            ctx.fillText("AIR   SLASH", 240,130);
             ctx.drawImage(this.itemAssets.coinDisplay,240,130);
             ctx.fillText("=  1", 285,154);
 
             //AIR SLASH SPECIAL ABILITY
-            ctx.drawImage(this.itemAssets.airSlash,420,15);
-            ctx.fillText("AIR   SLASH", 400,130);
+            ctx.drawImage(this.itemAssets.lazerBeam,375,40);
+            ctx.fillText("Laser Beam", 400,130);
             ctx.drawImage(this.itemAssets.coinDisplay,400,130);
             ctx.fillText("=  2", 440,154);
 			ctx.fillText("SPECIAL ABILITY", 520,20);
 
+            ctx.drawImage(this.itemAssets.sonicWave,540,20);
+            ctx.fillText("Sonic Wave", 560,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,560,130);
+            ctx.fillText("=  3", 600,154)
+
             //laser beam special ability
-            ctx.drawImage(this.itemAssets.lazerBeam,685,40);
-            ctx.fillText("Laser Beam", 710,130);
+            ctx.drawImage(this.itemAssets.invincibility,710,20);
+            ctx.fillText("Invincibility", 710,130);
             ctx.drawImage(this.itemAssets.coinDisplay,710,130);
-            ctx.fillText("=  3", 747,154)
+            ctx.fillText("=  4", 747,154)
 
             //sonic wave special ability
-            ctx.drawImage(this.itemAssets.sonicWave,860,16);
-            ctx.fillText("Sonic wave", 880,130);
+            ctx.drawImage(this.itemAssets.nuke,860,13);
+            ctx.fillText("NUKE", 890,130);
             ctx.drawImage(this.itemAssets.coinDisplay,880,130);
-            ctx.fillText("=  4", 920,154)
+            ctx.fillText("=  5", 920,154)
         }
 
         if(this.skillP){
@@ -358,27 +378,27 @@ class Chest {
             //Increase health SKILL POINT
             ctx.drawImage(this.itemAssets.healthIncrease,240,10);
             ctx.fillText("Health Increase", 240,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,240,130);
-            ctx.fillText("=  1", 285,154)
+            //ctx.drawImage(this.itemAssets.coinDisplay,240,130);
+            ctx.fillText("UPGRADE: 1", 240,154)
             ctx.fillText("SKILL POINT", 570,20);
 
             //Increase Damage SKILL POINT
             ctx.drawImage(this.itemAssets.damageIncrease,400,15);
             ctx.fillText("Increase Damage", 400,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,400,130);
-            ctx.fillText("=  2", 440,154)
+            //ctx.drawImage(this.itemAssets.coinDisplay,400,130);
+            ctx.fillText("UPGRADE: 1", 400,154)
 
             //Increase speed SKILL POINT
             ctx.drawImage(this.itemAssets.speedIncrease,710,20);
             ctx.fillText("Increase Speed", 710,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,710,130);
-            ctx.fillText("=  3", 747,154)
+            //ctx.drawImage(this.itemAssets.coinDisplay,710,130);
+            ctx.fillText("UPGRADE: 1", 710, 154)
 
             //cooldown SKILL POINT
             ctx.drawImage(this.itemAssets.coolDown,860,20);
             ctx.fillText("Cool Down", 860,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,860,130);
-            ctx.fillText("=  4", 900,154)
+            //ctx.drawImage(this.itemAssets.coinDisplay,860,130);
+            ctx.fillText("UPGRADE: 1", 860,154)
 
         }
 
@@ -388,13 +408,13 @@ class Chest {
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-1; 
         }
-        if(!this.reset2 && this.arrowShooter && PARAMS.SCORE >= 2 && this.count2 === 0){
-            this.game.addEntityForeground(new ArrowShooter(this.game,80,80));
+        if(!this.reset2 && this.potionH && PARAMS.SCORE >= 2 && this.count2 === 0){
+            this.game.addEntityInventory(new HealthPotion(this.game,80,80));
             this.count2++;
             PARAMS.SCORE = PARAMS.SCORE-2;
         }
-        if(!this.reset3 && this.dSpeed && PARAMS.SCORE  >= 3  && this.count3 === 0){
-            this.game.addEntityForeground(new SpeedIncrease(this.game,80,80));
+        if(!this.reset3 && this.shieldAbility && PARAMS.SCORE  >= 3  && this.count3 === 0){
+            this.game.addEntityInventory(new Shield(this.game,80,80));
             this.count3++;
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
@@ -403,50 +423,55 @@ class Chest {
             this.count4++;
             PARAMS.SCORE = PARAMS.SCORE-4;
         }
-        if(!this.reset5 && this.star && PARAMS.SCORE  >= 5 && this.count5 === 0){
+        if(!this.reset5 && this.arrowShooter && PARAMS.SCORE  >= 5 && this.count5 === 0){
             this.count5++;
-            this.game.addEntityForeground(new Invincibility(this.game,80,80));
+            this.game.addEntityForeground(new ArrowShooter(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-5;
         }
-        if(!this.reset6 && this.shieldAbility && PARAMS.SCORE  >= 1 && this.count6 === 0){
+        if(!this.reset6 && this.slashAbility && PARAMS.SCORE  >= 1 && this.count6 === 0){
             this.count6++;
-            this.game.addEntityInventory(new Shield(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-1;
-        }
-        if(!this.reset7 && this.slashAbility && PARAMS.SCORE  >= 2 && this.count7 === 0){
-            this.count7++;
             this.game.addEntityForeground(new AirSlash(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-2;
-        }
-        if(!this.reset8 && this.laserB && PARAMS.SCORE  >= 3 && this.count8 === 0){
-            this.count8++;
-            this.game.addEntityForeground(new Lazer(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-3;
-        }
-        if(!this.reset9 && this.waveS && PARAMS.SCORE  >= 4 && this.count9 === 0){
-            this.count9++;
-            this.game.addEntityForeground(new SonicWave(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-4;
-        }
-        if(!this.reset10 && this.health && PARAMS.SCORE  >= 1 && this.count10 === 0){
-            this.count10++;
-            this.game.addEntityInventory(new HealthIncrease(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-1;
         }
-        if(!this.reset11 && this.damage && PARAMS.SCORE  >= 2 && this.count11 === 0){
-            this.count11++;
-            this.game.addEntityForeground(new DamageIncrease(this.game,80,80));
+        if(!this.reset7 && this.laserB && PARAMS.SCORE  >= 2 && this.count7 === 0){
+            this.count7++;
+            this.game.addEntityForeground(new Lazer(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-2;
         }
-        if(!this.reset12 && this.speed && PARAMS.SCORE  >= 3 && this.count12 === 0){
-            this.count12++;
-            this.game.addEntityInventory(new SpeedSkill(this.game,80,80));
+        if(!this.reset8 && this.waveS && PARAMS.SCORE  >= 3 && this.count8 === 0){
+            this.count8++;
+            this.game.addEntityForeground(new SonicWave(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
-        if(!this.reset13 && this.coolD && PARAMS.SCORE  >= 4 && this.count13 === 0){
-            this.count13++;
-            this.game.addEntityInventory(new CoolDown(this.game,80,80));
+        if(!this.reset9 && this.invincibility && PARAMS.SCORE  >= 4 && this.count9 === 0){
+            this.count9++;
+            this.game.addEntityForeground(new Invincibility(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-4;
+        }
+        if(!this.reset10 && this.nuke && PARAMS.SCORE  >= 5 && this.count10 === 0){
+            this.count10++;
+            this.game.addEntityForeground(new NUKE(this.game,80,80));
+            PARAMS.SCORE = PARAMS.SCORE-5;
+        }
+        if(!this.reset11 && this.health && PARAMS.SKILL_POINTS  >= 1 && this.count11 === 0){
+            this.count11++;
+            this.game.addEntityInventory(new HealthIncrease(this.game,80,80));
+            PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
+        }
+        if(!this.reset12 && this.damage && PARAMS.SKILL_POINTS  >= 1 && this.count12 === 0){
+            this.count12++;
+            this.game.addEntityForeground(new DamageIncrease(this.game,80,80));
+            PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
+        }
+        if(!this.reset13 && this.speed && PARAMS.SKILL_POINTS  >= 1 && this.count13 === 0){
+            this.count13++;
+            this.game.addEntityInventory(new SpeedSkill(this.game,80,80));
+            PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
+        }
+        if(!this.reset14 && this.coolD && PARAMS.SKILL_POINTS  >= 1 && this.count14 === 0){
+            this.count14++;
+            this.game.addEntityInventory(new CoolDown(this.game,80,80));
+            PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         
 		if(!this.open){

@@ -108,6 +108,7 @@ class Hero {
         this.coolDown = 1;
         this.attackSpeed = 0.5 * this.coolDown;
         this.speedMultiplier = 1;
+        this.increaseH = 1;
        
         
     }
@@ -123,14 +124,14 @@ class Hero {
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x -= this.ACCELERATION; 
                 } else {
-                    this.velocity.x = this.velocity.x = (this.MAX_RUN*PARAMS.SPEED) * (-1);
+                    this.velocity.x = this.velocity.x = (this.MAX_RUN) * (-1);
                 }
             } else {
                 this.state = this.WALKING;
                 if (Math.abs(this.velocity.x) <= this.MAX_WALK) {
                     this.velocity.x -= this.ACCELERATION; 
                 } else {
-                    this.velocity.x = (this.MAX_WALK*PARAMS.SPEED) * (-1);
+                    this.velocity.x = (this.MAX_WALK) * (-1);
                 }
             }
  
@@ -143,14 +144,14 @@ class Hero {
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x += this.ACCELERATION; 
                 } else {
-                    this.velocity.x = this.velocity.x = (this.MAX_RUN*PARAMS.SPEED);
+                    this.velocity.x = this.velocity.x = (this.MAX_RUN);
                 }
             } else {
                 this.state = this.WALKING;
                 if (Math.abs(this.velocity.x) <= this.MAX_WALK) {
                     this.velocity.x += this.ACCELERATION; 
                 } else {
-                    this.velocity.x = this.MAX_WALK*PARAMS.SPEED;
+                    this.velocity.x = this.MAX_WALK;
                 }
             }
         } 
@@ -235,10 +236,20 @@ class Hero {
                 }
                 entity.removeFromWorld = true;
             }
-            if(entity instanceof HealthIncrease) {
+            if(entity instanceof HealthPotion) {
                 //entity.startTimer = true;
                 if(that.health < that.MAX_HEALTH) that.health += 50;
                 if(that.health > that.MAX_HEALTH) that.health = that.MAX_HEALTH;
+
+                entity.removeFromWorld = true;
+            } 
+            if(entity instanceof HealthIncrease) {
+                //entity.startTimer = true;
+                that.increaseH += 10;
+                that.MAX_HEALTH += 10;
+                that.health += 10;
+                //if(that.health < that.MAX_HEALTH) that.health = that.MAX_HEALTH;
+
                 entity.removeFromWorld = true;
             } 
             if(entity instanceof SpeedSkill && entity.removeFromWorld == false) {
@@ -248,6 +259,11 @@ class Hero {
                 }
                 entity.removeFromWorld = true;
             } 
+            if(entity instanceof Shield) {
+                that.shield = that.MAX_SHIELD;
+                entity.removeFromWorld = true;
+            } 
+
             
         })
 
@@ -344,6 +360,8 @@ class Hero {
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
+       
+
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
@@ -476,7 +494,7 @@ class Hero {
                 ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
             }
         }
-        ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
+        ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width+this.increaseH, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
         ctx.drawImage(this.healthbarblue, this.BB.x, this.BB.y - 3, this.BB.width * (this.shield/ this.MAX_SHIELD), 5);
         //ctx.lineWidth = 6; 
