@@ -49,7 +49,6 @@ class SpeedIncrease {
     constructor(game, x, y) {
         this.x = 25;
         this.y = 600;
-        Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/times2.png");
         this.loadProperties();
         this.removeFromWorld = false;
@@ -110,11 +109,10 @@ class HealthIncrease {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/healthIncrease.png");
-
+        this.removeFromWorld = false;
     };
     
     update () {
-        this.removeFromWorld = true;
     };
 
     draw(ctx) {
@@ -162,6 +160,19 @@ class Shield {
         ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
+class HealthPotion {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/healthPotion.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
 class SonicWave {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
@@ -180,6 +191,19 @@ class Lazer {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
 
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
+class NUKE {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
+        this.removeFromWorld = false;
     };
     
     update () {};
