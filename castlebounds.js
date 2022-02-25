@@ -3,6 +3,7 @@ class CastleBounds {
         Object.assign(this, {game, x, y});
         this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
         this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
+        this.healthbarGold = ASSET_MANAGER.getAsset("./resources/background/gold.png");
         this.loadProperties();
         this.updateBB();
     };
@@ -11,6 +12,8 @@ class CastleBounds {
         this.MAX_HEALTH = 1000;
         this.health = this.MAX_HEALTH;
         this.dead = false;
+        this.MAX_SHIELD = 1000;
+        this.shield = 0;
     }
 
     updateBB() {
@@ -23,11 +26,24 @@ class CastleBounds {
         this.game.entities[1].forEach(function (entity) {
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
                 if (entity instanceof SmallFireBall) {
-                    that.health -= 10;
+                    if (that.shield > 0) {
+                        that.shield -= 10;
+                    } else if (that.shield <= 0){
+                        that.shield = 0;
+                        that.health -= 10;
+                    }
                     entity.removeFromWorld = true;
                 }
                 
             }
+        })
+        this.game.entities[3].forEach(function (entity) {
+            if(entity instanceof CastleShield) {
+                that.shield = that.MAX_SHIELD;
+                entity.removeFromWorld = true;
+            } 
+
+            
         })
     }
 
@@ -47,6 +63,7 @@ class CastleBounds {
         }
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width, 5);
         ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
+        ctx.drawImage(this.healthbarGold, this.BB.x, this.BB.y - 3, this.BB.width * (this.shield/ this.MAX_SHIELD), 5);
     };
 
 }

@@ -17,6 +17,7 @@ class ItemAssets {
         this.lazerBeam = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
         this.healthPotion = ASSET_MANAGER.getAsset("./resources/powerUps/healthPotion.png");
         this.nuke = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
+        this.cDefense = ASSET_MANAGER.getAsset("./resources/powerUps/castleDefense.png");
 
     }
 }
@@ -131,12 +132,12 @@ class Chest {
                     this.count3 = 0;
                     this.game.click = false;
             } 
-            //USER SELECTED DOUBLE SIZE
+            //USER SELECTED Castle Defense
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 840
                 && this.game.click.y >= 130 && this.game.click.y <= 166) {
                     if(PARAMS.SCORE < 4) this.reset4 = true;
                     if(PARAMS.SCORE >= 4) this.reset4 = false;
-                    this.dSize = true;
+                    this.castleD = true;
                     this.count4 = 0;
                     this.game.click = false;
             }
@@ -297,8 +298,8 @@ class Chest {
             ctx.fillText("=  3", 600,154)
             
             //DOUBLE SIZE POWERUP
-            ctx.drawImage(this.itemAssets.doubleSize, 710,20);
-            ctx.fillText("Double Size", 710,130);
+            ctx.drawImage(this.itemAssets.cDefense, 710,20);
+            ctx.fillText("Castle Defense", 700,130);
             ctx.drawImage(this.itemAssets.coinDisplay,710,130);
             ctx.fillText("=  4", 747,154);
             
@@ -418,8 +419,8 @@ class Chest {
             this.count3++;
             PARAMS.SCORE = PARAMS.SCORE-3;
         }
-        if(!this.reset4 && this.dSize && PARAMS.SCORE  >= 4 && this.count4 === 0){
-            this.game.addEntityForeground(new SizeIncrease(this.game,80,80));
+        if(!this.reset4 && this.castleD && PARAMS.SCORE  >= 4 && this.count4 === 0){
+            this.game.addEntityInventory(new CastleShield(this.game,80,80));
             this.count4++;
             PARAMS.SCORE = PARAMS.SCORE-4;
         }

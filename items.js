@@ -145,31 +145,58 @@ class AirSlash {
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/airSlash.png");
-        
+        this.animation = [];
         this.loadProperties();
         this.loadAnimation();
+        this.updateBB();
+    };
+    updateBB() {
+        this.lastBB = this.BB;
+        if (this.facing == this.LEFT) {
+            this.BB = new BoundingBox(this.x + 5, this.y + 5, 24, 16);
+        } else if (this.facing == this.RIGHT) {
+            this.BB = new BoundingBox(this.x + 5, this.y + 5, 24, 16);
+        }
+        
     };
     loadAnimation() {
-        this.animation = new Animator(this.spritesheet,8,90,56,112,1,1,0,false,true);
+        this.animation[0] = new Animator(this.spritesheet,8,90,56,112,1,1,0,false,true);
     };
     loadProperties() {
         //facings
         this.LEFT = 0;
         this.RIGHT = 1;
+        this.hasBeenAttacked = false;
+        this.removeFromWorld = false;
 
         //restrictions
-        this.SPEED = 0.4;
+        this.SPEED = 120;
         this.HEIGHT = 5;
     };
     update() {
+        this.updateBB();
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.facing == this.LEFT) {
+                this.x -= this.SPEED * TICK;
+            } else {
+                this.x += this.SPEED * TICK; 
+            } 
+        }
+
         
     };
-    draw(ctx) {  
-        if (this.facing == this.LEFT) {
-            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,0.5); 
+    draw(ctx) {
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
+        if (this.facing == this.RIGHT) {
+            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,2); 
         } else {
-            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,0.5);   
-        }      
+            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,2);   
+        }  
     };
 };
 
