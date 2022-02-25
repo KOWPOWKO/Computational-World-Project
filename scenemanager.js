@@ -94,7 +94,11 @@ class SceneManager {
                     entity.startTimer = true;
                     PARAMS.SLOW = 0.1;
                 }
+<<<<<<< HEAD
+            }
+=======
             } 
+>>>>>>> 2497367a32830dcd56e40771d83c7442e8f2f02e
             if(entity instanceof SpeedIncrease) {
                 if(!PARAMS.PAUSE){
                     entity.startTimer = true;
