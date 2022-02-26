@@ -9,6 +9,7 @@ class Hero {
         this.updateBB();
         this.animations = [];
         this.loadAnimation();
+    
     };
 
     
@@ -81,6 +82,11 @@ class Hero {
         this.JUMPING = true;
         this.HITMAXPEAK = false;
 
+        //special abilities
+        this.kSlot = false;
+        this.lSlot = false;
+        this.kFill;
+
         //basic restrictions
         this.GROUND = 455;
         this.MAX_RUN = 200;
@@ -112,6 +118,8 @@ class Hero {
         this.damage = 25;
        
         
+        this.myInventory = new Inventory(this.game);
+        this.outsideCastle = false;
     }
     
 
@@ -231,6 +239,15 @@ class Hero {
         var that = this;
 
         this.game.entities[3].forEach(function (entity) {
+            if(entity instanceof ArrowShooterInvetory) {
+                if (that.kSlot == false) {
+                    that.kFill = entity;
+                    that.kSlot = true;
+                    
+                }
+                entity.removeFromWorld = true;
+            }
+
             if(entity instanceof CoolDown && entity.removeFromWorld == false) {
                 if (that.coolDown > 0.3) {
                     that.coolDown -= 0.2;
@@ -268,11 +285,17 @@ class Hero {
                 that.shield = that.MAX_SHIELD;
                 entity.removeFromWorld = true;
             } 
-
-            
         })
 
         this.game.entities[2].forEach(function (entity) {
+            if (entity instanceof CastleBounds) {
+                if (entity.BB && that.BB.collide(entity.BB)) {
+                    that.outsideCastle = false;
+                } else {
+                    that.outsideCastle = true;
+                }
+            }
+
             if (entity.BB && that.BB.collide(entity.BB)) {
                 if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top ) { //ground logic
                     that.y = entity.BB.top - that.BB.height;
@@ -362,6 +385,17 @@ class Hero {
         
     }
 
+    specialUpdate() {
+        if (this.game.specialK) {
+            if (this.kSlot == true && this.outsideCastle == true) {
+                if (this.kFill instanceof ArrowShooterInvetory) {
+                    this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                }
+                this.kSlot = false;
+            }
+        }
+    }
+
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
@@ -407,6 +441,7 @@ class Hero {
             else if (this.JUMPING) {
                 this.jumpUpdate();
             }
+            this.specialUpdate();
             this.XYupdate(TICK);
             this.updateBB();
             this.updateAttackBB();
@@ -492,6 +527,12 @@ class Hero {
         } else if (this.dead == true) {
             this.deadAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
             
+        }
+
+        if (this.kSlot == true) {
+            this.kSlotSheet = this.kFill.spritesheet;
+            this.kSlotAnimation = this.kFill.animation;
+            this.kSlotAnimation.drawFrame(this.game.clockTick,ctx,this.myInventory.BB.x,this.myInventory.BB.y,0.5);
         }
         
 

@@ -36,7 +36,6 @@ class SceneManager {
     mainMenu() {
 
         this.game.addEntityBackground(new StartingScreen(this.game, 0, 0));
-        
     }
 
     gameOver() {
@@ -52,6 +51,7 @@ class SceneManager {
         this.clearEntities();
         //this.game.addEntity(new Character_2(this.game,0,0));
         this.game.addEntityForeground(new Hero(this.game,0,0));
+        this.game.addEntityBackground(new Inventory(this.game));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
 
 

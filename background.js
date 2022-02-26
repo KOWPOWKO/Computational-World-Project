@@ -73,15 +73,31 @@ class Fire {
 
 class Inventory {
     constructor(game) {
+        this.game = game;
+        this.updateBB();
+    }
+
+
+    updateBB() {
+        this.lastBB = this.BB;
+        this.lastBB2 = this.BB2;
+  
+        this.BB = new BoundingBox(720, 590, 100, 100);
+        this.BB2 = new BoundingBox(830, 590, 100, 100);
 
     }
 
-    update() {
 
+    update() {
+        this.updateBB();
     }
 
     draw(ctx) {
-        
+        ctx.strokeStyle = 'Black';
+        ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        ctx.fillText("[K]", this.BB.x + (this.BB.width / 2) - 10, this.BB.y + this.BB.height + 16);
+        ctx.strokeRect(this.BB2.x, this.BB2.y, this.BB2.width, this.BB2.height);
+        ctx.fillText("[L]", this.BB2.x + (this.BB2.width / 2) - 10, this.BB2.y + this.BB2.height + 16);
     }
 }
 
