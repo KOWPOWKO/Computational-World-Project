@@ -24,6 +24,8 @@ class GameEngine {
        this.left = null;
        this.run = null;
        this.attack = null;
+       this.specialK = null;
+       this.specialL = null;
 
        this.elapsedTime = 0;
        this.totalTime = 90;
@@ -99,6 +101,15 @@ class GameEngine {
                 case "KeyJ":
                     that.attack = true;
                     break;
+
+                case "KeyK":
+                    that.specialK = true;
+                    break;
+
+                case "KeyL":
+                    that.specialL = true;
+                    break;
+
                 case "ShiftLeft":
                     that.run = true;
             }
@@ -124,6 +135,14 @@ class GameEngine {
 
                 case "KeyD":
                     that.right = false;
+                    break;
+
+                case "KeyK":
+                    that.specialK = false;
+                    break;
+
+                case "KeyL":
+                    that.specialL = false;
                     break;
                 case "ShiftLeft":
                     that.run = false;
