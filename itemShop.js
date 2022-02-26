@@ -344,6 +344,19 @@ class Shield {
         ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
+class CastleShield {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/castleDefense.png");
+
+    };
+    
+    update () {};
+
+    draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
+    };
+};
 class HealthPotion {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});

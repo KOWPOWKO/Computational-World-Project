@@ -114,7 +114,7 @@ class Hero {
         this.coolDown = 1;
         this.attackSpeed = 0.5 * this.coolDown;
         this.speedMultiplier = 1;
-        this.increaseH = 1;
+        this.increaseH = 0;
         this.myInventory = new Inventory(this.game);
         this.outsideCastle = false;
     }
@@ -261,9 +261,8 @@ class Hero {
             if(entity instanceof HealthIncrease) {
                 //entity.startTimer = true;
                 that.increaseH += 10;
-                that.MAX_HEALTH += 10;
-                that.health += 10;
-                //if(that.health < that.MAX_HEALTH) that.health = that.MAX_HEALTH;
+                that.MAX_HEALTH = that.MAX_HEALTH + that.increaseH;
+                if(that.health < that.MAX_HEALTH) that.health = that.MAX_HEALTH;
 
                 entity.removeFromWorld = true;
             } 
@@ -534,7 +533,7 @@ class Hero {
             }
         }
         ctx.drawImage(this.healthbarred, this.BB.x, this.BB.y - 10, this.BB.width+this.increaseH, 5);
-        ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
+        ctx.drawImage(this.healthbar, this.BB.x, this.BB.y - 10, this.BB.width * (this.health / this.MAX_HEALTH)+this.increaseH, 5);
         ctx.drawImage(this.healthbarblue, this.BB.x, this.BB.y - 3, this.BB.width * (this.shield/ this.MAX_SHIELD), 5);
         //ctx.lineWidth = 6; 
         ctx.fillStyle = "White";

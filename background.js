@@ -25,7 +25,7 @@ class StartingScreen {
     
     update () {
         if(this.game.click){
-            if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 750
+            if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 800
                 && this.game.click.y >= 680 && this.game.click.y <= 705) {
                this.loadGame =true;
                this.game.click = false;
@@ -37,9 +37,18 @@ class StartingScreen {
         if(!this.loadGame){
             ctx.fillStyle = "White";
             ctx.fillRect(0,0, 1280, 720);
-            ctx.font = ctx.font.replace(/\d+px/, "18px");
-            ctx.fillStyle = "Red";
-		    ctx.fillText("CLICK TO START GAME", 535,700);
+            ctx.font = ctx.font.replace(/\d+px/, "24px");
+            ctx.fillStyle = "Black";
+            ctx.fillText("CONTROLS: ", 50,50);
+            ctx.fillText("OBJECTIVE: ", 1000,50);
+            if(this.game.mouse && this.game.mouse.x >= 530 && this.game.mouse.x <= 800 && this.game.mouse.y >= 680 && this.game.mouse.y <= 705){
+                ctx.fillStyle = "Grey";
+		        ctx.fillText("CLICK TO START GAME", 535,700);
+                }
+            else{
+                ctx.fillStyle = "Red";
+		        ctx.fillText("CLICK TO START GAME", 535,700);
+            }
             //this.game.addEntityBackground(new Castle(this.game, 0, 0));
             ctx.drawImage(this.title, 463, 0,320,320);
         } 

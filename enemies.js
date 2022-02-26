@@ -107,7 +107,12 @@ class Snake {
                     } else if (that.facing == that.LEFT) {
                         that.x = entity.BB.right + that.BB.width;
                     }
-                    entity.health -= 10;
+                    if (entity.shield > 0) {
+                        entity.shield -= 10;
+                    } else if (entity.shield <= 0){
+                        entity.shield = 0;
+                        entity.health -= 10;
+                    }
                     that.previousAttack = 0;
                 }
             }    
@@ -408,7 +413,12 @@ class Ogre {
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
-                    entity.health -= 10;
+                    if (entity.shield > 0) {
+                        entity.shield -= 10;
+                    } else if (entity.shield <= 0){
+                        entity.shield = 0;
+                        entity.health -= 10;
+                    }
                     that.previousAttack = 0;
                 }else {
                     that.SPEED = 25;
@@ -573,7 +583,12 @@ class Skeleton {
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
-                    entity.health -= 10;
+                    if (entity.shield > 0) {
+                        entity.shield -= 10;
+                    } else if (entity.shield <= 0){
+                        entity.shield = 0;
+                        entity.health -= 10;
+                    }
                     that.previousAttack = 0;
                 }else {
                     that.SPEED = 25;

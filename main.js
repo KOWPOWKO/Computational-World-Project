@@ -33,6 +33,7 @@ ASSET_MANAGER.queueDownload("./resources/powerUps/cooldown.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/lazerbeam.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/nuke.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/healthPotion.png");
+ASSET_MANAGER.queueDownload("./resources/powerUps/castleDefense.png");
 ASSET_MANAGER.queueDownload("./resources/powerUps/damageIncrease.gif");
 ASSET_MANAGER.queueDownload("./resources/powerUps/greenguyarrow.png");
 
@@ -47,6 +48,7 @@ ASSET_MANAGER.queueDownload("./resources/background/background.jpg");
 ASSET_MANAGER.queueDownload("./resources/background/healthgreen.jpg");
 ASSET_MANAGER.queueDownload("./resources/background/healthred.jpg");
 ASSET_MANAGER.queueDownload("./resources/background/healthblue.png");
+ASSET_MANAGER.queueDownload("./resources/background/gold.png");
 ASSET_MANAGER.queueDownload("./resources/background/exit.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
