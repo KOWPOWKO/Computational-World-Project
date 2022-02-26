@@ -234,8 +234,14 @@ class Chest {
                     this.game.click = false;
             }             
         }
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
     };
 	draw(ctx){   
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
         ctx.fillStyle = "Black";
         ctx.font.replace(/\d+px/, "10px");
 		ctx.fillText("ITEM SHOP", 500,595);
@@ -457,21 +463,24 @@ class Chest {
         if(!this.reset11 && this.health && PARAMS.SKILL_POINTS  >= 1 && this.count11 === 0){
             this.count11++;
             this.game.addEntityInventory(new HealthIncrease(this.game,80,80));
+            playSound("upgrade.mp3"); // Location to your sound file
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         if(!this.reset12 && this.damage && PARAMS.SKILL_POINTS  >= 1 && this.count12 === 0){
             this.count12++;
-            this.game.addEntityForeground(new DamageIncrease(this.game,80,80));
+            this.game.addEntityInventory(new DamageIncrease(this.game,80,80));
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         if(!this.reset13 && this.speed && PARAMS.SKILL_POINTS  >= 1 && this.count13 === 0){
             this.count13++;
             this.game.addEntityInventory(new SpeedSkill(this.game,80,80));
+            playSound("upgrade.mp3"); // Location to your sound file
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         if(!this.reset14 && this.coolD && PARAMS.SKILL_POINTS  >= 1 && this.count14 === 0){
             this.count14++;
             this.game.addEntityInventory(new CoolDown(this.game,80,80));
+            playSound("upgrade.mp3"); // Location to your sound file
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         
