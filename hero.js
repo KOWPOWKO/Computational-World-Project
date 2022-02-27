@@ -489,6 +489,7 @@ class Hero {
                 } 
                 else if (this.ATTACKING == true) {
                     this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
+                    
     
                 } 
                 else if (this.knockback) {

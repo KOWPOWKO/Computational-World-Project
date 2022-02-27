@@ -66,7 +66,7 @@ class Chest {
 
 		if (this.game.click) {
             this.screen = true;
-            if (this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571){
+            if (!PARAMS.PAUSE && this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571){
                 this.open = true;
                 this.p1 = true;
                 this.p2 = true;
@@ -74,11 +74,12 @@ class Chest {
                 this.test = 0;
             }
             if(this.p1 && this.game.click.x > 420 && this.game.click.x < 495 && this.game.click.y > 15 && this.game.click.y < 90 ){
+                this.game.click.x = 0;
                 this.test = 1;
                 this.powerUp = true;
                 this.p2 = false;
                 this.p3 = false;
-                this.game.click.x = 0;
+                
             }
             if(this.p2 && this.game.click && this.game.click.x > 570 && this.game.click.x < 645 && this.game.click.y > 15 && this.game.click.y < 110){
                 this.test = 1;
@@ -105,8 +106,8 @@ class Chest {
 
             //***POWER UP***
             //USER SELECTED TIME STOP
-            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
-                && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 201 && this.game.click.x <= 242 
+                && this.game.click.y>=135 && this.game.click.y <= 160 ) {
                     if(PARAMS.SCORE < 1) this.reset1 = true;
                     if(PARAMS.SCORE >= 1) this.reset1 = false;
 
@@ -115,8 +116,8 @@ class Chest {
                     this.game.click = false;
             }  
             //USER SELECTED HEALTH POTION
-            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
-                && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 376 && this.game.click.x <= 407 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 2) this.reset2 = true;
                     if(PARAMS.SCORE >= 2) this.reset2 = false;
                     this.potionH = true;
@@ -124,8 +125,8 @@ class Chest {
                     this.game.click = false;
             }  
             //USER SELECTED SHIELD POTION
-            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 575 && this.game.click.x <= 700
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 546 && this.game.click.x <= 587 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 3) this.reset3 = true;
                     if(PARAMS.SCORE >= 3) this.reset3 = false;
                     this.shieldAbility = true;
@@ -133,8 +134,8 @@ class Chest {
                     this.game.click = false;
             } 
             //USER SELECTED Castle Defense
-            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 840
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 731 && this.game.click.x <= 772 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 4) this.reset4 = true;
                     if(PARAMS.SCORE >= 4) this.reset4 = false;
                     this.castleD = true;
@@ -142,8 +143,8 @@ class Chest {
                     this.game.click = false;
             }
             //USER SELECTED ARROW SHOOTER
-            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 920
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 916 && this.game.click.x <= 957 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 5) this.reset5 = true;
                     if(PARAMS.SCORE >= 5) this.reset5 = false;
                     this.arrowShooter = true;
@@ -152,8 +153,8 @@ class Chest {
              }  
              //***SPECIAL ABILITY***
              //USER SELECTED AIR SLASH
-             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 276 
-                && this.game.click.y >= 130 && this.game.click.y <= 166 ) {
+             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 201 && this.game.click.x <= 242 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 1) this.reset6 = true;
                     if(PARAMS.SCORE >= 1) this.reset6 = false;
                     this.slashAbility = true;
@@ -161,8 +162,8 @@ class Chest {
                     this.game.click = false;
             }   
             //USER SELECTED LASER BEAM  
-            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 436
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 376 && this.game.click.x <= 407 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 2) this.reset7 = true;
                     if(PARAMS.SCORE >= 2) this.reset7 = false;
                     this.laserB = true;
@@ -170,8 +171,8 @@ class Chest {
                     this.game.click = false;
             } 
             //USER SELECTED SONIC WAVE
-            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 560 && this.game.click.x <= 596
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 546 && this.game.click.x <= 587 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 3) this.reset8 = true;
                     if(PARAMS.SCORE >= 3) this.reset8 = false;
                     this.waveS = true;
@@ -179,8 +180,8 @@ class Chest {
                     this.game.click = false;
             } 
             //USER SELECTED INVINCIBILITY
-            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 746
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 731 && this.game.click.x <= 772 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 4) this.reset9 = true;
                     if(PARAMS.SCORE >= 4) this.reset9 = false;
                     this.invincibility = true;
@@ -188,8 +189,8 @@ class Chest {
                     this.game.click = false;
             } 
             //USER SELECTED NUKE
-            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 880 && this.game.click.x <= 916
-                && this.game.click.y >= 130 && this.game.click.y <= 166) {
+            if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 916 && this.game.click.x <= 957 
+                && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 4) this.reset10 = true;
                     if(PARAMS.SCORE >= 4) this.reset10 = false;
                     this.nuke = true;
@@ -198,8 +199,8 @@ class Chest {
             } 
             //***SKILL POINTS***
              //USER SELECTED INCREASE HEALTH
-            if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 390
-                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+            if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 350
+                && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 1) this.reset11 = true;
                     if(PARAMS.SCORE >= 1) this.reset11 = false;
                     this.health =  true;
@@ -207,8 +208,8 @@ class Chest {
                     this.game.click = false;
             } 
              //USER SELECTED INCREASE DAMAGE
-             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 520
-                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 510
+                && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 2) this.reset12 = true;
                     if(PARAMS.SCORE >= 2) this.reset12 = false;
                     this.damage =  true;
@@ -216,8 +217,8 @@ class Chest {
                     this.game.click = false;
             } 
              //USER SELECTED INCREASE SPEED
-             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 850
-                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 820
+                && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 3) this.reset13 = true;
                     if(PARAMS.SCORE >= 3) this.reset13 = false;
                     this.speed =  true;
@@ -225,17 +226,14 @@ class Chest {
                     this.game.click = false;
             } 
              //USER SELECTED INCREASE COOLDOWN
-             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 940
-                && this.game.click.y >= 20 && this.game.click.y <= 120) {
+             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 970
+                && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 4) this.reset14 = true;
                     if(PARAMS.SCORE >= 4) this.reset14 = false;
                     this.coolD =  true;
                     this.count14 = 0;
                     this.game.click = false;
             }             
-        }
-        function playSound(soundfile){
-            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
         }
     };
 	draw(ctx){   
@@ -272,9 +270,9 @@ class Chest {
         //powerup 
         if(this.powerUp){
             this.open = false
-            ctx.drawImage(this.itemAssets.exit,1000,5);
+            ctx.drawImage(this.itemAssets.exit,1060,5);
             if(this.game.click){
-                if(this.game.click && this.game.click.x >= 1000 && this.game.click.x <= 1022 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
+                if(this.game.click && this.game.click.x >= 1060 && this.game.click.x <= 1082 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
                     this.powerUp = false;
                     this.open = true;
                     this.p1 = true;
@@ -283,37 +281,85 @@ class Chest {
                 }
             }
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
-            ctx.fillRect(230 ,0, 800, 165);
+            ctx.fillRect(190 ,0, 900, 165);
             ctx.fillStyle = "White";
             //TIME WATCH powerUP
-            ctx.drawImage(this.itemAssets.slowEnemies,240,20);
-            ctx.fillText("Slow Enemies", 240,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,240,130);
-            ctx.fillText("=  1", 285,154)
-        
-            //Arrow shooter powerup
-            ctx.drawImage(this.itemAssets.healthPotion,400,15);
-            ctx.fillText("Health Potion", 400,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,400,130);
-            ctx.fillText("=  2", 440,154);
-
-            //DOUBLE SPEED POWERUP
+            ctx.drawImage(this.itemAssets.slowEnemies,220,20);
+            ctx.fillText("Slow Enemies", 220,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,250,133);
+            ctx.fillText("=  1", 295,157)
+            ctx.strokeRect(195, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 201 && this.game.mouse.x <= 242 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 202,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 202,155);
+            }
+            ctx.fillStyle = "White";
+            //HEALTH POTION powerup
+            ctx.drawImage(this.itemAssets.healthPotion,385,15);
+            ctx.fillText("Health Potion", 385,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,425,133);
+            ctx.fillText("=  2", 470,157);
+            ctx.strokeRect(370, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 376 && this.game.mouse.x <= 407 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 377,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 377,155);
+            }
+            ctx.fillStyle = "White";
+            //SHIELD POTION POWERUP
             ctx.drawImage(this.itemAssets.shield,575,21);
             ctx.fillText("Shield Potion", 560,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,560,130);
-            ctx.fillText("=  3", 600,154)
+            ctx.drawImage(this.itemAssets.coinDisplay,595,133);
+            ctx.fillText("=  3", 640,157)
+            ctx.strokeRect(540, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 546 && this.game.mouse.x <= 587 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 547,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 547,155);
+            }
+            ctx.fillStyle = "White";
             
-            //DOUBLE SIZE POWERUP
-            ctx.drawImage(this.itemAssets.cDefense, 710,20);
-            ctx.fillText("Castle Defense", 700,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,710,130);
-            ctx.fillText("=  4", 747,154);
+            //CASTLE DEFENSE POWERUP
+            ctx.drawImage(this.itemAssets.cDefense, 750,20);
+            ctx.fillText("Castle Defense", 740,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,780,133);
+            ctx.fillText("=  4", 825,157);
+            ctx.strokeRect(725, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 731 && this.game.mouse.x <= 772 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 732,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 732,155);
+            }
+            ctx.fillStyle = "White";
             
-            //INVINCIBILITY POWERUP
-            ctx.drawImage(this.itemAssets.arrowShooter, 860,12);
-            ctx.fillText("Arrow Shooter", 860,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,860,130);
-            ctx.fillText("=  5", 900,154);
+            //ARROW SHOOTER POWERUP
+            ctx.drawImage(this.itemAssets.arrowShooter, 945,12);
+            ctx.fillText("Arrow Shooter", 930,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,965,133);
+            ctx.fillText("=  5", 1005,157);
+            ctx.strokeRect(910, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 916 && this.game.mouse.x <= 957 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 917,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 917,155);
+            }
+            ctx.fillStyle = "White";
 
             ctx.fillText("POWER UPS", 570,20);
             
@@ -321,9 +367,9 @@ class Chest {
 
         if(this.specialAbil){
             this.open = false;
-            ctx.drawImage(this.itemAssets.exit,1000,5);
+            ctx.drawImage(this.itemAssets.exit,1060,5);
             if(this.game.click){
-                if(this.game.click && this.game.click.x >= 1000 && this.game.click.x <= 1022 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
+                if(this.game.click && this.game.click.x >= 1060 && this.game.click.x <= 1082 && this.game.click.y >= 5 && this.game.click.y <= 27 ){
                     this.specialAbil = false;
                     this.open = true;
                     this.p1 = true;
@@ -334,37 +380,87 @@ class Chest {
 
            // this.specialAbil = false;
             ctx.fillStyle = rgba(0, 0, 0, 0.5);
-            ctx.fillRect(230 ,0, 800, 165);
+            ctx.fillRect(190 ,0, 900, 165);
             ctx.fillStyle = "White";
-            //SHIELD SPECIAL ABILITY
-            ctx.drawImage(this.itemAssets.airSlash,250,15);
-            ctx.fillText("AIR   SLASH", 240,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,240,130);
-            ctx.fillText("=  1", 285,154);
 
             //AIR SLASH SPECIAL ABILITY
-            ctx.drawImage(this.itemAssets.lazerBeam,375,40);
-            ctx.fillText("Laser Beam", 400,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,400,130);
-            ctx.fillText("=  2", 440,154);
-			ctx.fillText("SPECIAL ABILITY", 520,20);
+            ctx.drawImage(this.itemAssets.airSlash,220,15);
+            ctx.fillText("AIR   SLASH", 210,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,250,133);
+            ctx.fillText("=  1", 295,157)
+            ctx.strokeRect(195, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 201 && this.game.mouse.x <= 242 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 202,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 202,155);
+            }
+            ctx.fillStyle = "White";
+
+            //LASER BEAM SPECIAL ABILITY
+            ctx.drawImage(this.itemAssets.lazerBeam,365,40);
+            ctx.fillText("Laser Beam", 390,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,425,133);
+            ctx.fillText("=  2", 470,157);
+            ctx.strokeRect(370, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 376 && this.game.mouse.x <= 407 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 377,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 377,155);
+            }
+            ctx.fillStyle = "White";
 
             ctx.drawImage(this.itemAssets.sonicWave,540,20);
             ctx.fillText("Sonic Wave", 560,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,560,130);
-            ctx.fillText("=  3", 600,154)
+            ctx.drawImage(this.itemAssets.coinDisplay,595,133);
+            ctx.fillText("=  3", 640,157)
+            ctx.strokeRect(540, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 546 && this.game.mouse.x <= 587 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 547,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 547,155);
+            }
+            ctx.fillStyle = "White";
 
             //laser beam special ability
-            ctx.drawImage(this.itemAssets.invincibility,710,20);
-            ctx.fillText("Invincibility", 710,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,710,130);
-            ctx.fillText("=  4", 747,154)
-
+            ctx.drawImage(this.itemAssets.invincibility,760,20);
+            ctx.fillText("Invincibility", 760,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,780,133);
+            ctx.fillText("=  4", 825,157);
+            ctx.strokeRect(725, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 731 && this.game.mouse.x <= 772 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 732,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 732,155);
+            }
+            ctx.fillStyle = "White";
             //sonic wave special ability
-            ctx.drawImage(this.itemAssets.nuke,860,13);
-            ctx.fillText("NUKE", 890,130);
-            ctx.drawImage(this.itemAssets.coinDisplay,880,130);
-            ctx.fillText("=  5", 920,154)
+            ctx.drawImage(this.itemAssets.nuke,910,13);
+            ctx.fillText("NUKE", 950,130);
+            ctx.drawImage(this.itemAssets.coinDisplay,965,133);
+            ctx.fillText("=  5", 1005,157);
+            ctx.strokeRect(910, 136 , 50, 27);
+            if(this.game.mouse && this.game.mouse.x >= 916 && this.game.mouse.x <= 957 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Red";
+                ctx.fillText("BUY", 917,155);
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("BUY", 917,155);
+            }
+            ctx.fillStyle = "White";
+            ctx.fillText("SPECIAL ABILITY", 540,20);
         }
 
         if(this.skillP){
@@ -386,26 +482,63 @@ class Chest {
             ctx.drawImage(this.itemAssets.healthIncrease,240,10);
             ctx.fillText("Health Increase", 240,130);
             //ctx.drawImage(this.itemAssets.coinDisplay,240,130);
-            ctx.fillText("UPGRADE: 1", 240,154)
             ctx.fillText("SKILL POINT", 570,20);
+            ctx.strokeRect(235, 136 , 120, 27);
+            if(this.game.mouse && this.game.mouse.x >= 239 && this.game.mouse.x <= 350 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Gold";
+                ctx.fillText("UPGRADE: 1", 240,154)
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("UPGRADE: 1", 240,154)
+            }
+            ctx.fillStyle = "White";
+
 
             //Increase Damage SKILL POINT
             ctx.drawImage(this.itemAssets.damageIncrease,400,15);
             ctx.fillText("Increase Damage", 400,130);
             //ctx.drawImage(this.itemAssets.coinDisplay,400,130);
-            ctx.fillText("UPGRADE: 1", 400,154)
+            ctx.strokeRect(395, 136 , 120, 27);
+            if(this.game.mouse && this.game.mouse.x >= 399 && this.game.mouse.x <= 510 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Gold";
+                ctx.fillText("UPGRADE: 1", 400,154)
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("UPGRADE: 1", 400,154)
+            }
+            ctx.fillStyle = "White";
 
             //Increase speed SKILL POINT
             ctx.drawImage(this.itemAssets.speedIncrease,710,20);
             ctx.fillText("Increase Speed", 710,130);
             //ctx.drawImage(this.itemAssets.coinDisplay,710,130);
-            ctx.fillText("UPGRADE: 1", 710, 154)
+            ctx.strokeRect(705, 136 , 120, 27);
+            if(this.game.mouse && this.game.mouse.x >= 709 && this.game.mouse.x <= 820 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Gold";
+                ctx.fillText("UPGRADE: 1", 710,154)
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("UPGRADE: 1", 710,154)
+            }
+            ctx.fillStyle = "White";
 
             //cooldown SKILL POINT
             ctx.drawImage(this.itemAssets.coolDown,860,20);
             ctx.fillText("Cool Down", 860,130);
             //ctx.drawImage(this.itemAssets.coinDisplay,860,130);
-            ctx.fillText("UPGRADE: 1", 860,154)
+            ctx.strokeRect(855, 136 , 120, 27);
+            if(this.game.mouse && this.game.mouse.x >= 859 && this.game.mouse.x <= 970 && this.game.mouse.y>=135 && this.game.mouse.y <= 160){
+                ctx.fillStyle = "Gold";
+                ctx.fillText("UPGRADE: 1", 860,154)
+            }
+            else{
+                ctx.fillStyle = "White";
+                ctx.fillText("UPGRADE: 1", 860,154)
+            }
+            ctx.fillStyle = "White";
 
         }
 

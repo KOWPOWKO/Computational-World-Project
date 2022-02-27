@@ -2,10 +2,18 @@ class Sun {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/sun.png");
+        this.counter = 10;
 
     };
     
-    update () {};
+    update () {
+        if(this.game.mouse && this.game.mouse.x >= 1100 && this.game.mouse.x <= 1280 && this.game.mouse.y >= 0 && this.game.mouse.y <= 150){
+            if(this.counter > 0){
+            this.game.addEntityForeground(new Coin(this.game, 300, 300));
+            this.counter--;
+            }
+        }
+    };
 
     draw(ctx) {
         ctx.drawImage(this.spritesheet, 1100, 0, this.x, this.y);
@@ -40,7 +48,24 @@ class StartingScreen {
             ctx.font = ctx.font.replace(/\d+px/, "24px");
             ctx.fillStyle = "Black";
             ctx.fillText("CONTROLS: ", 50,50);
-            ctx.fillText("OBJECTIVE: ", 1000,50);
+            ctx.fillText("[W] = JUMP", 50,75);
+            ctx.fillText("[A] = LEFT", 50,100);
+            ctx.fillText("[D] = RIGHT", 50,125);
+            ctx.fillText("[J] = ATTACK", 50,150);
+            ctx.fillText("[S] = BLOCK", 50,175);
+            ctx.fillText("[SHIFT] = HOLD TO RUN", 50,200);
+
+            ctx.fillText("OBJECTIVE: ", 900,50);
+            ctx.fillText("Defeat the wave of enemies swarming the castle. ", 755,75);
+            ctx.fillText("Use coins dropped by enemies to purchase Powerups.", 698,100);
+            ctx.fillText("After every round, you are rewarded One Skill Point.", 725,125);
+            ctx.fillText("Skill Points can be used to upgrade Players stats.", 750,150);
+
+            ctx.fillText("Hint: ", 50,400);
+            ctx.fillText("Sunshine leads all paths to victory!", 50,425);
+
+
+
             if(this.game.mouse && this.game.mouse.x >= 530 && this.game.mouse.x <= 800 && this.game.mouse.y >= 680 && this.game.mouse.y <= 705){
                 ctx.fillStyle = "Grey";
 		        ctx.fillText("CLICK TO START GAME", 535,700);
