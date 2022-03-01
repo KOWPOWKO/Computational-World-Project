@@ -68,5 +68,6 @@ const PARAMS = {
     PAUSE: false,
     SLOW: 1,
     HEALTH: 0,
+    INV_FULL: false,
     SPEED: 1
 };

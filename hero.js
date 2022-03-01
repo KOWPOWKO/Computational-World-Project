@@ -86,6 +86,7 @@ class Hero {
         this.kSlot = false;
         this.lSlot = false;
         this.kFill;
+        this.lFill
 
         //basic restrictions
         this.GROUND = 455;
@@ -240,7 +241,9 @@ class Hero {
                 if (that.kSlot == false) {
                     that.kFill = entity;
                     that.kSlot = true;
-                    
+                } else if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;
                 }
                 entity.removeFromWorld = true;
             }
@@ -379,19 +382,38 @@ class Hero {
 
     specialUpdate() {
         if (this.game.specialK) {
-            if (this.kSlot == true && this.outsideCastle == true) {
-                if (this.kFill instanceof ArrowShooterInvetory) {
-                    this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+            if (this.outsideCastle == true) {
+                if (this.kSlot == true) {
+                    if (this.kFill instanceof ArrowShooterInvetory) {
+                        this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                    }
+                    this.kSlot = false;
                 }
-                this.kSlot = false;
+
+                if (this.lSlot == true) {
+                    if (this.lFill instanceof ArrowShooterInvetory) {
+                        this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                    }
+                    this.lSlot = false;
+                }
+                
+                
             }
+        }
+    }
+
+    checkInventoryFull() {
+        if (this.lSlot == true && this.kSlot == true) {
+            PARAMS.INV_FULL = true;
+        } else {
+            PARAMS.INV_FULL = false;
         }
     }
 
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
-       
+        this.checkInventoryFull();
 
 
         if (this.dead == false && PARAMS.PAUSE == false) {
@@ -520,6 +542,10 @@ class Hero {
             this.kSlotSheet = this.kFill.spritesheet;
             this.kSlotAnimation = this.kFill.animation;
             this.kSlotAnimation.drawFrame(this.game.clockTick,ctx,this.myInventory.BB.x,this.myInventory.BB.y,0.5);
+        } else if (this.lSlot == true) {
+            this.lSlotSheet = this.lFill.spritesheet;
+            this.lSlotAnimation = this.lFill.animation;
+            this.lSlotAnimation.drawFrame(this.game.clockTick,ctx,this.myInventory.BB.x,this.myInventory.BB.y,0.5);
         }
         
 
