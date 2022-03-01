@@ -116,6 +116,9 @@ class Hero {
         this.attackSpeed = 0.5 * this.coolDown;
         this.speedMultiplier = 1;
         this.increaseH = 0;
+        this.damage = 25;
+       
+        
         this.myInventory = new Inventory(this.game);
         this.outsideCastle = false;
     }
@@ -269,6 +272,11 @@ class Hero {
 
                 entity.removeFromWorld = true;
             } 
+            if(entity instanceof DamageIncrease) {
+                that.damage += 10;
+
+                entity.removeFromWorld = true;
+            } 
             if(entity instanceof SpeedSkill && entity.removeFromWorld == false) {
                 //entity.startTimer = true;
                 if (that.speedMultiplier < 5) {
@@ -310,7 +318,7 @@ class Hero {
             if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) { //attacking enemies
                 if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
-                        entity.health -= 25;
+                        entity.health -= that.damage;
                         entity.hasBeenAttacked = true;
                         entity.knockback = true;
                     } 
@@ -413,7 +421,13 @@ class Hero {
     update() {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
+<<<<<<< HEAD
         this.checkInventoryFull();
+=======
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+>>>>>>> b9a0a33c1a97dab7124083103f022ea246868446
 
 
         if (this.dead == false && PARAMS.PAUSE == false) {
@@ -464,6 +478,7 @@ class Hero {
                 this.dead = true;
             }
         } else if (this.dead == true) {
+            playSound("game-lose-2.mp3"); // Location to your sound file
             if(this.deadAnim.isDone()) {
                 this.finishDead = true;
             }
@@ -492,6 +507,7 @@ class Hero {
     }
 
     draw(ctx) {
+        
         if (this.dead == false) {
             if (this.facing == this.LEFT) {
                 if (this.JUMPING == true && this.ATTACKING == false) {
@@ -499,6 +515,7 @@ class Hero {
                 } 
                 else if (this.ATTACKING == true) {
                     this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
+                    
     
                 } 
                 else if (this.knockback) {
@@ -536,6 +553,7 @@ class Hero {
             }
         } else if (this.dead == true) {
             this.deadAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
+            
         }
 
         if (this.kSlot == true) {
@@ -568,8 +586,12 @@ class Hero {
         ctx.fillText("Time: " + Math.round(PARAMS.TIME), 25, 70); 
 
         ctx.fillStyle = "Green";
-        ctx.fillText("Attack Cooldown: " + this.coolDown, 25, 90);
-        ctx.fillText("Speed: " + this.speedMultiplier, 25, 110);
+        ctx.fillText("PLAYER STATS" , 25, 90);
+        ctx.fillText("*Cooldown: " + this.coolDown, 25, 110);
+        ctx.fillText("*Speed: " + this.speedMultiplier, 25, 130);
+        ctx.fillText("*Max Health: " + this.MAX_HEALTH, 25, 150);
+        ctx.fillText("*Damage: " + this.damage, 25, 170);
+
 
         ctx.fillStyle = "Black";
         ctx.fillText("Round", 1164, 70);   

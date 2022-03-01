@@ -90,6 +90,7 @@ class SmallFireBall {
                 this.x += this.SPEED * TICK; 
             } 
         }
+        
 
         
     };

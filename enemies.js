@@ -147,6 +147,13 @@ class Snake {
         this.updateBB();
         this.updateAttackBB();
         this.collisionUpdate(TICK);
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+        
+        if(this.dead){// Your condition
+            playSound("collectCoin.mp3"); // Location to your sound file
+        }
     };
 
     draw(ctx) {
@@ -274,6 +281,11 @@ class Mage {
     }
 
     update() {
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+        
+            
         const TICK = this.game.clockTick;
         this.y += 1;
         if (this.dead) {
@@ -289,6 +301,7 @@ class Mage {
                     this.timeElapsed = 0;
                     this.state = this.ATTACKING;
                     this.game.addEntityEnemies(new SmallFireBall(this.game,this.x,this.y,this.facing));
+                    playSound("fire.mp3"); // Location to your sound file
                 }
             }
         }
