@@ -25,12 +25,12 @@ class CastleBounds {
         var that = this;
         this.game.entities[1].forEach(function (entity) {
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
-                if (entity instanceof SmallFireBall) {
+                if (entity instanceof SmallFireBall || entity instanceof FireBall) {
                     if (that.shield > 0) {
-                        that.shield -= 10;
+                        that.shield -= entity instanceof SmallFireBall ? 10 : 20;
                     } else if (that.shield <= 0){
                         that.shield = 0;
-                        that.health -= 10;
+                        that.health -= entity instanceof SmallFireBall ? 10 : 20;
                     }
                     entity.removeFromWorld = true;
                 }

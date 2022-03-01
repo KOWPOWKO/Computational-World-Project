@@ -5,7 +5,10 @@ class SceneManager {
         this.END = false;
         this.LEFT = 0;
         this.RIGHT = 1; 
-        this.monsters = [[5,0,0,0,0],[5,2,0,0,0],[8,2,2,0,0],[10,2,2,1,0],[10,2,0,0,1]];
+        this.monsters = [[1,0,0,1,0]];
+        /**
+         * [[5,0,0,0,0],[5,2,0,0,0],[8,2,2,0,0],[10,2,2,1,0],[10,2,0,0,1]];
+         */
         this.roundMonster = [];
         this.roundMonterProgress = 0;
         this.title = true;

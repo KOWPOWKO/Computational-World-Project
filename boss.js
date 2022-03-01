@@ -177,3 +177,184 @@ class DragonBoss {
         }
     };
 };
+
+/**
+ * class Mage {
+    constructor(game,x,facing) {
+        Object.assign(this,{game,x,facing});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/enemies.png");
+    
+        this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
+        this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
+       // this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
+        //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
+        this.animation = [];
+        this.loadProperties();
+        this.loadAnimation();
+        this.updateBB();
+        
+        
+        this.elapsed = 0;
+        
+
+    };
+    
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y + 3, this.animation[0].width*this.scale, this.animation[0].height*this.scale);
+        if(this.facing == this.RIGHT) {
+            this.rangeBB = new BoundingBox(this.x+this.animation[0].width*this.scale, this.y, this.stopRange, this.animation[0].width*this.scale);
+        } else {
+            this.rangeBB = new BoundingBox((this.x-this.stopRange), this.y, this.stopRange, this.animation[0].width*this.scale);
+        }
+        
+    }
+
+    loadProperties() {
+        //facings
+        this.LEFT = 0;
+        this.RIGHT = 1;
+
+        //restrictions
+        this.SPEED = 35;
+        this.baseSpeed = 35;
+        this.GROUND = 507;
+        this.y = this.GROUND;
+        this.x;
+        this.scale = 4;
+        //states
+        this.attackCoolDown = 3;
+        this.dead = false;
+        this.MAX_HEALTH = 75;
+        this.health = this.MAX_HEALTH;
+        this.hasBeenAttacked = false;
+        this.knockback = false;
+        this.MAX_KNOCKBACK = 50;
+        this.knockbackCounter = 0;
+        this.stopRange = 100;
+
+    }
+
+    loadAnimation() {
+
+        this.animation[0] = new Animator(this.spritesheet,278,74,16,16,2,0.2,14,false,true);
+        this.animation[1] = new Animator(this.spritesheet,369,15,13,13,1,0.2,0,false,true);
+    }
+
+    knockbackUpdate() {
+        if(this.knockbackCounter < this.MAX_KNOCKBACK) {
+            if (this.facing == this.RIGHT) {
+                this.x -= 10;
+                this.y -= 2;
+            } else if (this.facing == this.LEFT) {
+                this.x += 10;
+                this.y -= 2;
+            }
+            this.knockbackCounter += 10;
+        } else if (this.knockbackCounter >= this.MAX_KNOCKBACK) {
+            this.knockbackCounter = 0;
+            this.knockback = false;
+        }
+    }
+
+    horizontalUpdate() {
+        if (this.facing == this.LEFT && !this.knockback) {
+            this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
+
+        } else if (this.facing == this.RIGHT && !this.knockback) {
+                this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
+        }
+    }
+    collisionUpdate() {
+        var that = this;
+        this.game.entities[2].forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top && !that.knockback) {
+                    that.y = entity.BB.top - that.BB.height;
+                }
+
+            }
+            if(entity.BB && that.rangeBB.collide(entity.BB)) {
+                if (entity instanceof CastleBounds || entity instanceof Hero) {
+                    that.SPEED = 0;
+                } else {
+                    that.SPEED = that.baseSpeed;
+                }
+            }
+            
+        });
+
+        this.game.entities[0].forEach(function (entity) {
+            if(entity.BB && that.rangeBB.collide(entity.BB)) {
+                if (entity instanceof Hero) {
+                    that.SPEED = 0;
+                } else {
+                    that.SPEED = that.baseSpeed;
+                }
+            }
+            
+        });
+
+    }
+
+    update() {
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+        
+            
+        const TICK = this.game.clockTick;
+        this.y += 1;
+        if (this.dead) {
+            this.removeFromWorld = true;
+            this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
+        } else {
+            if (PARAMS.PAUSE == false) {
+                this.horizontalUpdate();
+
+                if (this.timeElapsed < this.attackCoolDown) {
+                    this.timeElapsed += TICK;
+                } else {
+                    this.timeElapsed = 0;
+                    this.state = this.ATTACKING;
+                    this.game.addEntityEnemies(new SmallFireBall(this.game,this.x,this.y,this.facing));
+                    playSound("fire.mp3"); // Location to your sound file
+                }
+            }
+        }
+        
+        if (this.knockback) {
+            this.knockbackUpdate();
+        }
+
+        if (this.health <= 0 && !this.knockback) {
+            this.health = 0;
+            this.dead = true;
+        }
+
+        this.updateBB();
+
+        this.collisionUpdate();
+    };
+
+    draw(ctx) {
+
+        if(!this.dead) {
+            if (this.facing == this.LEFT) {
+                this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,this.scale); 
+            } else {
+                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,this.scale);  
+            }
+
+            if (PARAMS.DEBUG) { 
+                ctx.strokeStyle = 'Red';
+                ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+                ctx.strokeRect(this.rangeBB.x, this.rangeBB.y, this.rangeBB.width, this.rangeBB.height);
+            }
+
+            ctx.drawImage(this.healthbarred, this.BB.x, this.y-10, this.BB.width, 5);
+            ctx.drawImage(this.healthbar, this.BB.x, this.y-10, this.BB.width * (this.health / this.MAX_HEALTH), 5);
+        }
+    };
+};
+ */

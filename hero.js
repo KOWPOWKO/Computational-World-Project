@@ -323,28 +323,34 @@ class Hero {
                 }
             }
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
-                if (entity instanceof SmallFireBall) {
+                if (entity instanceof SmallFireBall||entity instanceof FireBall) {
                     if (that.health <= 0) {
                         that.health = 0;
                         that.dead = true;
                     } 
                     if (that.BLOCK == false) {
                         if (that.shield > 0) {
-                            that.shield -= 10;
+                            that.shield -= entity instanceof SmallFireBall ? 10 : 20;
                         } else if (that.shield <= 0){
                             that.shield = 0;
-                            that.health -= 10;
+                            that.health -= entity instanceof SmallFireBall ? 10 : 20;
                         }
+                        that.knockback = entity instanceof FireBall;
                     }
                     
                     entity.removeFromWorld = true;
                 }
-                if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+
+                if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
                         entity.hasBeenAttacked = true;
                         entity.knockback = true;
                     } 
 
+                } else if (entity instanceof Skeleton || entity instanceof DragonBoss && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                    if (entity.health > 0) {
+                        that.knockback = true;
+                    } 
                 }
             }
             if(entity.attackBB && that.BB.collide(entity.attackBB) && entity.previousAttack >= entity.ATTACK_SPEED) { //enemies attacking
@@ -393,6 +399,9 @@ class Hero {
                 }
                 this.kSlot = false;
             }
+        }
+        if (this.game.specialL) {
+            this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
         }
     }
 
