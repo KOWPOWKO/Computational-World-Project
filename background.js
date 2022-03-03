@@ -2,7 +2,7 @@ class Sun {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/sun.png");
-        this.counter = 10;
+        this.counter = 70;
 
     };
     

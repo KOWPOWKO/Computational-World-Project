@@ -242,8 +242,14 @@ class Hero {
             if(entity instanceof ArrowShooterInvetory) {
                 if (that.kSlot == false) {
                     that.kFill = entity;
-                    that.kSlot = true;
-                    
+                    that.kSlot = true;                    
+                }
+                entity.removeFromWorld = true;
+            }
+            if(entity instanceof AirSlashInvetory) {
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
                 }
                 entity.removeFromWorld = true;
             }
@@ -394,6 +400,14 @@ class Hero {
                 this.kSlot = false;
             }
         }
+        if (this.game.specialL) {
+            if (this.lSlot == true) {
+                if (this.lFill instanceof AirSlashInvetory) {
+                    this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
+                }
+                this.lSlot = false;
+            }
+        }
     }
 
     update() {
@@ -402,7 +416,6 @@ class Hero {
         function playSound(soundfile){
             document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
         }
-
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
@@ -488,10 +501,12 @@ class Hero {
                     this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                 } 
                 else if (this.ATTACKING == true) {
-                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
-                    
+                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2);     
     
                 } 
+                else if (this.specialL == true){
+                    this.game.addEntityForeground(new AirSlash(this.game,this.x - 48,this.y - 25,this.LEFT))
+                }
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
                 } 
@@ -515,6 +530,9 @@ class Hero {
                 else if (this.ATTACKING == true) {
                     this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y - 25,1.2); 
                 } 
+                else if (this.specialL == true){
+                    this.game.addEntityForeground(new AirSlash(this.game,this.x - 48,this.y - 25,this.RIGHT))
+                }
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
                 }

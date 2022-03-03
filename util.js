@@ -66,6 +66,8 @@ const PARAMS = {
     SKILL_POINTS: 0,
     TIME: 0,
     PAUSE: false,
+    BUY: true,
+    SHIELD:0,
     SLOW: 1,
     HEALTH: 0,
     SPEED: 1

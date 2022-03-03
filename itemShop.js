@@ -18,6 +18,7 @@ class TimeStop {
         if (this.startTimer == true) {this.elapsed += this.game.clockTick;}
         if(this.elapsed >= this.duration) {
             this.removeFromWorld = true;
+            PARAMS.BUY = true;
         }
     };
 
@@ -397,15 +398,114 @@ class Lazer {
     };
 };
 class NUKE {
-    constructor(game, x, y) {
-        Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
-        this.removeFromWorld = false;
-    };
-    
-    update () {};
+    constructor(game){
+		this.game = game;
+		this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
+		this.spritesheet2 = ASSET_MANAGER.getAsset("./resources/background/explosion.png");
+		this.x = 400;
+		this.y = 0;
+		this.speed = 300;
+        this.finished = false;
+	};
 
+	update(){
+		this.y+= this.speed * this.game.clockTick;
+		//if(this.y> 769) this.y = 0;
+	};
+	
+	draw(ctx){
+		// this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x, this.y);
+		// this.animator.drawFrame(this.game.clockTick, ctx, this.x+100, this.y);
+		ctx.drawImage(this.spritesheet,this.x, this.y);
+		if(this.y> 769) {
+            ctx.drawImage(this.spritesheet2,50, 0);
+            this.finished = true;
+        }
+	};
+};
+class AirSlash {
+    constructor(game,x,y,facing) {
+        Object.assign(this,{game,x,y,facing});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/airSlash.png");
+        this.animation = [];
+        this.loadProperties();
+        this.loadAnimation();
+        this.updateBB();
+    };
+    updateBB() {
+        this.lastBB = this.BB;
+        if (this.facing == this.LEFT) {
+            this.BB = new BoundingBox(this.x, this.y, 35,95);
+        } else if (this.facing == this.RIGHT) {
+            this.BB = new BoundingBox(this.x, this.y, 35, 95);
+        }
+    }
+    loadAnimation() {
+        this.animation[0] = new Animator(this.spritesheet,0,38,30,52,2,2,0,false,true);
+    };
+    loadProperties() {
+            this.LEFT = 0;
+            this.RIGHT = 1;
+    
+            this.SPEED = 300;
+            this.removeFromWorld = false;
+    };
+    collisionUpdate() {
+        var that = this;
+        this.game.entities[1].forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof SmallFireBall) {
+                    entity.removeFromWorld = true;
+                    that.removeFromWorld = true;
+                } else {
+                    entity.health -= 25;
+                    that.removeFromWorld = true;
+                }
+            } 
+        })
+
+    }
+    update() {
+        const TICK = this.game.clockTick;
+        this.updateBB();
+        if (PARAMS.PAUSE == false) {
+            if (this.facing == this.LEFT) {
+                this.x -= this.SPEED * TICK;
+            } else {
+                this.x += this.SPEED * TICK; 
+            } 
+        }
+        this.collisionUpdate();
+    };
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y-20, this.BB.width, this.BB.height);
+        }
+        if (this.facing == this.RIGHT) {
+            this.animation[0].drawFrame(this.game.clockTick,ctx,this.x,this.y-20,2); 
+        } else {
+            this.animation[0].drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,2);   
+        }  
     };
 };
+class AirSlashInvetory {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/slash.png");
+        this.loadAnimation();
+    }
+
+    loadAnimation() {
+        this.animation = new Animator(this.spritesheet,0,0,71,89,1,0.1,0,false,true);
+    }
+
+
+    update() {
+
+    }
+
+    draw(ctx) {
+  
+    }
+}

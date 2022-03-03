@@ -50,6 +50,7 @@ ASSET_MANAGER.queueDownload("./resources/background/healthred.jpg");
 ASSET_MANAGER.queueDownload("./resources/background/healthblue.png");
 ASSET_MANAGER.queueDownload("./resources/background/gold.png");
 ASSET_MANAGER.queueDownload("./resources/background/exit.png");
+ASSET_MANAGER.queueDownload("./resources/background/explosion.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
 //ASSET_MANAGER.queueDownload("./resources/.png");
