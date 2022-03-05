@@ -564,9 +564,11 @@ class Chest {
             PARAMS.SCORE = PARAMS.SCORE-4;
         }
         if(!this.reset5 && this.arrowShooter && PARAMS.SCORE  >= 5 && this.count5 === 0){
-            this.count5++;
-            this.game.addEntityInventory(new ArrowShooterInvetory(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-5;
+            if (PARAMS.INV_FULL == false) {
+                this.count5++;
+                this.game.addEntityInventory(new ArrowShooterInvetory(this.game,80,80));
+                PARAMS.SCORE = PARAMS.SCORE-5;
+            }
         }
         if(!this.reset6 && this.slashAbility && PARAMS.SCORE  >= 1 && this.count6 === 0){
             this.count6++;

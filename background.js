@@ -109,7 +109,6 @@ class Inventory {
   
         this.BB = new BoundingBox(720, 590, 100, 100);
         this.BB2 = new BoundingBox(830, 590, 100, 100);
-
     }
 
 
