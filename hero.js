@@ -401,7 +401,7 @@ class Hero {
             }
         }
         if (this.game.specialL) {
-            this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+            this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
         }
     }
 

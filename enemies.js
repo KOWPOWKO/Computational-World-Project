@@ -452,7 +452,7 @@ class Ogre {
                     }
                     that.previousAttack = 0;
                 }else {
-                    that.SPEED = baseSpeed;
+                    that.SPEED = that.baseSpeed;
                 }
             }    
        
@@ -547,15 +547,20 @@ class Skeleton {
     updateAttackBB() {
         this.lastAttackBB = this.attackBB;
         if(this.facing == this.LEFT) {
-            this.attackBB = new BoundingBox(this.BB.x-20, this.BB.y, 20, this.BB.height);
+            this.attackBB = new BoundingBox(this.BB.x-this.atttackRange, this.BB.y, this.atttackRange, this.BB.height);
         } else {
-            this.attackBB = new BoundingBox(this.BB.x+this.BB.width, this.BB.y, 20, this.BB.height);
+            this.attackBB = new BoundingBox(this.BB.x+this.BB.width, this.BB.y, this.atttackRange, this.BB.height);
         }   
     }
 
     updateBB() {
         this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, (this.animation[0].width*4), (this.animation[0].height*4));
+        if(this.facing == this.LEFT) {
+            this.BB = new BoundingBox(this.x+60, this.y, (this.animation[0].width*4)-60, (this.animation[0].height*4));
+        } else {
+            this.BB = new BoundingBox(this.x, this.y, (this.animation[0].width*4)-60, (this.animation[0].height*4));
+        }   
+        
     }
 
     loadProperties() {
@@ -575,6 +580,7 @@ class Skeleton {
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
+        this.atttackRange = 30;
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
         this.previousAttack = 0;
@@ -588,13 +594,10 @@ class Skeleton {
 
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
-            if (this.x >= 780) {
-                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
+            this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
+
         } else if (this.facing == this.RIGHT && !this.knockback) {
-            if (this.x <= 440) {
                 this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
         }
     }
     collisionUpdate(TICK) {
@@ -613,7 +616,6 @@ class Skeleton {
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
-                    that.SPEED = 0;
                     if (entity.shield > 0) {
                         entity.shield -= 10;
                     } else if (entity.shield <= 0){
@@ -621,7 +623,8 @@ class Skeleton {
                         entity.health -= 10;
                     }
                     that.previousAttack = 0;
-                }else {
+                    that.SPEED = 0;
+                } else {
                     that.SPEED = 25;
                 }
             }    
