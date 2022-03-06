@@ -593,7 +593,7 @@ class Hero {
         ctx.fillText("*Speed: " + this.speedMultiplier, 25, 130);
         ctx.fillText("*Max Health: " + this.MAX_HEALTH, 25, 150);
         ctx.fillText("*Damage: " + this.damage, 25, 170);
-        ctx.fillText("*PARAMS.INV_FULL: " + PARAMS.INV_FULL, 25, 190);
+        //ctx.fillText("*: " + PARAMS.INV_FULL, 25, 190);
 
 
         ctx.fillStyle = "Black";
