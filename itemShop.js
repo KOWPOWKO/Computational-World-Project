@@ -402,9 +402,9 @@ class NUKE {
 		this.game = game;
 		this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
 		this.spritesheet2 = ASSET_MANAGER.getAsset("./resources/background/explosion.png");
-		this.x = 400;
+		this.x = 500;
 		this.y = 0;
-		this.speed = 300;
+		this.speed = 260;
         this.finished = false;
 	};
 
@@ -414,11 +414,13 @@ class NUKE {
 	};
 	
 	draw(ctx){
-		// this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x, this.y);
-		// this.animator.drawFrame(this.game.clockTick, ctx, this.x+100, this.y);
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
 		ctx.drawImage(this.spritesheet,this.x, this.y);
-		if(this.y> 769) {
-            ctx.drawImage(this.spritesheet2,50, 0);
+		if(this.y> 700) {
+            playSound("explosion.mp3"); // Location to your sound file
+            ctx.drawImage(this.spritesheet2,50, -50);
             this.finished = true;
         }
 	};
@@ -441,7 +443,7 @@ class AirSlash {
         }
     }
     loadAnimation() {
-        this.animation[0] = new Animator(this.spritesheet,0,38,30,52,2,2,0,false,true);
+        this.animation[0] = new Animator(this.spritesheet,0,38,30,52,2,.4,0,false,true);
     };
     loadProperties() {
             this.LEFT = 0;
@@ -506,6 +508,7 @@ class AirSlashInvetory {
     }
 
     draw(ctx) {
+        ctx.drawImage(this.spritesheet,this.x,this.y);
   
     }
 }

@@ -63,6 +63,8 @@ class StartingScreen {
 
             ctx.fillText("Hint: ", 50,400);
             ctx.fillText("Sunshine leads all paths to victory!", 50,425);
+            ctx.fillText("Click on Chest image to open ItemShop", 50,475);
+
 
 
 

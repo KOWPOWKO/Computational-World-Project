@@ -18,6 +18,7 @@ class ItemAssets {
         this.healthPotion = ASSET_MANAGER.getAsset("./resources/powerUps/healthPotion.png");
         this.nuke = ASSET_MANAGER.getAsset("./resources/powerUps/nuke.png");
         this.cDefense = ASSET_MANAGER.getAsset("./resources/powerUps/castleDefense.png");
+        this.cart = ASSET_MANAGER.getAsset("./resources/background/cart.png");
 
     }
 }
@@ -62,7 +63,9 @@ class Chest {
 	update(){
         this.elapsed += this.game.clockTick;
 
-        
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
 
 		if (this.game.click) {
             this.screen = true;
@@ -108,8 +111,16 @@ class Chest {
             //USER SELECTED TIME STOP
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 201 && this.game.click.x <= 242 
                 && this.game.click.y>=135 && this.game.click.y <= 160 ) {
-                    if(PARAMS.SCORE < 1) this.reset1 = true;
-                    if(PARAMS.SCORE >= 1) this.reset1 = false;
+                    if(PARAMS.SCORE < 10) {
+                    this.reset1 = true;
+                    playSound("notEnough.mp3"); // Location to your sound file
+
+                    }
+                    if(PARAMS.SCORE >= 10) {
+                        this.reset1 = false;
+                        playSound("register.mp3"); // Location to your sound file
+
+                    }
 
                     this.timePower = true;
                     this.count1 = 0;
@@ -118,8 +129,16 @@ class Chest {
             //USER SELECTED HEALTH POTION
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 376 && this.game.click.x <= 407 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 2) this.reset2 = true;
-                    if(PARAMS.SCORE >= 2) this.reset2 = false;
+                    if(PARAMS.SCORE < 15) {
+                        this.reset2 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 15) {
+                            this.reset2 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.potionH = true;
                     this.count2 = 0;
                     this.game.click = false;
@@ -127,8 +146,16 @@ class Chest {
             //USER SELECTED SHIELD POTION
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 546 && this.game.click.x <= 587 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 3) this.reset3 = true;
-                    if(PARAMS.SCORE >= 3) this.reset3 = false;
+                    if(PARAMS.SCORE < 20) {
+                        this.reset3 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 20) {
+                            this.reset3 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.shieldAbility = true;
                     this.count3 = 0;
                     this.game.click = false;
@@ -136,8 +163,16 @@ class Chest {
             //USER SELECTED Castle Defense
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 731 && this.game.click.x <= 772 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 4) this.reset4 = true;
-                    if(PARAMS.SCORE >= 4) this.reset4 = false;
+                    if(PARAMS.SCORE < 25) {
+                        this.reset4 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 25) {
+                            this.reset4 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.castleD = true;
                     this.count4 = 0;
                     this.game.click = false;
@@ -145,8 +180,16 @@ class Chest {
             //USER SELECTED ARROW SHOOTER
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 916 && this.game.click.x <= 957 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 5) this.reset5 = true;
-                    if(PARAMS.SCORE >= 5) this.reset5 = false;
+                    if(PARAMS.SCORE < 30) {
+                        this.reset5 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 30) {
+                            this.reset5 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.arrowShooter = true;
                     this.count5 = 0;
                     this.game.click = false;
@@ -155,8 +198,16 @@ class Chest {
              //USER SELECTED AIR SLASH
              if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 201 && this.game.click.x <= 242 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 1) this.reset6 = true;
-                    if(PARAMS.SCORE >= 1) this.reset6 = false;
+                    if(PARAMS.SCORE < 20) {
+                        this.reset6 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 20) {
+                            this.reset6 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.slashAbility = true;
                     this.count6 = 0;
                     this.game.click = false;
@@ -164,8 +215,16 @@ class Chest {
             //USER SELECTED LASER BEAM  
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 376 && this.game.click.x <= 407 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 2) this.reset7 = true;
-                    if(PARAMS.SCORE >= 2) this.reset7 = false;
+                    if(PARAMS.SCORE < 30) {
+                        this.reset7 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 30) {
+                            this.reset7 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.laserB = true;
                     this.count7 = 0;
                     this.game.click = false;
@@ -173,8 +232,16 @@ class Chest {
             //USER SELECTED SONIC WAVE
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 546 && this.game.click.x <= 587 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 3) this.reset8 = true;
-                    if(PARAMS.SCORE >= 3) this.reset8 = false;
+                    if(PARAMS.SCORE < 40) {
+                        this.reset8 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 40) {
+                            this.reset8 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.waveS = true;
                     this.count8 = 0;
                     this.game.click = false;
@@ -182,8 +249,16 @@ class Chest {
             //USER SELECTED INVINCIBILITY
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 731 && this.game.click.x <= 772 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 4) this.reset9 = true;
-                    if(PARAMS.SCORE >= 4) this.reset9 = false;
+                    if(PARAMS.SCORE < 50) {
+                        this.rese9 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 50) {
+                            this.reset9 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.invincibility = true;
                     this.count9 = 0;
                     this.game.click = false;
@@ -191,8 +266,16 @@ class Chest {
             //USER SELECTED NUKE
             if(this.test === 1 && this.p2 && this.game.click && this.game.click.x >= 916 && this.game.click.x <= 957 
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 4) this.reset10 = true;
-                    if(PARAMS.SCORE >= 4) this.reset10 = false;
+                    if(PARAMS.SCORE < 70) {
+                        this.reset10 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SCORE >= 70) {
+                            this.reset10 = false;
+                            playSound("register.mp3"); // Location to your sound file
+    
+                        }
                     this.nuke = true;
                     this.count10 = 0;
                     this.game.click = false;
@@ -201,8 +284,16 @@ class Chest {
              //USER SELECTED INCREASE HEALTH
             if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 240 && this.game.click.x <= 350
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 1) this.reset11 = true;
-                    if(PARAMS.SCORE >= 1) this.reset11 = false;
+                    if(PARAMS.SKILL_POINTS < 1) {
+                        this.reset11 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SKILL_POINTS >= 1) {
+                            this.reset11 = false;
+                            playSound("upgrade.mp3"); // Location to your sound file
+    
+                        }
                     this.health =  true;
                     this.count11 = 0;
                     this.game.click = false;
@@ -210,8 +301,16 @@ class Chest {
              //USER SELECTED INCREASE DAMAGE
              if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 400 && this.game.click.x <= 510
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 2) this.reset12 = true;
-                    if(PARAMS.SCORE >= 2) this.reset12 = false;
+                    if(PARAMS.SKILL_POINTS < 1) {
+                        this.reset12 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SKILL_POINTS >= 1) {
+                            this.reset12 = false;
+                            playSound("upgrade.mp3"); // Location to your sound file
+    
+                        }
                     this.damage =  true;
                     this.count12 = 0;
                     this.game.click = false;
@@ -219,8 +318,16 @@ class Chest {
              //USER SELECTED INCREASE SPEED
              if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 710 && this.game.click.x <= 820
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 3) this.reset13 = true;
-                    if(PARAMS.SCORE >= 3) this.reset13 = false;
+                    if(PARAMS.SKILL_POINTS < 1) {
+                        this.reset13 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SKILL_POINTS >= 1) {
+                            this.reset13 = false;
+                            playSound("upgrade.mp3"); // Location to your sound file
+    
+                        }
                     this.speed =  true;
                     this.count13 = 0;
                     this.game.click = false;
@@ -228,8 +335,16 @@ class Chest {
              //USER SELECTED INCREASE COOLDOWN
              if(this.test === 1 && this.p3 && this.game.click && this.game.click.x >= 860 && this.game.click.x <= 970
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
-                    if(PARAMS.SCORE < 4) this.reset14 = true;
-                    if(PARAMS.SCORE >= 4) this.reset14 = false;
+                    if(PARAMS.SKILL_POINTS < 1) {
+                        this.reset14 = true;
+                        playSound("notEnough.mp3"); // Location to your sound file
+    
+                        }
+                        if(PARAMS.SKILL_POINTS >= 1) {
+                            this.reset14 = false;
+                            playSound("upgrade.mp3"); // Location to your sound file
+    
+                        }
                     this.coolD =  true;
                     this.count14 = 0;
                     this.game.click = false;
@@ -237,9 +352,7 @@ class Chest {
         }
     };
 	draw(ctx){   
-        function playSound(soundfile){
-            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
-        }
+
         ctx.fillStyle = "Black";
         ctx.font.replace(/\d+px/, "10px");
 		ctx.fillText("ITEM SHOP", 500,595);
@@ -264,7 +377,7 @@ class Chest {
 			ctx.fillText("ITEM SHOP", 570,20);
             ctx.fillText("Power-ups", 420,120);
             ctx.fillText("Special Abilities", 560,120);
-            ctx.fillText("Skill Point", 720,120);       
+            ctx.fillText("Skill Point", 720,120); 
            //this.open = false;
 		}
         //powerup 
@@ -544,18 +657,18 @@ class Chest {
 
         
         if(!this.reset1 && PARAMS.SCORE >= 10 && this.timePower  && this.count1 === 0 & PARAMS.BUY){
-            this.game.addEntityInventory(new TimeStop(this.game,80,80));
+            this.game.addEntityInventory(new TimeStop(this.game,25,250));
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-10; 
             PARAMS.BUY = false;
         }
         if(!this.reset2 && this.potionH && PARAMS.SCORE >= 15 && this.count2 === 0){
-            this.game.addEntityInventory(new HealthPotion(this.game,80,80));
+            this.game.addEntityInventory(new HealthPotion(this.game,25,250));
             this.count2++;
             PARAMS.SCORE = PARAMS.SCORE-15;
         }
         if(!this.reset3 && this.shieldAbility && PARAMS.SCORE  >= 20  && this.count3 === 0){
-            this.game.addEntityInventory(new Shield(this.game,80,80));
+            this.game.addEntityInventory(new Shield(this.game,100,250));
             this.count3++;
             PARAMS.SCORE = PARAMS.SCORE-20;
             PARAMS.BUY2 = false;
@@ -565,11 +678,11 @@ class Chest {
             this.count4++;
             PARAMS.SCORE = PARAMS.SCORE-25;
         }
-        if(!this.reset5 && this.arrowShooter && PARAMS.SCORE  >= 5 && this.count5 === 0){
+        if(!this.reset5 && this.arrowShooter && PARAMS.SCORE  >= 30 && this.count5 === 0){
             if (PARAMS.INV_FULL == false) {
                 this.count5++;
                 this.game.addEntityInventory(new ArrowShooterInvetory(this.game,80,80));
-                PARAMS.SCORE = PARAMS.SCORE-5;
+                PARAMS.SCORE = PARAMS.SCORE-30;
             }
         }
         if(!this.reset6 && this.slashAbility && PARAMS.SCORE  >= 20 && this.count6 === 0){
@@ -600,7 +713,6 @@ class Chest {
         if(!this.reset11 && this.health && PARAMS.SKILL_POINTS  >= 1 && this.count11 === 0){
             this.count11++;
             this.game.addEntityInventory(new HealthIncrease(this.game,80,80));
-            playSound("upgrade.mp3"); // Location to your sound file
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         if(!this.reset12 && this.damage && PARAMS.SKILL_POINTS  >= 1 && this.count12 === 0){
@@ -611,13 +723,11 @@ class Chest {
         if(!this.reset13 && this.speed && PARAMS.SKILL_POINTS  >= 1 && this.count13 === 0){
             this.count13++;
             this.game.addEntityInventory(new SpeedSkill(this.game,80,80));
-            playSound("upgrade.mp3"); // Location to your sound file
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         if(!this.reset14 && this.coolD && PARAMS.SKILL_POINTS  >= 1 && this.count14 === 0){
             this.count14++;
             this.game.addEntityInventory(new CoolDown(this.game,80,80));
-            playSound("upgrade.mp3"); // Location to your sound file
             PARAMS.SKILL_POINTS = PARAMS.SKILL_POINTS-1;
         }
         
@@ -625,5 +735,12 @@ class Chest {
 		this.animations[0].drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
         
 		}
+        if(this.open || this.specialAbil || this.powerUp || this.skillP){
+            ctx.fillStyle = "Black";
+            ctx.fillText("ITEMS PURCHASED", 25,220); 
+            ctx.fillText("____________________", 25,225); 
+            ctx.drawImage(this.itemAssets.cart,200,200);
+        }
+
 	};
 };
