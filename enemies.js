@@ -301,7 +301,7 @@ class Mage {
                     this.timeElapsed = 0;
                     this.state = this.ATTACKING;
                     this.game.addEntityEnemies(new SmallFireBall(this.game,this.x,this.y,this.facing));
-                    playSound("fire.mp3"); // Location to your sound file
+                    //playSound("fire.mp3");  Location to your sound file
                 }
             }
         }
