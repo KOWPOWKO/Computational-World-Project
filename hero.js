@@ -320,7 +320,8 @@ class Hero {
                     if (entity.health > 0) {
                         entity.health -= that.damage;
                         entity.hasBeenAttacked = true;
-                        entity.knockback = true;
+                        if(!(entity instanceof DragonBoss))
+                            entity.knockback = true;
                     } 
 
                 }
@@ -376,8 +377,9 @@ class Hero {
                                 that.health -= 25;
                             }
                         }
-                        entity.previousAttack = 0;
+                        
                     }
+                    entity.previousAttack = 0;
                 }
                 
             }
@@ -537,6 +539,9 @@ class Hero {
                     if (this.state == this.WALKING) {
                         this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x-20,this.y,1.2);
                     } 
+                    else if (this.state == this.RUNNING) {
+                        this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x-30,this.y,1.2);
+                    } 
                     else {
                         this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                     }
@@ -554,7 +559,10 @@ class Hero {
                     this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
                 }
                 else if (this.BLOCK) {
-                    this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+                    this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y,1.2);
+                } 
+                else if (this.state == this.RUNNING) {
+                    this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y,1.2);
                 } 
                 else {
                     this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);

@@ -5,7 +5,7 @@ class SceneManager {
         this.END = false;
         this.LEFT = 0;
         this.RIGHT = 1; 
-        this.monsters = [[1,1,1,1,0]];
+        this.monsters = [[1,0,0,0,1]];
         /**
          * [[5,0,0,0,0],[5,2,0,0,0],[8,2,2,0,0],[10,2,2,1,0],[10,2,0,0,1]];
          */
@@ -201,15 +201,15 @@ class SceneManager {
                 var currentMonster = this.roundMonster[this.roundMonterProgress];
                 this.roundMonster.splice(this.roundMonterProgress, 1);
                 if (currentMonster[0] === 0) {
-                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Snake(this.game,currentMonster[1] == 1 ? -75 : 1275,currentMonster[1]));
                 } else if (currentMonster[0] === 1) {
-                    this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Mage(this.game,currentMonster[1] == 1 ? -75 : 1275,currentMonster[1]));
                 } else if (currentMonster[0] === 2) {
-                    this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Ogre(this.game,currentMonster[1] == 1 ? -75 : 1275,currentMonster[1]));
                 } else if (currentMonster[0] === 3) {
-                    this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new Skeleton(this.game,currentMonster[1] == 1 ? -75 : 1275,currentMonster[1]));
                 } else if (currentMonster[0] === 4) {
-                    this.game.addEntityEnemies(new DragonBoss(this.game,currentMonster[1] == 1 ? -75 : 1320,currentMonster[1]));
+                    this.game.addEntityEnemies(new DragonBoss(this.game,currentMonster[1] == 1 ? -75 : 1275,currentMonster[1]));
                 }
                 this.roundMonterProgress -= 1;
             }
