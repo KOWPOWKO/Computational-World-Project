@@ -331,7 +331,8 @@ class Hero {
                     if (entity.health > 0) {
                         entity.health -= that.damage;
                         entity.hasBeenAttacked = true;
-                        entity.knockback = true;
+                        if(!(entity instanceof DragonBoss))
+                            entity.knockback = true;
                         //playSound("bruh.mp3");
                         ASSET_MANAGER.playAsset("./resources/sound/enemyHurt.mp3");
                     } 
@@ -339,7 +340,7 @@ class Hero {
                 }
             }
             if(entity.BB && that.BB.collide(entity.BB)) { //run into enemies
-                if (entity instanceof SmallFireBall) {
+                if (entity instanceof SmallFireBall||entity instanceof FireBall) {
                     if (that.health <= 0) {
                         that.health = 0;
                         that.dead = true;
@@ -347,23 +348,29 @@ class Hero {
                     if (that.BLOCK == false) {
                         ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                         if (that.shield > 0) {
-                            that.shield -= 10;
+                            that.shield -= entity instanceof SmallFireBall ? 10 : 20;
                         } else if (that.shield <= 0){
                             that.shield = 0;
-                            that.health -= 10;
+                            that.health -= entity instanceof SmallFireBall ? 10 : 20;
                         }
+                        that.knockback = entity instanceof FireBall;
                     } else if (that.BLOCK == true) {
                         ASSET_MANAGER.playAsset("./resources/sound/shieldBlock.wav");
                     }
                     
                     entity.removeFromWorld = true;
                 }
-                if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+
+                if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
                         entity.hasBeenAttacked = true;
                         entity.knockback = true;
                     } 
 
+                } else if (entity instanceof Skeleton || entity instanceof DragonBoss && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
+                    if (entity.health > 0) {
+                        that.knockback = true;
+                    } 
                 }
             }
             if(entity.attackBB && that.BB.collide(entity.attackBB) && entity.previousAttack >= entity.ATTACK_SPEED) { //enemies attacking
@@ -388,8 +395,9 @@ class Hero {
                                 that.health -= 25;
                             }
                         }
-                        entity.previousAttack = 0;
+                        
                     }
+                    entity.previousAttack = 0;
                 }
                 
             }
@@ -428,6 +436,9 @@ class Hero {
                 }
                 this.lSlot = false;
             }
+        }
+        if (this.game.specialL) {
+            this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
         }
     }
 
@@ -544,6 +555,9 @@ class Hero {
                     if (this.state == this.WALKING) {
                         this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x-20,this.y,1.2);
                     } 
+                    else if (this.state == this.RUNNING) {
+                        this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x-30,this.y,1.2);
+                    } 
                     else {
                         this.animations[this.state].drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                     }
@@ -561,7 +575,10 @@ class Hero {
                     this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
                 }
                 else if (this.BLOCK) {
-                    this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1.2);
+                    this.blockAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y,1.2);
+                } 
+                else if (this.state == this.RUNNING) {
+                    this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y,1.2);
                 } 
                 else {
                     this.animations[this.state].drawFrameReverse(this.game.clockTick,ctx,this.x-20,this.y,1.2);

@@ -372,30 +372,218 @@ class HealthPotion {
         ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
-class SonicWave {
+
+class SonicWaveInvetory {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.loadAnimation();
+        this.loadProperties();
+    }
+
+    loadAnimation() {
+        this.animation = new Animator(this.spritesheet,0,0,127,108,1,0.1,0,false,true);
+    }
+
+    loadProperties() {
+        this.coolDown = 20;
+        this.previous = 20;
 
     };
-    
-    update () {};
+
+    update() {
+        
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.coolDown <= this.previous && this.game.specialL) {
+                this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y));
+                this.previous = 0;
+            }
+            this.previous += TICK;
+        }
+    }
 
     draw(ctx) {
+  
+    }
+}
+
+class SonicWave{
+    constructor(game,x,y) {
+        Object.assign(this,{game,x,y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.animation = [];
+        this.loadProperties();
+        this.loadAnimation();
+        this.updateBB();
+    };
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x-130, this.y, this.range, this.height);
+        
+    };
+    loadAnimation() {
+        this.animation = new Animator(this.spritesheet,8,90,56,112,1,1,0,false,true);
+    };
+    loadProperties() {
+        //facings
+
+        this.range = 400;
+        this.coolDown = 30;
+        this.waves = 4;
+        this.attackSpeed = 0.4;
+        this.timeElapsed = 0;
+        //restrictions
+        this.width = 135;
+        this.height = 100;
+        this.SPEED = 120;
+
+        this.removeFromWorld = false;
+    };
+    collisionUpdate() {
+        var that= this;
+        this.game.entities[1].forEach(function (entity) {
+            if(entity.BB && that.BB.collide(entity.BB)) {
+                entity.knockback = true;
+            }
+        });
+    }
+    update() {
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            
+            this.timeElapsed += TICK;
+            if (this.waves <= 0) {
+                this.removeFromWorld = true;
+            } 
+            else if (this.timeElapsed >= this.attackSpeed) {
+                this.waves --;
+                this.timeElapsed = 0;
+                this.collisionUpdate();
+            }
+            if(this.waves == 0) {
+                this.previous = 0
+            }
+            this.updateBB();
+        }                 
+        
+    };
+    draw(ctx) {
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
         ctx.drawImage(this.spritesheet,this.x,this.y);
     };
 };
-class Lazer {
-    constructor(game, x, y) {
+
+class LazerInvetory {
+    constructor(game, x, y,facing) {
         Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.loadAnimation();
+        this.loadProperties();
+    }
+
+    loadAnimation() {
+        this.animation = new Animator(this.spritesheet,0,0,127,108,1,0.1,0,false,true);
+    }
+
+    loadProperties() {
+        this.coolDown = 60;
+        this.previous = 60;
 
     };
-    
-    update () {};
+
+    update() {
+        
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.coolDown <= this.previous && this.game.specialL) {
+                this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+                this.previous = 0;
+            }
+            this.previous += TICK;
+        }
+    }
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
+  
+    }
+}
+
+class Lazer {
+    constructor(game, x, y,facing) {
+        Object.assign(this, {game, x, y,facing});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
+        this.loadProperties();
+        this.updateBB();
+    };
+    updateBB() {
+        this.lastBB = this.BB;
+        if(this.facing == this.RIGHT) {
+            this.BB = new BoundingBox(this.x+70, this.y+70, this.range, 50);
+        } 
+        else {
+            this.BB = new BoundingBox(this.x-this.range, this.y+70, this.range, 50);
+        }
+        
+        
+    };
+    loadProperties() {
+        //facings
+        this.LEFT = 0;
+        this.RIGHT = 1;
+        this.range = 1600;
+        this.coolDown = 30;
+        this.removeFromWorld = false;
+        this.waves = 10;
+        this.attackSpeed = 0.25;
+        this.timeElapsed = 0;
+        //restrictions
+        this.width = 135;
+        this.height = 100;
+        this.SPEED = 120;
+
+        this.removeFromWorld = false;
+    };
+    collisionUpdate() {
+        var that= this;
+        this.game.entities[1].forEach(function (entity) {
+            if(entity.BB && that.BB.collide(entity.BB)) {
+                entity.health -= 5;
+            }
+        });
+    }
+    update() {
+        if (PARAMS.PAUSE == false) {
+            const TICK = this.game.clockTick;
+            this.timeElapsed += TICK;
+            if (this.waves <= 0) {
+                this.removeFromWorld = true;
+            } 
+            else if (this.timeElapsed >= this.attackSpeed) {
+                this.waves --;
+                this.timeElapsed = 0;
+                this.collisionUpdate();
+            }
+        }                 
+        this.updateBB();
+    };
+    draw(ctx) {
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+        if(this.facing == this.RIGHT) {
+            ctx.drawImage(this.spritesheet,0,0,32,70,this.x+70,this.y+70,32,50);
+            ctx.drawImage(this.spritesheet,30,0,32,70,this.x+100,this.y+70,1600,50);
+        } 
+        else {
+            ctx.drawImage(this.spritesheet,118,0,32,70,this.x-30,this.y+70,32,50);
+            ctx.drawImage(this.spritesheet,30,0,32,70,this.x-30,this.y+70,-1600,50);
+        }
+
     };
 };
 class NUKE {

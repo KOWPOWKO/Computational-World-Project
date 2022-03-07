@@ -107,12 +107,12 @@ class Snake {
                     that.y = entity.BB.top - that.BB.height;
                 }
                 if (entity instanceof CastleBounds) {
-                if (that.facing == that.RIGHT) {
-                    that.x = entity.BB.left - (that.BB.width * 3);
-                } else if (that.facing == that.LEFT) {
-                    that.x = entity.BB.right + that.BB.width;
+                    if (that.facing == that.RIGHT) {
+                        that.x = entity.BB.left - (that.BB.width * 3);
+                    } else if (that.facing == that.LEFT) {
+                        that.x = entity.BB.right + that.BB.width;
+                    }
                 }
-            }
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
@@ -206,11 +206,12 @@ class Mage {
         this.healthbarred = ASSET_MANAGER.getAsset("./resources/background/healthred.jpg");
        // this.coinDisplay = ASSET_MANAGER.getAsset("./resources/powerUps/coinDisplay.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
-        
-        this.loadProperties();
-        this.updateBB();
         this.animation = [];
+        this.loadProperties();
         this.loadAnimation();
+        this.updateBB();
+        
+        
         this.elapsed = 0;
         
 
@@ -218,7 +219,13 @@ class Mage {
     
     updateBB() {
         this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y + 3, 60, 64);
+        this.BB = new BoundingBox(this.x, this.y + 3, this.animation[0].width*this.scale, this.animation[0].height*this.scale);
+        if(this.facing == this.RIGHT) {
+            this.rangeBB = new BoundingBox(this.x+this.animation[0].width*this.scale, this.y, this.stopRange, this.animation[0].width*this.scale);
+        } else {
+            this.rangeBB = new BoundingBox((this.x-this.stopRange), this.y, this.stopRange, this.animation[0].width*this.scale);
+        }
+        
     }
 
     loadProperties() {
@@ -228,19 +235,21 @@ class Mage {
 
         //restrictions
         this.SPEED = 35;
+        this.baseSpeed = 35;
         this.GROUND = 507;
         this.y = this.GROUND;
         this.x;
-
+        this.scale = 4;
         //states
         this.attackCoolDown = 3;
         this.dead = false;
-        this.MAX_HEALTH = 100;
+        this.MAX_HEALTH = 75;
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
+        this.stopRange = 100;
 
     }
 
@@ -268,13 +277,10 @@ class Mage {
 
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
-            if (this.x >= 780) {
-                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
+            this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
+
         } else if (this.facing == this.RIGHT && !this.knockback) {
-            if (this.x <= 440) {
                 this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
         }
     }
     collisionUpdate() {
@@ -284,16 +290,29 @@ class Mage {
                 if (entity instanceof Ground && that.lastBB.bottom >= entity.BB.top && !that.knockback) {
                     that.y = entity.BB.top - that.BB.height;
                 }
-                if (entity instanceof CastleBounds) {
-                    if (that.facing == that.RIGHT) {
-                        that.x = entity.BB.left - (that.BB.width);
-                    } else if (that.facing == that.LEFT) {
-                        that.x = entity.BB.right + that.BB.width;
-                    }
+
+            }
+            if(entity.BB && that.rangeBB.collide(entity.BB)) {
+                if (entity instanceof CastleBounds || entity instanceof Hero) {
+                    that.SPEED = 0;
+                } else if (!(entity instanceof Coin)) {
+                    that.SPEED = that.baseSpeed;
                 }
             }
             
-        })
+        });
+
+        this.game.entities[0].forEach(function (entity) {
+            if(entity.BB && that.rangeBB.collide(entity.BB)) {
+                if (entity instanceof Hero) {
+                    that.SPEED = 0;
+                } else if (!(entity instanceof Coin)) {
+                    that.SPEED = that.baseSpeed;
+                }
+            }
+            
+        });
+
     }
 
     update() {     
@@ -345,14 +364,15 @@ class Mage {
 
         if(!this.dead) {
             if (this.facing == this.LEFT) {
-                this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,4); 
+                this.animation[0].drawFrameY(this.game.clockTick,ctx,this.x,this.y,this.scale); 
             } else {
-                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,4);  
+                this.animation[0].drawFrameReverseY(this.game.clockTick,ctx,this.x,this.y,this.scale);  
             }
 
             if (PARAMS.DEBUG) { 
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+                ctx.strokeRect(this.rangeBB.x, this.rangeBB.y, this.rangeBB.width, this.rangeBB.height);
             }
 
             ctx.drawImage(this.healthbarred, this.BB.x, this.y-10, this.BB.width, 5);
@@ -380,7 +400,7 @@ class Ogre {
     updateAttackBB() {
         this.lastAttackBB = this.attackBB;
         if(this.facing == this.LEFT) {
-            this.attackBB = new BoundingBox(this.BB.x-10, this.BB.y, 20, this.BB.height);
+            this.attackBB = new BoundingBox(this.BB.x-20, this.BB.y, 20, this.BB.height);
         } else {
             this.attackBB = new BoundingBox(this.BB.x+this.BB.width, this.BB.y, 20, this.BB.height);
         }   
@@ -397,6 +417,7 @@ class Ogre {
         this.RIGHT = 1;
 
         //restrictions
+        this.baseSpeed = 25;
         this.SPEED = 25;
         this.GROUND = 480;
         this.ATTACK_SPEED = 1;
@@ -404,13 +425,14 @@ class Ogre {
 
         //states
         this.dead = false;
-        this.MAX_HEALTH = 50;
+        this.MAX_HEALTH = 150;
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
         this.previousAttack = 0;
+        this.baseSpeed = 25;
     }
     
 
@@ -421,13 +443,10 @@ class Ogre {
 
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
-            if (this.x >= 780) {
-                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
+            this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
+
         } else if (this.facing == this.RIGHT && !this.knockback) {
-            if (this.x <= 440) {
                 this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
         }
     }
     collisionUpdate(TICK) {
@@ -440,8 +459,8 @@ class Ogre {
                 }
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
-                } else {
-                    that.SPEED = 25;
+                } else if (!(entity instanceof Coin)) {
+                    that.SPEED = that.baseSpeed;
                 }
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
@@ -456,7 +475,7 @@ class Ogre {
                     }
                     that.previousAttack = 0;
                 }else {
-                    that.SPEED = 25;
+                    that.SPEED = that.baseSpeed;
                 }
             }    
        
@@ -560,15 +579,20 @@ class Skeleton {
     updateAttackBB() {
         this.lastAttackBB = this.attackBB;
         if(this.facing == this.LEFT) {
-            this.attackBB = new BoundingBox(this.BB.x-10, this.BB.y, 20, this.BB.height);
+            this.attackBB = new BoundingBox(this.BB.x-this.atttackRange, this.BB.y, this.atttackRange, this.BB.height);
         } else {
-            this.attackBB = new BoundingBox(this.BB.x+this.BB.width, this.BB.y, 20, this.BB.height);
+            this.attackBB = new BoundingBox(this.BB.x+this.BB.width, this.BB.y, this.atttackRange, this.BB.height);
         }   
     }
 
     updateBB() {
         this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, (this.animation[0].width*4), (this.animation[0].height*4));
+        if(this.facing == this.LEFT) {
+            this.BB = new BoundingBox(this.x+60, this.y, (this.animation[0].width*4)-60, (this.animation[0].height*4));
+        } else {
+            this.BB = new BoundingBox(this.x, this.y, (this.animation[0].width*4)-60, (this.animation[0].height*4));
+        }   
+        
     }
 
     loadProperties() {
@@ -584,13 +608,15 @@ class Skeleton {
 
         //states
         this.dead = false;
-        this.MAX_HEALTH = 50;
+        this.MAX_HEALTH = 175;
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
+        this.atttackRange = 30;
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
         this.previousAttack = 0;
+        this.baseSpeed = 25;
     }
     
 
@@ -601,13 +627,10 @@ class Skeleton {
 
     horizontalUpdate() {
         if (this.facing == this.LEFT && !this.knockback) {
-            if (this.x >= 780) {
-                this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
+            this.x -= this.SPEED * PARAMS.SLOW * this.game.clockTick;
+
         } else if (this.facing == this.RIGHT && !this.knockback) {
-            if (this.x <= 440) {
                 this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
-            }
         }
     }
     collisionUpdate(TICK) {
@@ -620,13 +643,12 @@ class Skeleton {
                 }
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
-                } else {
-                    that.SPEED = 25;
+                } else if (!(entity instanceof Coin)) {
+                    that.SPEED = that.baseSpeed;
                 }
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
-                    that.SPEED = 0;
                     if (entity.shield > 0) {
                         entity.shield -= 10;
                     } else if (entity.shield <= 0){
@@ -634,7 +656,8 @@ class Skeleton {
                         entity.health -= 10;
                     }
                     that.previousAttack = 0;
-                }else {
+                    that.SPEED = 0;
+                } else {
                     that.SPEED = 25;
                 }
             }    

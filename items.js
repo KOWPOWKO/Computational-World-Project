@@ -111,15 +111,21 @@ class SmallFireBall {
 };
 
 class FireBall {
-    constructor(game,x,y) {
-        Object.assign(this,{game,x,y});
+    constructor(game,x,y,facing) {
+        Object.assign(this,{game,x,y,facing});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/enemies/boss.png");
         //this.animation = new Animator(this.spritesheet,86,908,96,104,10,0.1,2,false,true);
-        this.y = 0;
-        this.x = 0;
         this.loadProperties();
         this.loadAnimation();
+        this.updateBB();
     };
+
+    updateBB() {
+        this.lastBB = this.BB;
+        this.BB = new BoundingBox(this.x, this.y, this.animation.width, this.animation.height);    
+            
+    };
+
     loadAnimation() {
         // Coin
         this.animation = new Animator(this.spritesheet,58,300,56,32,3,0.15,7,false,true);
@@ -128,17 +134,38 @@ class FireBall {
         //facings
         this.LEFT = 0;
         this.RIGHT = 1;
+        this.hasBeenAttacked = false;
+        this.removeFromWorld = false;
 
         //restrictions
-        this.SPEED = 0.4;
+        this.SPEED = 120;
         this.HEIGHT = 5;
     };
     update() {
+        this.updateBB();
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.facing == this.LEFT) {
+                this.x -= this.SPEED * TICK;
+            } else {
+                this.x += this.SPEED * TICK; 
+            } 
+        }
+        
 
+        
     };
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick,ctx,350,0,1);      
-        
+        if (PARAMS.DEBUG) { 
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
+        if (this.facing == this.LEFT) {
+            this.animation.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y,1);  
+        } else {
+            this.animation.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+        }         
     };
 };
 
