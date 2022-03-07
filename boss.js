@@ -31,7 +31,7 @@ class DragonBoss {
         //states
         this.ATTACK_SPEED = 2;
         this.dead = false;
-        this.MAX_HEALTH = 500;
+        this.MAX_HEALTH = 1000;
         this.health = this.MAX_HEALTH;
         this.hasBeenAttacked = false;
         this.knockback = false;
@@ -43,7 +43,7 @@ class DragonBoss {
         this.abilityChargingRamming = false;
         this.abilityChargingRammingTimer = 0;
         this.abilityRamTimer = 0;
-        this.abilityRamCooldown = 10;
+        this.abilityRamCooldown = 25;
 
 
         this.attacking = false;
@@ -152,6 +152,7 @@ class DragonBoss {
                 } else {
                     this.game.addEntityEnemies(new FireBall(this.game,this.x,this.y+120,this.facing));
                 }
+                ASSET_MANAGER.playAsset("./resources/sound/fireballSound.wav");
                 this.attacking = true;
                 this.rangeAttackTiming = 0;
                 this.rangeAttackCount ++;
@@ -162,6 +163,7 @@ class DragonBoss {
                 } else {
                     this.game.addEntityEnemies(new SmallFireBall(this.game,this.x,this.y+120,this.facing));
                 }
+                ASSET_MANAGER.playAsset("./resources/sound/fireballSound.wav");
                 this.rangeAttackTiming = 0;
                 this.rangeAttackCount ++;
             } else if(this.rangeAttackTiming > this.rangeAttackIntervals && this.rangeAttackCount >= 4) {
@@ -182,7 +184,7 @@ class DragonBoss {
             this.SPEED = this.baseSpeed;
         }
         else if (this.abilityRamming) {
-            this.previousAttack = 50;
+            this.previousAttack += TICK*40;
         }
         else if (this.abilityChargingRammingTimer > 2) {
             this.abilityChargingRamming = false;
@@ -190,7 +192,7 @@ class DragonBoss {
             this.previousAttack = 0;
             this.abilityRamTimer = 0;
             this.abilityRamming = true;
-            this.SPEED = 2000;
+            this.SPEED = 750;
 
         } else if ((!this.attacking && this.abilityRamTimer > this.abilityRamCooldown)|| this.abilityChargingRamming) {
             this.previousAttack = 0;
@@ -200,40 +202,48 @@ class DragonBoss {
     }
 
     update() {
-        
-        const TICK = this.game.clockTick;
-        this.previousAttack += TICK;
-        this.abilityRamTimer += TICK;
-        this.y += 1;
-        if (this.x < this.MIDDLE && !this.abilityRamming) {
-            this.facing = this.RIGHT;
-        } else if (this.x > this.MIDDLE && !this.abilityRamming){
-            this.facing = this.LEFT;
-        }
         if (this.dead) {
             this.removeFromWorld = true;
-            this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
+            this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
+            
         } else {
-            this.horizontalUpdate();
-        }
+            if (PARAMS.PAUSE == false) { 
+                const TICK = this.game.clockTick;
+                this.previousAttack += TICK;
+                this.abilityRamTimer += TICK;
+                this.y += 1;
+                if (this.x < this.MIDDLE && !this.abilityRamming) {
+                    this.facing = this.RIGHT;
+                } else if (this.x > this.MIDDLE && !this.abilityRamming){
+                    this.facing = this.LEFT;
+                }
+                if (this.dead) {
+                    this.removeFromWorld = true;
+                    this.game.addEntityForeground(new Coin(this.game, this.x, this.y-18)); 
+                } else {
+                    this.horizontalUpdate();
+                }
+                
+                if (this.knockback) {
+                    this.knockbackUpdate(TICK);
         
-        if (this.knockback) {
-            this.knockbackUpdate(TICK);
-
+                }
+        
+                if (this.health <= 0 && !this.knockback) {
+                    this.health = 0;
+                    this.dead = true;
+                    this.coinX = this.x+10;
+                }
+        
+                this.updateBB();
+                this.updateAttackBB();
+                this.ramAttack(TICK);
+        
+                this.collisionUpdate(TICK);
+                this.rangeAttack(TICK);
+            }
         }
 
-        if (this.health <= 0 && !this.knockback) {
-            this.health = 0;
-            this.dead = true;
-            this.coinX = this.x+10;
-        }
-
-        this.updateBB();
-        this.updateAttackBB();
-        this.ramAttack(TICK);
-
-        this.collisionUpdate(TICK);
-        this.rangeAttack(TICK);
     };
 
     draw(ctx) {

@@ -295,7 +295,7 @@ class Mage {
             if(entity.BB && that.rangeBB.collide(entity.BB)) {
                 if (entity instanceof CastleBounds || entity instanceof Hero) {
                     that.SPEED = 0;
-                } else {
+                } else if (!(entity instanceof Coin)) {
                     that.SPEED = that.baseSpeed;
                 }
             }
@@ -306,7 +306,7 @@ class Mage {
             if(entity.BB && that.rangeBB.collide(entity.BB)) {
                 if (entity instanceof Hero) {
                     that.SPEED = 0;
-                } else {
+                } else if (!(entity instanceof Coin)) {
                     that.SPEED = that.baseSpeed;
                 }
             }
@@ -432,6 +432,7 @@ class Ogre {
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
         this.previousAttack = 0;
+        this.baseSpeed = 25;
     }
     
 
@@ -458,8 +459,8 @@ class Ogre {
                 }
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
-                } else {
-                    that.SPEED = 25;
+                } else if (!(entity instanceof Coin)) {
+                    that.SPEED = that.baseSpeed;
                 }
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
@@ -615,6 +616,7 @@ class Skeleton {
         this.MAX_KNOCKBACK = 50;
         this.knockbackCounter = 0;
         this.previousAttack = 0;
+        this.baseSpeed = 25;
     }
     
 
@@ -641,8 +643,8 @@ class Skeleton {
                 }
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
-                } else {
-                    that.SPEED = 25;
+                } else if (!(entity instanceof Coin)) {
+                    that.SPEED = that.baseSpeed;
                 }
             } 
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {

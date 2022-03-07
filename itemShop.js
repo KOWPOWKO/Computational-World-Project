@@ -373,6 +373,41 @@ class HealthPotion {
     };
 };
 
+class SonicWaveInvetory {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.loadAnimation();
+        this.loadProperties();
+    }
+
+    loadAnimation() {
+        this.animation = new Animator(this.spritesheet,0,0,127,108,1,0.1,0,false,true);
+    }
+
+    loadProperties() {
+        this.coolDown = 20;
+        this.previous = 20;
+
+    };
+
+    update() {
+        
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.coolDown <= this.previous && this.game.specialL) {
+                this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y));
+                this.previous = 0;
+            }
+            this.previous += TICK;
+        }
+    }
+
+    draw(ctx) {
+  
+    }
+}
+
 class SonicWave{
     constructor(game,x,y) {
         Object.assign(this,{game,x,y});
@@ -392,11 +427,9 @@ class SonicWave{
     };
     loadProperties() {
         //facings
-        this.LEFT = 0;
-        this.RIGHT = 1;
+
         this.range = 400;
         this.coolDown = 30;
-        this.removeFromWorld = false;
         this.waves = 4;
         this.attackSpeed = 0.4;
         this.timeElapsed = 0;
@@ -416,8 +449,9 @@ class SonicWave{
         });
     }
     update() {
+        const TICK = this.game.clockTick;
         if (PARAMS.PAUSE == false) {
-            const TICK = this.game.clockTick;
+            
             this.timeElapsed += TICK;
             if (this.waves <= 0) {
                 this.removeFromWorld = true;
@@ -427,8 +461,12 @@ class SonicWave{
                 this.timeElapsed = 0;
                 this.collisionUpdate();
             }
+            if(this.waves == 0) {
+                this.previous = 0
+            }
+            this.updateBB();
         }                 
-        this.updateBB();
+        
     };
     draw(ctx) {
         if (PARAMS.DEBUG) { 
@@ -439,6 +477,40 @@ class SonicWave{
     };
 };
 
+class LazerInvetory {
+    constructor(game, x, y,facing) {
+        Object.assign(this, {game, x, y});
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.loadAnimation();
+        this.loadProperties();
+    }
+
+    loadAnimation() {
+        this.animation = new Animator(this.spritesheet,0,0,127,108,1,0.1,0,false,true);
+    }
+
+    loadProperties() {
+        this.coolDown = 60;
+        this.previous = 60;
+
+    };
+
+    update() {
+        
+        const TICK = this.game.clockTick;
+        if (PARAMS.PAUSE == false) {
+            if (this.coolDown <= this.previous && this.game.specialL) {
+                this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+                this.previous = 0;
+            }
+            this.previous += TICK;
+        }
+    }
+
+    draw(ctx) {
+  
+    }
+}
 
 class Lazer {
     constructor(game, x, y,facing) {
