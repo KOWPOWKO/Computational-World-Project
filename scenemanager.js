@@ -43,6 +43,10 @@ class SceneManager {
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./resources/sound/startingMusic.mp3");
     }
+    gameWon() {
+        PARAMS.SCORE = 0;
+        this.game.addEntityBackground(new Win(this.game,this), 0, 0);
+    }
 
     loadWorld() {
         //player        
@@ -129,6 +133,13 @@ class SceneManager {
                     entity.startTimer = true;
                     PARAMS.SPEED = 4;
                 }
+            }
+            if(entity instanceof NUKE  && (entity.finished == true)){
+                that.loadGame = false;
+                that.clearEntities();
+                PARAMS.ROUND = 1;
+                that.END = true;
+                that.gameWon();
             } 
         })
         

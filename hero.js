@@ -249,12 +249,20 @@ class Hero {
             if(entity instanceof ArrowShooterInvetory) {
                 if (that.kSlot == false) {
                     that.kFill = entity;
-                    that.kSlot = true;
-                } else if (that.lSlot == false) {
-                    that.lFill = entity;
-                    that.lSlot = true;
+                    that.kSlot = true;                    
                 }
+            else if (that.lSlot == false) {
+                that.lFill = entity;
+                that.lSlot = true;
+            }
                 entity.removeFromWorld = true;
+            }
+            if(entity instanceof AirSlashInvetory) {
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
+                entity.removeFromWorld = true;
+                }
             }
 
             if(entity instanceof CoolDown && entity.removeFromWorld == false) {
@@ -407,6 +415,7 @@ class Hero {
                 if (this.kSlot == true) {
                     if (this.kFill instanceof ArrowShooterInvetory) {
                         this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+
                     }
                     this.kSlot = false;
                 }
@@ -416,6 +425,9 @@ class Hero {
             if (this.lSlot == true) {
                 if (this.lFill instanceof ArrowShooterInvetory) {
                     this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                }
+                else if (this.lFill instanceof AirSlashInvetory) {
+                    this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
                 }
                 this.lSlot = false;
             }
@@ -441,7 +453,6 @@ class Hero {
         
         
         
-
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
@@ -528,9 +539,7 @@ class Hero {
                     this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                 } 
                 else if (this.ATTACKING == true) {
-                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
-                    
-    
+                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2);     
                 } 
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
