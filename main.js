@@ -1,4 +1,4 @@
-var gameEngine = new GameEngine();
+
 var ASSET_MANAGER = new AssetManager();
 
 //hero images
@@ -12,6 +12,32 @@ ASSET_MANAGER.queueDownload("./resources/enemies/monstor2rev.png");
 ASSET_MANAGER.queueDownload("./resources/enemies/enemies.png");
 ASSET_MANAGER.queueDownload("./resources/enemies/skeleton.png");
 ASSET_MANAGER.queueDownload("./resources/enemies/boss.png");
+
+//sounds
+ASSET_MANAGER.queueDownload("./resources/sound/bruh.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/castleHurt.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/newRound.mp3");
+
+ASSET_MANAGER.queueDownload("./resources/sound/enemyDie.wav");
+ASSET_MANAGER.queueDownload("./resources/sound/enemyDieThree.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/enemyHurt.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/fireballSound.wav");
+ASSET_MANAGER.queueDownload("./resources/sound/arrowSound.wav");
+
+
+ASSET_MANAGER.queueDownload("./resources/sound/openTreasure.wav");
+ASSET_MANAGER.queueDownload("./resources/sound/shieldBlock.wav");
+ASSET_MANAGER.queueDownload("./resources/sound/swordAttack.wav");
+ASSET_MANAGER.queueDownload("./resources/sound/playerHurt.mp3");
+
+//music
+ASSET_MANAGER.queueDownload("./resources/sound/startingMusic.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/eightbit_lit.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/gameoverSound.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/medieval_lit.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/dumb_lit.mp3");
+
+
 
 //Power Up images
 ASSET_MANAGER.queueDownload("./resources/powerUps/coin.png");
@@ -56,9 +82,18 @@ ASSET_MANAGER.queueDownload("./resources/background/exit.png");
 
 
 ASSET_MANAGER.downloadAll(function() {
+    var gameEngine = new GameEngine();
     var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
+    ASSET_MANAGER.autoRepeat("./resources/sound/eightbit_lit.mp3");
+    ASSET_MANAGER.autoRepeat("./resources/sound/dumb_lit.mp3");
+    ASSET_MANAGER.autoRepeat("./resources/sound/medieval_lit.mp3");
+    ASSET_MANAGER.autoRepeat("./resources/sound/gameoverSound.mp3");
+    
+    
     ctx.imageSmoothingEnabled = false;
+
+    
     gameEngine.init(ctx);
     
     

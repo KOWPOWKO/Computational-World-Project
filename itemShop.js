@@ -266,6 +266,7 @@ class ArrowShooter {
                 this.timeElapsed = 0;
                 this.state = this.ATTACKING;
                 this.game.addEntityForeground(new GreenGuyArrow(this.game,this.x,this.y+15,this.facing));
+                ASSET_MANAGER.playAsset("./resources/sound/arrowSound.wav");
             }
         }
             

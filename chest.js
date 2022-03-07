@@ -68,6 +68,7 @@ class Chest {
             this.screen = true;
             if (!PARAMS.PAUSE && this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571){
                 this.open = true;
+                ASSET_MANAGER.playAsset("./resources/sound/openTreasure.wav");
                 this.p1 = true;
                 this.p2 = true;
                 this.p3 = true;
@@ -245,6 +246,7 @@ class Chest {
 		ctx.fillText("ITEM SHOP", 500,595);
 
 		if(this.open){
+            
             ctx.drawImage(this.itemAssets.exit,795,1);
             if(this.game.click){
                 if(this.game.click && this.game.click.x >= 795 && this.game.click.x <= 817 && this.game.click.y >= 1 && this.game.click.y <= 23 ){

@@ -13,9 +13,8 @@ class SceneManager {
         this.monsterType = 5;
         //this.game.click = false;
         //this.update();
+        
         this.mainMenu();
-        
-        
     };
     clearEntities() {
         this.game.entities[0].forEach(function (entity) {
@@ -34,13 +33,15 @@ class SceneManager {
     };
 
     mainMenu() {
-
-        this.game.addEntityBackground(new StartingScreen(this.game, 0, 0));
+        
+            this.game.addEntityBackground(new StartingScreen(this.game, 0, 0));
     }
 
     gameOver() {
         PARAMS.SCORE = 0;
         this.game.addEntityBackground(new GameOver(this.game, 0, 0));
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./resources/sound/startingMusic.mp3");
     }
 
     loadWorld() {
@@ -75,10 +76,38 @@ class SceneManager {
     loadProperties() {
         PARAMS.SLOW = 1;
     }
+
+    UpdateAudio() {
+        var mute = document.getElementById("mute").checked;
+        var volume = document.getElementById("volume").value;
+
+        ASSET_MANAGER.muteAudio(mute);
+        ASSET_MANAGER.adjustVolume(volume);
+
+    };
+
+    playRandom() {
+        ASSET_MANAGER.pauseBackgroundMusic();
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var songNumber = getRandomInt(3);
+        if (songNumber == 0) {
+            ASSET_MANAGER.playAsset("./resources/sound/eightbit_lit.mp3");
+            
+        }
+        if (songNumber == 1) {
+            ASSET_MANAGER.playAsset("./resources/sound/medieval_lit.mp3");
+        } 
+        if (songNumber == 2) {
+            ASSET_MANAGER.playAsset("./resources/sound/gameoverSound.mp3");
+        } 
+    }
     update() {
+        
         PARAMS.DEBUG = document.getElementById("debug").checked;
         this.loadProperties();
-    
+        this.UpdateAudio();
 
         /*
         if (this.loadGame == false) {
@@ -106,11 +135,16 @@ class SceneManager {
         
         this.game.entities[2].forEach(function (entity) {
             if(entity instanceof StartingScreen && (entity.loadGame == true) && (entity.loaded == false)) {
+                
+                  
+                
                 that.loadGame = true;
                 that.loadWorld();
                 that.setRoundMonters();
                 entity.loaded = true;
                 entity.removeFromWorld = true;
+
+                that.playRandom();
             }
             if(entity instanceof CastleBounds && (entity.dead == true)) {
                 that.loadGame = false;
@@ -119,6 +153,7 @@ class SceneManager {
                 that.gameOver();
             }
             if(entity instanceof GameOver && (entity.restart == true)) {
+                that.playRandom();
                 that.loadGame = true;
                 that.loadWorld();
                 that.setRoundMonters();
@@ -146,6 +181,7 @@ class SceneManager {
             console.log(this.game.entities[1]);
             PARAMS.ROUND += 1;
             PARAMS.SKILL_POINTS +=1;
+            ASSET_MANAGER.playAsset("./resources/sound/newRound.mp3");
             this.setRoundMonters();
         }
     }

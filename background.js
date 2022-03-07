@@ -28,10 +28,13 @@ class StartingScreen {
         this.loadGame = false;
         this.loaded = false;
         this.removeFromWorld = false;
-
+        this.playedMusic = false;
     };
+
+    
     
     update () {
+        
         if(this.game.click){
             if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 800
                 && this.game.click.y >= 680 && this.game.click.y <= 705) {

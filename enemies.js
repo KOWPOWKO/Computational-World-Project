@@ -83,6 +83,20 @@ class Snake {
                 this.x += this.SPEED * PARAMS.SLOW * this.game.clockTick;
         }
     }
+    playRandom() {
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var songNumber = getRandomInt(2);
+        
+        if (songNumber == 0) {
+            ASSET_MANAGER.playAsset("./resources/sound/castleHurt.mp3");
+            
+        }
+        if (songNumber == 1) {
+            ASSET_MANAGER.playAsset("./resources/sound/bruh.mp3");
+        } 
+    }
 
     collisionUpdate(TICK) {
         var that = this;
@@ -114,6 +128,7 @@ class Snake {
                         entity.health -= 10;
                     }
                     that.previousAttack = 0;
+                    that.playRandom();
                 }
             }    
        
@@ -153,6 +168,7 @@ class Snake {
         
         if(this.dead){// Your condition
             playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     };
 
@@ -280,17 +296,13 @@ class Mage {
         })
     }
 
-    update() {
-        function playSound(soundfile){
-            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
-        }
-        
-            
+    update() {     
         const TICK = this.game.clockTick;
         this.y += 1;
         if (this.dead) {
             this.removeFromWorld = true;
             this.game.addEntityForeground(new Coin(this.game, this.x, this.y)); 
+            
         } else {
             if (PARAMS.PAUSE == false) {
                 this.horizontalUpdate();
@@ -301,7 +313,8 @@ class Mage {
                     this.timeElapsed = 0;
                     this.state = this.ATTACKING;
                     this.game.addEntityEnemies(new SmallFireBall(this.game,this.x,this.y,this.facing));
-                    //playSound("fire.mp3");  Location to your sound file
+     
+                    ASSET_MANAGER.playAsset("./resources/sound/fireballSound.wav");
                 }
             }
         }
@@ -318,6 +331,14 @@ class Mage {
         this.updateBB();
 
         this.collisionUpdate();
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+
+        if(this.dead){// Your condition
+            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
+        }
     };
 
     draw(ctx) {
@@ -426,6 +447,7 @@ class Ogre {
             if(entity.BB && that.attackBB.collide(entity.BB) && that.previousAttack >= that.ATTACK_SPEED) {
                 if (entity instanceof CastleBounds) {
                     that.SPEED = 0;
+                    
                     if (entity.shield > 0) {
                         entity.shield -= 10;
                     } else if (entity.shield <= 0){
@@ -484,6 +506,15 @@ class Ogre {
         this.updateBB();
         this.updateAttackBB();
         this.collisionUpdate(TICK);
+
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+
+        if(this.dead){// Your condition
+            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
+        }
     };
 
     draw(ctx) {
@@ -654,6 +685,15 @@ class Skeleton {
         this.updateBB();
         this.updateAttackBB();
         this.collisionUpdate(TICK);
+
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+
+        if(this.dead){// Your condition
+            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
+        }
     };
 
     draw(ctx) {
@@ -718,6 +758,13 @@ class Skeleton {
             if (this.x <= 440) {
                 this.x += this.SPEED;
             }
+        }
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
+        if(this.dead){// Your condition
+            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     }
 	

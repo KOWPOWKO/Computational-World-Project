@@ -206,6 +206,7 @@ class Hero {
 
     noAttackUpdate() {
         if(this.game.attack) {
+            ASSET_MANAGER.playAsset("./resources/sound/swordAttack.wav");
             this.attackAnim.elapsedTime = 0;
             this.ATTACKING = true;
             this.game.attack = false;
@@ -236,8 +237,13 @@ class Hero {
         this.y += this.velocity.y * this.speedMultiplier * TICK;
     }
 
+
     collisionUpdate() {
         var that = this;
+
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\"resources\\sound\\"+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
 
         this.game.entities[3].forEach(function (entity) {
             if(entity instanceof ArrowShooterInvetory) {
@@ -321,6 +327,8 @@ class Hero {
                         entity.health -= that.damage;
                         entity.hasBeenAttacked = true;
                         entity.knockback = true;
+                        //playSound("bruh.mp3");
+                        ASSET_MANAGER.playAsset("./resources/sound/enemyHurt.mp3");
                     } 
 
                 }
@@ -332,12 +340,15 @@ class Hero {
                         that.dead = true;
                     } 
                     if (that.BLOCK == false) {
+                        ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                         if (that.shield > 0) {
                             that.shield -= 10;
                         } else if (that.shield <= 0){
                             that.shield = 0;
                             that.health -= 10;
                         }
+                    } else if (that.BLOCK == true) {
+                        ASSET_MANAGER.playAsset("./resources/sound/shieldBlock.wav");
                     }
                     
                     entity.removeFromWorld = true;
@@ -353,6 +364,7 @@ class Hero {
             if(entity.attackBB && that.BB.collide(entity.attackBB) && entity.previousAttack >= entity.ATTACK_SPEED) { //enemies attacking
                 if((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if(that.BLOCK) {
+                        ASSET_MANAGER.playAsset("./resources/sound/shieldBlock.wav");
                         that.knockback = true;
                     } else {
                         if (that.health <= 0) {
@@ -360,6 +372,7 @@ class Hero {
                             that.dead = true;
                         } 
                         else if (!that.hasBeenAttacked) {
+                            ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                             that.hasBeenAttacked = true;
                             that.knockback = true;
 
@@ -418,15 +431,16 @@ class Hero {
     }
 
     update() {
+        
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
        
-        
-        /*
         function playSound(soundfile){
             document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
         }
-        */
+        
+        
+        
 
 
         if (this.dead == false && PARAMS.PAUSE == false) {
@@ -478,7 +492,7 @@ class Hero {
                 this.dead = true;
             }
         } else if (this.dead == true) {
-            playSound("game-lose-2.mp3"); // Location to your sound file
+            playSound("game-lose-2.mp3");
             if(this.deadAnim.isDone()) {
                 this.finishDead = true;
             }
