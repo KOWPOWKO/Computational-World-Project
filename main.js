@@ -3,8 +3,14 @@ var ASSET_MANAGER = new AssetManager();
 
 //hero images
 ASSET_MANAGER.queueDownload("./resources/hero/defender.png");
+ASSET_MANAGER.queueDownload("./resources/hero/defenderTitle.png");
+ASSET_MANAGER.queueDownload("./resources/hero/defenderShadow.png");
 ASSET_MANAGER.queueDownload("./resources/hero/character2.png");
 ASSET_MANAGER.queueDownload("./resources/hero/greenguy.png");
+ASSET_MANAGER.queueDownload("./resources/hero/eren.png");
+ASSET_MANAGER.queueDownload("./resources/hero/eren2.png");
+ASSET_MANAGER.queueDownload("./resources/hero/ErenJ.png");
+ASSET_MANAGER.queueDownload("./resources/hero/ErenJ2.png");
 
 //enemies images
 ASSET_MANAGER.queueDownload("./resources/enemies/monstor2.png");
@@ -23,6 +29,13 @@ ASSET_MANAGER.queueDownload("./resources/sound/enemyDieThree.mp3");
 ASSET_MANAGER.queueDownload("./resources/sound/enemyHurt.mp3");
 ASSET_MANAGER.queueDownload("./resources/sound/fireballSound.wav");
 ASSET_MANAGER.queueDownload("./resources/sound/arrowSound.wav");
+ASSET_MANAGER.queueDownload("./resources/sound/collectCoin.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/eren.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/explosion.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/game-lose-2.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/notEnough.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/register.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/upgrade.mp3");
 
 
 ASSET_MANAGER.queueDownload("./resources/sound/openTreasure.wav");

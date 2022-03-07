@@ -55,8 +55,10 @@ class SceneManager {
         PARAMS.TOTAL = this.monsters.length;
         this.clearEntities();
         //this.game.addEntity(new Character_2(this.game,0,0));
-        this.game.addEntityForeground(new Hero(this.game,0,0));
-        this.game.addEntityBackground(new Inventory(this.game));
+        if(PARAMS.CHARACTER1 == true) this.game.addEntityForeground(new Hero(this.game,0,0));
+        if(PARAMS.CHARACTER2 == true) this.game.addEntityForeground(new ErenJ(this.game,0,0));
+
+       this.game.addEntityBackground(new Inventory(this.game));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
 
 

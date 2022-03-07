@@ -71,5 +71,7 @@ const PARAMS = {
     SLOW: 1,
     HEALTH: 0,
     INV_FULL: false,
+    CHARACTER1: false,
+    CHARACTER2: false,
     SPEED: 1
 };

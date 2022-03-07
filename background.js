@@ -20,11 +20,40 @@ class Sun {
     };
 }
 
+class LoadCharacter {
+    constructor(game, x, y) {
+        Object.assign(this, {game, x, y});
+
+    };
+    
+    update () {
+       if(this.game.click && this.game.click.x >= 850 && this.game.click.x <= 970 && this.game.click.y >= 425 && this.game.click.y <= 605){
+                PARAMS.CHARACTER1 = true;
+                PARAMS.CHARACTER2 = false;
+        }
+        if(this.game.click && this.game.click.x >= 1030 && this.game.click.x <= 1170 && this.game.click.y >= 425 && this.game.click.y <= 605 ){
+                PARAMS.CHARACTER2 = true;
+                PARAMS.CHARACTER1 = false;
+
+        }
+    };
+
+    draw(ctx) {
+    };
+
+}
+
 class StartingScreen {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
        // this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/background.png");
         this.title = ASSET_MANAGER.getAsset("./resources/background/castledefenderlogo.png");
+        this.shadow = ASSET_MANAGER.getAsset("./resources/hero/defenderShadow.png");
+        this.dtitle = ASSET_MANAGER.getAsset("./resources/hero/defenderTitle.png");
+        this.eren = ASSET_MANAGER.getAsset("./resources/hero/eren.png");
+        this.eren2 = ASSET_MANAGER.getAsset("./resources/hero/eren2.png");
+
+
         this.loadGame = false;
         this.loaded = false;
         this.removeFromWorld = false;
@@ -37,7 +66,7 @@ class StartingScreen {
         
         if(this.game.click){
             if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 800
-                && this.game.click.y >= 680 && this.game.click.y <= 705) {
+                && this.game.click.y >= 680 && this.game.click.y <= 705 && (PARAMS.CHARACTER1 == true || PARAMS.CHARACTER2 == true)) {
                this.loadGame =true;
                this.game.click = false;
             }
@@ -46,6 +75,9 @@ class StartingScreen {
 
     draw(ctx) {
         if(!this.loadGame){
+            function playSound(soundfile){
+                document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+            }
             ctx.fillStyle = "White";
             ctx.fillRect(0,0, 1280, 720);
             ctx.font = ctx.font.replace(/\d+px/, "24px");
@@ -69,7 +101,28 @@ class StartingScreen {
             ctx.fillText("Click on Chest image to open ItemShop", 50,475);
 
 
+            ctx.fillText("CHARACTERS", 900,400);
+            ctx.strokeRect(850, 425 , 140, 180);
+            if(this.game.mouse && this.game.mouse.x >= 850 && this.game.mouse.x <= 970 && this.game.mouse.y >= 425 && this.game.mouse.y <= 605 || (this.game.click && this.game.click.x >= 850 && this.game.click.x <= 970 && this.game.click.y >= 425 && this.game.click.y <= 605)){
+                ctx.drawImage(this.dtitle, 830,435);
+                ctx.fillText("Knight", 850,630);
 
+                }
+            else{
+                ctx.drawImage(this.shadow, 830,435);
+            }
+
+            ctx.strokeRect(1030, 425 , 140, 180);
+            if(this.game.mouse && this.game.mouse.x >= 1030 && this.game.mouse.x <= 1170 && this.game.mouse.y >= 425 && this.game.mouse.y <= 605 || (this.game.click && this.game.click.x >= 1030 && this.game.click.x <= 1170 && this.game.click.y >= 425 && this.game.click.y <= 605 )){
+                ctx.drawImage(this.eren, 1030,425);
+                ctx.fillText("Eren Jeagar", 1030,630);
+
+                //ASSET_MANAGER.playAsset("./resources/sound/eren.mp3");
+               if (this.game.click && this.game.click.x >= 1030 && this.game.click.x <= 1170 && this.game.click.y >= 425 && this.game.click.y <= 605 ) playSound("./resources/sound/eren.mp3");
+                }
+            else{
+                ctx.drawImage(this.eren2, 1030,425);
+            }
 
             if(this.game.mouse && this.game.mouse.x >= 530 && this.game.mouse.x <= 800 && this.game.mouse.y >= 680 && this.game.mouse.y <= 705){
                 ctx.fillStyle = "Grey";
@@ -81,6 +134,8 @@ class StartingScreen {
             }
             //this.game.addEntityBackground(new Castle(this.game, 0, 0));
             ctx.drawImage(this.title, 463, 0,320,320);
+            this.game.addEntityBackground(new LoadCharacter(this.game,0,0));
+
         } 
     };
 }

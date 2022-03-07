@@ -63,10 +63,6 @@ class Chest {
 	update(){
         this.elapsed += this.game.clockTick;
 
-        function playSound(soundfile){
-            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
-        }
-
 		if (this.game.click) {
             this.screen = true;
             if (!PARAMS.PAUSE && this.game.click && this.game.click.x > 520 && this.game.click.x < 590 && this.game.click.y > 534 && this.game.click.y < 571){
@@ -113,13 +109,13 @@ class Chest {
             if(this.test === 1 && this.p1 && this.game.click && this.game.click.x >= 201 && this.game.click.x <= 242 
                 && this.game.click.y>=135 && this.game.click.y <= 160 ) {
                     if(PARAMS.SCORE < 10) {
-                    this.reset1 = true;
-                    playSound("notEnough.mp3"); // Location to your sound file
+                        this.reset1 = true;
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
 
                     }
                     if(PARAMS.SCORE >= 10) {
                         this.reset1 = false;
-                        playSound("register.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
 
                     }
 
@@ -132,12 +128,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 15) {
                         this.reset2 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 15) {
                             this.reset2 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.potionH = true;
@@ -149,12 +145,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 20) {
                         this.reset3 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 20) {
                             this.reset3 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.shieldAbility = true;
@@ -166,12 +162,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 25) {
                         this.reset4 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 25) {
                             this.reset4 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.castleD = true;
@@ -183,12 +179,11 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 30) {
                         this.reset5 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
-    
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3");     
                         }
                         if(PARAMS.SCORE >= 30) {
                             this.reset5 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.arrowShooter = true;
@@ -201,12 +196,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 20) {
                         this.reset6 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 20) {
                             this.reset6 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.slashAbility = true;
@@ -218,12 +213,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 30) {
                         this.reset7 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 30) {
                             this.reset7 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.laserB = true;
@@ -235,13 +230,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 40) {
                         this.reset8 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 40) {
                             this.reset8 = false;
-                            playSound("register.mp3"); // Location to your sound file
-    
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3");     
                         }
                     this.waveS = true;
                     this.count8 = 0;
@@ -252,13 +246,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 50) {
                         this.rese9 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 50) {
                             this.reset9 = false;
-                            playSound("register.mp3"); // Location to your sound file
-    
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3");     
                         }
                     this.invincibility = true;
                     this.count9 = 0;
@@ -269,12 +262,12 @@ class Chest {
                 && this.game.click.y>=135 && this.game.click.y <= 160) {
                     if(PARAMS.SCORE < 70) {
                         this.reset10 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3"); 
     
                         }
                         if(PARAMS.SCORE >= 70) {
                             this.reset10 = false;
-                            playSound("register.mp3"); // Location to your sound file
+                            ASSET_MANAGER.playAsset("./resources/sound/register.mp3"); 
     
                         }
                     this.nuke = true;
@@ -287,13 +280,11 @@ class Chest {
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SKILL_POINTS < 1) {
                         this.reset11 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
-    
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3");     
                         }
                         if(PARAMS.SKILL_POINTS >= 1) {
                             this.reset11 = false;
-                            playSound("upgrade.mp3"); // Location to your sound file
-    
+                            ASSET_MANAGER.playAsset("./resources/sound/upgrade.mp3");     
                         }
                     this.health =  true;
                     this.count11 = 0;
@@ -304,13 +295,11 @@ class Chest {
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SKILL_POINTS < 1) {
                         this.reset12 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
-    
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3");     
                         }
                         if(PARAMS.SKILL_POINTS >= 1) {
                             this.reset12 = false;
-                            playSound("upgrade.mp3"); // Location to your sound file
-    
+                            ASSET_MANAGER.playAsset("./resources/sound/upgrade.mp3");     
                         }
                     this.damage =  true;
                     this.count12 = 0;
@@ -321,13 +310,11 @@ class Chest {
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SKILL_POINTS < 1) {
                         this.reset13 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
-    
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3");     
                         }
                         if(PARAMS.SKILL_POINTS >= 1) {
                             this.reset13 = false;
-                            playSound("upgrade.mp3"); // Location to your sound file
-    
+                            ASSET_MANAGER.playAsset("./resources/sound/upgrade.mp3");     
                         }
                     this.speed =  true;
                     this.count13 = 0;
@@ -338,13 +325,11 @@ class Chest {
                 && this.game.click.y >= 135 && this.game.click.y <= 160) {
                     if(PARAMS.SKILL_POINTS < 1) {
                         this.reset14 = true;
-                        playSound("notEnough.mp3"); // Location to your sound file
-    
+                        ASSET_MANAGER.playAsset("./resources/sound/notEnough.mp3");     
                         }
                         if(PARAMS.SKILL_POINTS >= 1) {
                             this.reset14 = false;
-                            playSound("upgrade.mp3"); // Location to your sound file
-    
+                            ASSET_MANAGER.playAsset("./resources/sound/upgrade.mp3");     
                         }
                     this.coolD =  true;
                     this.count14 = 0;

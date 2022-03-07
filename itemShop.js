@@ -415,12 +415,10 @@ class NUKE {
 	};
 	
 	draw(ctx){
-        function playSound(soundfile){
-            document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
-        }
+        
 		ctx.drawImage(this.spritesheet,this.x, this.y);
 		if(this.y> 700) {
-            playSound("explosion.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/explosion.mp3"); 
             ctx.drawImage(this.spritesheet2,50, -50);
             this.finished = true;
         }

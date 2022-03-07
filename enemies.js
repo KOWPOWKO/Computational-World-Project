@@ -167,7 +167,7 @@ class Snake {
         }
         
         if(this.dead){// Your condition
-            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/collectCoin.mp3");
             ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     };
@@ -336,7 +336,7 @@ class Mage {
         }
 
         if(this.dead){// Your condition
-            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/collectCoin.mp3");
             ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     };
@@ -512,7 +512,7 @@ class Ogre {
         }
 
         if(this.dead){// Your condition
-            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/collectCoin.mp3");
             ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     };
@@ -691,7 +691,7 @@ class Skeleton {
         }
 
         if(this.dead){// Your condition
-            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/collectCoin.mp3");
             ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     };
@@ -763,7 +763,7 @@ class Skeleton {
             document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
         }
         if(this.dead){// Your condition
-            playSound("collectCoin.mp3"); // Location to your sound file
+            ASSET_MANAGER.playAsset("./resources/sound/collectCoin.mp3");
             ASSET_MANAGER.playAsset("./resources/sound/enemyDieThree.mp3");
         }
     }
