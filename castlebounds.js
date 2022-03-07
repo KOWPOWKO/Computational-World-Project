@@ -34,6 +34,7 @@ class CastleBounds {
                     }
                     entity.removeFromWorld = true;
                 }
+                ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                 
             }
         })

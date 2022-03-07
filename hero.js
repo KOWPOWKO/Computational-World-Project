@@ -206,6 +206,7 @@ class Hero {
 
     noAttackUpdate() {
         if(this.game.attack) {
+            ASSET_MANAGER.playAsset("./resources/sound/swordAttack.wav");
             this.attackAnim.elapsedTime = 0;
             this.ATTACKING = true;
             this.game.attack = false;
@@ -236,19 +237,32 @@ class Hero {
         this.y += this.velocity.y * this.speedMultiplier * TICK;
     }
 
+
     collisionUpdate() {
         var that = this;
+
+        function playSound(soundfile){
+            document.getElementById("sound").innerHTML="<embed src=\"resources\\sound\\"+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
+        }
 
         this.game.entities[3].forEach(function (entity) {
             if(entity instanceof ArrowShooterInvetory) {
                 if (that.kSlot == false) {
                     that.kFill = entity;
-                    that.kSlot = true;
-                } else if (that.lSlot == false) {
-                    that.lFill = entity;
-                    that.lSlot = true;
+                    that.kSlot = true;                    
                 }
+            else if (that.lSlot == false) {
+                that.lFill = entity;
+                that.lSlot = true;
+            }
                 entity.removeFromWorld = true;
+            }
+            if(entity instanceof AirSlashInvetory) {
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
+                entity.removeFromWorld = true;
+                }
             }
 
             if(entity instanceof CoolDown && entity.removeFromWorld == false) {
@@ -322,6 +336,8 @@ class Hero {
                         entity.hasBeenAttacked = true;
                         if(!(entity instanceof DragonBoss))
                             entity.knockback = true;
+                        //playSound("bruh.mp3");
+                        ASSET_MANAGER.playAsset("./resources/sound/enemyHurt.mp3");
                     } 
 
                 }
@@ -333,6 +349,7 @@ class Hero {
                         that.dead = true;
                     } 
                     if (that.BLOCK == false) {
+                        ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                         if (that.shield > 0) {
                             that.shield -= entity instanceof SmallFireBall ? 10 : 20;
                         } else if (that.shield <= 0){
@@ -340,6 +357,8 @@ class Hero {
                             that.health -= entity instanceof SmallFireBall ? 10 : 20;
                         }
                         that.knockback = entity instanceof FireBall;
+                    } else if (that.BLOCK == true) {
+                        ASSET_MANAGER.playAsset("./resources/sound/shieldBlock.wav");
                     }
                     
                     entity.removeFromWorld = true;
@@ -360,6 +379,7 @@ class Hero {
             if(entity.attackBB && that.BB.collide(entity.attackBB) && entity.previousAttack >= entity.ATTACK_SPEED) { //enemies attacking
                 if((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if(that.BLOCK) {
+                        ASSET_MANAGER.playAsset("./resources/sound/shieldBlock.wav");
                         that.knockback = true;
                     } else {
                         if (that.health <= 0) {
@@ -367,6 +387,7 @@ class Hero {
                             that.dead = true;
                         } 
                         else if (!that.hasBeenAttacked) {
+                            ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                             that.hasBeenAttacked = true;
                             that.knockback = true;
 
@@ -402,6 +423,7 @@ class Hero {
                 if (this.kSlot == true) {
                     if (this.kFill instanceof ArrowShooterInvetory) {
                         this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+
                     }
                     this.kSlot = false;
                 }
@@ -411,6 +433,9 @@ class Hero {
             if (this.lSlot == true) {
                 if (this.lFill instanceof ArrowShooterInvetory) {
                     this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                }
+                else if (this.lFill instanceof AirSlashInvetory) {
+                    this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
                 }
                 this.lSlot = false;
             }
@@ -429,16 +454,16 @@ class Hero {
     }
 
     update() {
+        
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
        
-        
-        /*
         function playSound(soundfile){
             document.getElementById("sound").innerHTML="<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\"/>";
         }
-        */
-
+        
+        
+        
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
@@ -489,7 +514,7 @@ class Hero {
                 this.dead = true;
             }
         } else if (this.dead == true) {
-            playSound("game-lose-2.mp3"); // Location to your sound file
+            playSound("game-lose-2.mp3");
             if(this.deadAnim.isDone()) {
                 this.finishDead = true;
             }
@@ -525,9 +550,7 @@ class Hero {
                     this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                 } 
                 else if (this.ATTACKING == true) {
-                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2); 
-                    
-    
+                    this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2);     
                 } 
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
@@ -610,7 +633,7 @@ class Hero {
         ctx.fillText("*Speed: " + this.speedMultiplier, 25, 130);
         ctx.fillText("*Max Health: " + this.MAX_HEALTH, 25, 150);
         ctx.fillText("*Damage: " + this.damage, 25, 170);
-        ctx.fillText("*PARAMS.INV_FULL: " + PARAMS.INV_FULL, 25, 190);
+        //ctx.fillText("*: " + PARAMS.INV_FULL, 25, 190);
 
 
         ctx.fillStyle = "Black";

@@ -2,7 +2,7 @@ class Sun {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/background/sun.png");
-        this.counter = 10;
+        this.counter = 70;
 
     };
     
@@ -28,10 +28,13 @@ class StartingScreen {
         this.loadGame = false;
         this.loaded = false;
         this.removeFromWorld = false;
-
+        this.playedMusic = false;
     };
+
+    
     
     update () {
+        
         if(this.game.click){
             if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 800
                 && this.game.click.y >= 680 && this.game.click.y <= 705) {
@@ -63,6 +66,8 @@ class StartingScreen {
 
             ctx.fillText("Hint: ", 50,400);
             ctx.fillText("Sunshine leads all paths to victory!", 50,425);
+            ctx.fillText("Click on Chest image to open ItemShop", 50,475);
+
 
 
 
