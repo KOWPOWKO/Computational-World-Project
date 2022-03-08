@@ -101,6 +101,10 @@ class GameEngine {
                 case "KeyJ":
                     that.attack = true;
                     break;
+                    
+                case "KeyI":
+                    that.titan= true;
+                    break;
 
                 case "KeyK":
                     that.specialK = true;

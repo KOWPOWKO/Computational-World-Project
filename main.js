@@ -23,6 +23,7 @@ ASSET_MANAGER.queueDownload("./resources/enemies/boss.png");
 ASSET_MANAGER.queueDownload("./resources/sound/bruh.mp3");
 ASSET_MANAGER.queueDownload("./resources/sound/castleHurt.mp3");
 ASSET_MANAGER.queueDownload("./resources/sound/newRound.mp3");
+ASSET_MANAGER.queueDownload("./resources/sound/roar.mp3");
 
 ASSET_MANAGER.queueDownload("./resources/sound/enemyDie.wav");
 ASSET_MANAGER.queueDownload("./resources/sound/enemyDieThree.mp3");

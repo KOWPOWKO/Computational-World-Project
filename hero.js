@@ -689,8 +689,10 @@ class ErenJ {
         this.blockAnim = new Animator(this.spritesheet2,0,176,100,54,1,0.8,18,false,true);
         // Attacking
         this.attackAnim = new Animator(this.spritesheet2,360,0,120,110,3,0.2,0.5,false,false);
+        //
+        this.attackAnim2 = new Animator(this.spritesheet1,0,0,120,110,6,0.3,0.5,false,false);
         // Jumping
-        this.jumpAnim = new Animator(this.spritesheet2,360,130,100,74,3,.8,-0.5,false,true);
+        this.jumpAnim = new Animator(this.spritesheet2,500,130,100,74,1,.8,-0.5,false,true);
 
         // Die
         this.deadAnim= new Animator(this.spritesheet2,732,176,96,54,2,0.8,-1,false,false);
@@ -718,6 +720,7 @@ class ErenJ {
         //attackingState
         this.canAttack = true;
         this.ATTACKING = false;
+        this.TITAN =false;
         this.BLOCK = false;
 
         //jumpingState
@@ -773,6 +776,7 @@ class ErenJ {
             if (this.game.run ) {
                 this.state = this.RUNNING;
                 this.game.attack = false;
+                this.game.titan = false;
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x -= this.ACCELERATION; 
                 } else {
@@ -793,6 +797,7 @@ class ErenJ {
             if (this.game.run) {
                 this.state = this.RUNNING;
                 this.game.attack = false;
+                this.game.titan = false;
                 if (Math.abs(this.velocity.x) <= this.MAX_RUN) {
                     this.velocity.x += this.ACCELERATION; 
                 } else {
@@ -854,6 +859,13 @@ class ErenJ {
             this.game.attack = false;
             this.canAttack = false;
         }
+        if(this.game.titan) {
+            ASSET_MANAGER.playAsset("./resources/sound/roar.mp3");
+            this.attackAnim2.elapsedTime = 0;
+            this.TITAN = true;
+            this.game.titan = false;
+            this.canAttack = false;
+        }
 
     }
 
@@ -862,6 +874,12 @@ class ErenJ {
             this.ATTACKING = false;
             
             this.attackAnim.elapsedTime = 0;
+            this.previousAttack = 0; 
+        }
+        if (this.attackAnim2.isDone()) {
+            this.TITAN = false;
+            
+            this.attackAnim2.elapsedTime = 0;
             this.previousAttack = 0; 
         }
     }
@@ -965,10 +983,10 @@ class ErenJ {
         })
 
         this.game.entities[1].forEach(function (entity) {
-            if (!that.ATTACKING) {
+            if (!that.ATTACKING || !that.TITAN) {
                 entity.hasBeenAttacked = false;
             }
-            if(entity.BB && that.attackBB.collide(entity.BB) && that.ATTACKING) { //attacking enemies
+            if(entity.BB && that.attackBB.collide(entity.BB) && (that.ATTACKING|| that.TITAN)) { //attacking enemies
                 if ((entity instanceof Mage || entity instanceof Snake || entity instanceof Ogre || entity instanceof Skeleton || entity instanceof DragonBoss) && (entity.dead == false) && (entity.hasBeenAttacked == false)) {
                     if (entity.health > 0) {
                         entity.health -= that.damage;
@@ -1109,13 +1127,21 @@ class ErenJ {
                 
             } else {
                 this.game.attack = false;
+                this.game.titan = false;
             }
 
             
             if(!this.ATTACKING && (this.state != this.RUNNING) && (this.canAttack == true)) {                    
                 this.noAttackUpdate(); 
             }
+            if(!this.TITAN && (this.state != this.RUNNING) && (this.canAttack == true)) {                    
+                this.noAttackUpdate(); 
+            }
             else if (this.ATTACKING) {
+                this.attackUpdate();    
+                this.previousAttack = 0;
+            }
+            else if (this.TITAN) {
                 this.attackUpdate();    
                 this.previousAttack = 0;
             }
@@ -1170,11 +1196,14 @@ class ErenJ {
         
         if (this.dead == false) {
             if (this.facing == this.RIGHT) {
-                if (this.JUMPING == true && this.ATTACKING == false) {
+                if (this.JUMPING == true && this.ATTACKING == false && this.TITAN == false) {
                     this.jumpAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y,1.2);
                 } 
                 else if (this.ATTACKING == true) {
                     this.attackAnim.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2);     
+                } 
+                else if (this.TITAN == true) {
+                    this.attackAnim2.drawFrame(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2);     
                 } 
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrame(this.game.clockTick,ctx,this.x,this.y-20,1.2);
@@ -1193,11 +1222,14 @@ class ErenJ {
                 }
             } 
             else if (this.facing == this.LEFT){
-                if (this.JUMPING == true && this.ATTACKING == false) {
+                if (this.JUMPING == true && this.ATTACKING == false && this.TITAN == false) {
                     this.jumpAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-28,this.y,1.2);
                 } 
                 else if (this.ATTACKING == true) {
                     this.attackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x-30,this.y - 25,1.2); 
+                } 
+                else if (this.TITAN == true) {
+                    this.attackAnim2.drawFrameReverse(this.game.clockTick,ctx,this.x - 48,this.y - 25,1.2);     
                 } 
                 else if (this.knockback) {
                     this.knockbackAnim.drawFrameReverse(this.game.clockTick,ctx,this.x,this.y-20,1.2);
@@ -1233,6 +1265,9 @@ class ErenJ {
             ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
 
             if(this.ATTACKING == true) {
+                ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
+            }
+            if(this.TITAN == true) {
                 ctx.strokeRect(this.attackBB.x, this.attackBB.y, this.attackBB.width, this.attackBB.height);
             }
         }
