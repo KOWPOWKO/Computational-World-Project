@@ -60,6 +60,9 @@ class SceneManager {
         //this.game.addEntity(new Character_2(this.game,0,0));
         if(PARAMS.CHARACTER1 == true) this.game.addEntityForeground(new Hero(this.game,0,0));
         if(PARAMS.CHARACTER2 == true) this.game.addEntityForeground(new ErenJ(this.game,0,0));
+        if(this.transform == true){
+            this.game.addEntityForeground(new ErenTitan(this.game,0,0));
+        }
 
        this.game.addEntityBackground(new Inventory(this.game));
         //this.game.addEntityEnemies(new DragonBoss(this.game,1240,0));
@@ -175,16 +178,26 @@ class SceneManager {
                 that.setRoundMonters();
                 entity.removeFromWorld = true;
             }
+            // if(entity instanceof GameOver && (entity.mainMenu == true)) {
+            //     that.mainMenu();
+            // }
             if(entity instanceof Win && (entity.restart == true)) {
                 that.loadGame = true;
                 that.loadWorld();
                 that.setRoundMonters();
                 entity.removeFromWorld = true;
             }
+
         })
 
         this.game.entities[0].forEach(function (entity) {
             if (entity instanceof Hero && (entity.finishDead == true)) {
+                that.loadGame = false;
+                that.clearEntities();
+                PARAMS.ROUND = 1;
+                that.gameOver();
+            }
+            if (entity instanceof ErenJ && (entity.finishDead == true)) {
                 that.loadGame = false;
                 that.clearEntities();
                 PARAMS.ROUND = 1;
