@@ -242,9 +242,18 @@ class ArrowShooter {
                 } else {
                     that.health -= 10;
                     if (entity.facing == that.LEFT) {
-                        entity.x += 50;
+                        if (entity instanceof DragonBoss && entity.abilityRamming == true) {
+
+                        }else {
+                            entity.x += 50;
+                        }
+                        
                     } else if (entity.facing == that.RIGHT) {
-                        entity.x -= 50;
+                        if (entity instanceof DragonBoss && entity.abilityRamming == true) {
+
+                        }else {
+                            entity.x += 50;
+                        }
                     } 
                 }
             } 
@@ -386,8 +395,8 @@ class SonicWaveInvetory {
     }
 
     loadProperties() {
-        this.coolDown = 20;
-        this.previous = 20;
+        this.coolDown = 10;
+        this.previous = 10;
 
     };
 
@@ -395,11 +404,10 @@ class SonicWaveInvetory {
         
         const TICK = this.game.clockTick;
         if (PARAMS.PAUSE == false) {
-            if (this.coolDown <= this.previous && this.game.specialL) {
-                this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y));
-                this.previous = 0;
+            if (this.coolDown >= this.previous) {
+                this.previous += TICK;
             }
-            this.previous += TICK;
+            
         }
     }
 
@@ -499,11 +507,10 @@ class LazerInvetory {
         
         const TICK = this.game.clockTick;
         if (PARAMS.PAUSE == false) {
-            if (this.coolDown <= this.previous && this.game.specialL) {
-                this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
-                this.previous = 0;
+            if (this.coolDown >= this.previous) {
+                this.previous += TICK;
             }
-            this.previous += TICK;
+            
         }
     }
 
