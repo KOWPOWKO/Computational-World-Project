@@ -30,12 +30,20 @@ class LoadCharacter {
        if(this.game.click && this.game.click.x >= 850 && this.game.click.x <= 970 && this.game.click.y >= 425 && this.game.click.y <= 605){
                 PARAMS.CHARACTER1 = true;
                 PARAMS.CHARACTER2 = false;
+                PARAMS.CHARACTER3 = false;
+
         }
         if(this.game.click && this.game.click.x >= 1030 && this.game.click.x <= 1170 && this.game.click.y >= 425 && this.game.click.y <= 605 ){
                 PARAMS.CHARACTER2 = true;
                 PARAMS.CHARACTER1 = false;
+                PARAMS.CHARACTER3 = false;
 
         }
+        if(this.game.click && this.game.click.x >= 650 && this.game.click.x <= 770 && this.game.click.y >= 425 && this.game.click.y <= 605){
+            PARAMS.CHARACTER3 = true;
+            PARAMS.CHARACTER1 = false;
+            PARAMS.CHARACTER2 = false;
+    }
     };
 
     draw(ctx) {
@@ -50,6 +58,8 @@ class StartingScreen {
         this.title = ASSET_MANAGER.getAsset("./resources/background/castledefenderlogo.png");
         this.shadow = ASSET_MANAGER.getAsset("./resources/hero/defenderShadow.png");
         this.dtitle = ASSET_MANAGER.getAsset("./resources/hero/defenderTitle.png");
+        this.titan = ASSET_MANAGER.getAsset("./resources/hero/erendisplay.png");
+        this.titanShadow = ASSET_MANAGER.getAsset("./resources/hero/erenshadow.png");
         this.eren = ASSET_MANAGER.getAsset("./resources/hero/eren.png");
         this.eren2 = ASSET_MANAGER.getAsset("./resources/hero/eren2.png");
 
@@ -66,7 +76,7 @@ class StartingScreen {
         
         if(this.game.click){
             if (this.game.click && this.game.click.x >=  530 && this.game.click.x <= 800
-                && this.game.click.y >= 680 && this.game.click.y <= 705 && (PARAMS.CHARACTER1 == true || PARAMS.CHARACTER2 == true)) {
+                && this.game.click.y >= 680 && this.game.click.y <= 705 && (PARAMS.CHARACTER1 == true || PARAMS.CHARACTER2 == true|| PARAMS.CHARACTER3 == true)) {
                this.loadGame =true;
                this.game.click = false;
             }
@@ -122,6 +132,15 @@ class StartingScreen {
                 }
             else{
                 ctx.drawImage(this.eren2, 1030,425);
+            }
+            ctx.strokeRect(650, 425 , 140, 180);
+            if(this.game.mouse && this.game.mouse.x >= 650 && this.game.mouse.x <= 770 && this.game.mouse.y >= 425 && this.game.mouse.y <= 605 || (this.game.click && this.game.click.x >= 650 && this.game.click.x <= 770 && this.game.click.y >= 425 && this.game.click.y <= 605)){
+                ctx.drawImage(this.titan, 660,435);
+                ctx.fillText("Attack Titan", 650,630);
+
+                }
+            else{
+                ctx.drawImage(this.titanShadow, 660,435);
             }
 
             if(this.game.mouse && this.game.mouse.x >= 530 && this.game.mouse.x <= 800 && this.game.mouse.y >= 680 && this.game.mouse.y <= 705){

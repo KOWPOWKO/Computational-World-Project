@@ -12,7 +12,8 @@ ASSET_MANAGER.queueDownload("./resources/hero/eren2.png");
 ASSET_MANAGER.queueDownload("./resources/hero/ErenJ.png");
 ASSET_MANAGER.queueDownload("./resources/hero/ErenJ2.png");
 ASSET_MANAGER.queueDownload("./resources/hero/titan.png");
-
+ASSET_MANAGER.queueDownload("./resources/hero/erendisplay.png");
+ASSET_MANAGER.queueDownload("./resources/hero/erenshadow.png");
 
 //enemies images
 ASSET_MANAGER.queueDownload("./resources/enemies/monstor2.png");

@@ -73,5 +73,6 @@ const PARAMS = {
     INV_FULL: false,
     CHARACTER1: false,
     CHARACTER2: false,
+    CHARACTER3: false,
     SPEED: 1
 };
