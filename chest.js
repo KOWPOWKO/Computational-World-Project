@@ -674,22 +674,22 @@ class Chest {
         }
         if(!this.reset6 && this.slashAbility && PARAMS.SCORE  >= 20 && this.count6 === 0){
             this.count6++;
-            this.game.addEntityForeground(new AirSlashInvetory(this.game,80,80));
+            this.game.addEntityInventory(new AirSlashInvetory(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-20;
         }
         if(!this.reset7 && this.laserB && PARAMS.SCORE  >= 30 && this.count7 === 0){
             this.count7++;
-            this.game.addEntityForeground(new Lazer(this.game,80,80));
+            this.game.addEntityInventory(new LazerInvetory(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-30;
         }
         if(!this.reset8 && this.waveS && PARAMS.SCORE  >= 40 && this.count8 === 0){
             this.count8++;
-            this.game.addEntityForeground(new SonicWave(this.game,80,80));
+            this.game.addEntityInventory(new SonicWaveInvetory(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-40;
         }
         if(!this.reset9 && this.invincibility && PARAMS.SCORE  >= 50 && this.count9 === 0){
             this.count9++;
-            this.game.addEntityForeground(new Invincibility(this.game,80,80));
+            this.game.addEntityInventory(new Invincibility(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-50;
         }
         if(!this.reset10 && this.nuke && PARAMS.SCORE  >= 70 && this.count10 === 0){

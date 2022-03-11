@@ -243,25 +243,41 @@ class Hero {
 
 
         this.game.entities[3].forEach(function (entity) {
+           
             if(entity instanceof ArrowShooterInvetory) {
                 if (that.kSlot == false) {
                     that.kFill = entity;
                     that.kSlot = true;                    
                 }
-            else if (that.lSlot == false) {
-                that.lFill = entity;
-                that.lSlot = true;
-            }
+                else if (that.lSlot == false) {
+                    that.lFill = entity;
+                    at.lSlot = true;
+                }
                 entity.removeFromWorld = true;
             }
             if(entity instanceof AirSlashInvetory) {
                 if (that.lSlot == false) {
                     that.lFill = entity;
-                    that.lSlot = true;                    
+                    that.lSlot = true;   
+                   // entity.removeFromWorld = true;
+                
+                 }
+            }
+            if(entity instanceof LazerInvetory) {
                 entity.removeFromWorld = true;
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
+                //entity.removeFromWorld = true;
                 }
             }
-
+            if(entity instanceof SonicWaveInvetory) {
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
+                //entity.removeFromWorld = true;
+                }
+            }
             if(entity instanceof CoolDown && entity.removeFromWorld == false) {
                 if (that.coolDown > 0.3) {
                     that.coolDown -= 0.2;
@@ -434,12 +450,18 @@ class Hero {
                 else if (this.lFill instanceof AirSlashInvetory) {
                     this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
                 }
+                else if (this.lFill instanceof LazerInvetory) {
+                    this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+                }
+                else if (this.lFill instanceof SonicWaveInvetory) {
+                    this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
+                }
                 this.lSlot = false;
             }
         }
-        if (this.game.specialL) {
-            this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
-        }
+        // if (this.game.specialL) {
+        //     this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
+        // }
     }
 
     checkInventoryFull() {

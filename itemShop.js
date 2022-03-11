@@ -488,7 +488,7 @@ class SonicWave{
 class LazerInvetory {
     constructor(game, x, y,facing) {
         Object.assign(this, {game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/sonicwave.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/lazerbeam.png");
         this.loadAnimation();
         this.loadProperties();
     }
@@ -631,9 +631,9 @@ class AirSlash {
     updateBB() {
         this.lastBB = this.BB;
         if (this.facing == this.LEFT) {
-            this.BB = new BoundingBox(this.x, this.y, 35,95);
+            this.BB = new BoundingBox(this.x, this.y, 35,110);
         } else if (this.facing == this.RIGHT) {
-            this.BB = new BoundingBox(this.x, this.y, 35, 95);
+            this.BB = new BoundingBox(this.x+30, this.y, 35, 110);
         }
     }
     loadAnimation() {
@@ -642,8 +642,10 @@ class AirSlash {
     loadProperties() {
             this.LEFT = 0;
             this.RIGHT = 1;
-    
-            this.SPEED = 300;
+            this.waves = 10;
+            this.attackSpeed = 0.25;
+            this.timeElapsed = 0;
+            this.SPEED = 200;
             this.removeFromWorld = false;
     };
     collisionUpdate() {
@@ -654,7 +656,7 @@ class AirSlash {
                     entity.removeFromWorld = true;
                     that.removeFromWorld = true;
                 } else {
-                    entity.health -= 25;
+                    entity.health -= 5;
                     that.removeFromWorld = true;
                 }
             } 
@@ -672,6 +674,19 @@ class AirSlash {
             } 
         }
         this.collisionUpdate();
+
+        if (PARAMS.PAUSE == false) {
+            const TICK = this.game.clockTick;
+            this.timeElapsed += TICK;
+            if (this.waves <= 0) {
+                this.removeFromWorld = true;
+            } 
+            else if (this.timeElapsed >= this.attackSpeed) {
+                this.waves --;
+                this.timeElapsed = 0;
+                this.collisionUpdate();
+            }
+        }     
     };
     draw(ctx) {
         if (PARAMS.DEBUG) { 
@@ -690,19 +705,22 @@ class AirSlashInvetory {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/slash.png");
         this.loadAnimation();
+        this.loadProperties();
     }
 
     loadAnimation() {
+
         this.animation = new Animator(this.spritesheet,0,0,71,89,1,0.1,0,false,true);
     }
+    loadProperties(){
 
+    }
 
     update() {
 
     }
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
   
     }
 }

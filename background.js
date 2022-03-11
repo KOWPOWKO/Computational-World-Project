@@ -39,11 +39,11 @@ class LoadCharacter {
                 PARAMS.CHARACTER3 = false;
 
         }
-        if(this.game.click && this.game.click.x >= 650 && this.game.click.x <= 770 && this.game.click.y >= 425 && this.game.click.y <= 605){
-            PARAMS.CHARACTER3 = true;
-            PARAMS.CHARACTER1 = false;
-            PARAMS.CHARACTER2 = false;
-    }
+    //     if(this.game.click && this.game.click.x >= 650 && this.game.click.x <= 770 && this.game.click.y >= 425 && this.game.click.y <= 605){
+    //         PARAMS.CHARACTER3 = true;
+    //         PARAMS.CHARACTER1 = false;
+    //         PARAMS.CHARACTER2 = false;
+    // }
     };
 
     draw(ctx) {
@@ -134,14 +134,17 @@ class StartingScreen {
                 ctx.drawImage(this.eren2, 1030,425);
             }
             ctx.strokeRect(650, 425 , 140, 180);
-            if(this.game.mouse && this.game.mouse.x >= 650 && this.game.mouse.x <= 770 && this.game.mouse.y >= 425 && this.game.mouse.y <= 605 || (this.game.click && this.game.click.x >= 650 && this.game.click.x <= 770 && this.game.click.y >= 425 && this.game.click.y <= 605)){
-                ctx.drawImage(this.titan, 660,435);
-                ctx.fillText("Attack Titan", 650,630);
+            // if(this.game.mouse && this.game.mouse.x >= 650 && this.game.mouse.x <= 770 && this.game.mouse.y >= 425 && this.game.mouse.y <= 605 || (this.game.click && this.game.click.x >= 650 && this.game.click.x <= 770 && this.game.click.y >= 425 && this.game.click.y <= 605)){
+            //     ctx.drawImage(this.titan, 660,435);
+            //     ctx.fillText("Attack Titan", 650,630);
 
-                }
-            else{
+            //     }
+            // else{
                 ctx.drawImage(this.titanShadow, 660,435);
-            }
+                ctx.fillText("Not Unlocked", 650,630);
+
+
+            //}
 
             if(this.game.mouse && this.game.mouse.x >= 530 && this.game.mouse.x <= 800 && this.game.mouse.y >= 680 && this.game.mouse.y <= 705){
                 ctx.fillStyle = "Grey";
