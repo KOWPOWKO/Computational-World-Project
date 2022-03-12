@@ -180,13 +180,18 @@ class SceneManager {
                 that.setRoundMonters();
                 entity.removeFromWorld = true;
             }
-            // if(entity instanceof GameOver && (entity.mainMenu == true)) {
-            //     that.mainMenu();
-            // }
+            if(entity instanceof GameOver && (entity.mMenu == true)) {
+                that.mainMenu();
+                entity.removeFromWorld = true;
+            }
             if(entity instanceof Win && (entity.restart == true)) {
                 that.loadGame = true;
                 that.loadWorld();
                 that.setRoundMonters();
+                entity.removeFromWorld = true;
+            }
+            if(entity instanceof Win && (entity.mMenu == true)) {
+                that.mainMenu();
                 entity.removeFromWorld = true;
             }
 
@@ -210,6 +215,15 @@ class SceneManager {
                 that.clearEntities();
                 PARAMS.ROUND = 1;
                 that.gameOver();
+            }
+            if (entity instanceof ErenJ && (entity.transform == true)) {
+                entity.removeFromWorld = true;
+                that.game.addEntityForeground(new ErenTitan(that.game,0,0));
+            }
+            if (entity instanceof ErenTitan && (entity.transform == true)) {
+                entity.removeFromWorld = true;
+                that.game.addEntityForeground(new ErenJ(that.game,0,0));
+                
             }
         })
         console.log(this.game.entities[1].length <= 0)

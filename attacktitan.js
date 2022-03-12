@@ -1,6 +1,7 @@
 
 class ErenTitan {
     constructor(game,x,y) {
+        this.transform = false;
         Object.assign(this,{game,x,y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/hero/titan.png");
         this.healthbar = ASSET_MANAGER.getAsset("./resources/background/healthgreen.jpg");
@@ -464,7 +465,8 @@ class ErenTitan {
      }
  
      update() {
-         
+        if(this.game.click && this.game.click.x >= 300 && this.game.click.x <= 450 && this.game.click.y >= 650 && this.game.click.y <= 680) this.transform = true;
+
          const TICK = this.game.clockTick;
          this.previousAttack += TICK;
         
@@ -559,6 +561,9 @@ class ErenTitan {
      }
 
     draw(ctx) {
+        
+        ctx.strokeRect(300, 650 , 150, 30);
+        ctx.fillText("TRANSFORM", 320,670);
         
         if (this.dead == false) {
             if (this.facing == this.RIGHT) {

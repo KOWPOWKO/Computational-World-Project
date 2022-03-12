@@ -211,7 +211,7 @@ class GameOver {
     constructor(game) {
         this.game = game;
         this.restart = false;
-        this.mainMenu = false;
+        this.mMenu = false;
     }
 
     update() {
@@ -220,13 +220,14 @@ class GameOver {
                 && this.game.click.y >= 350 && this.game.click.y <= 410) {
                 this.restart = true;
                 this.game.click = false;
+                PARAMS.SKILL_POINTS = 0;
             }
             if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 780 
                 && this.game.click.y >= 150 && this.game.click.y <= 210) {
-                this.mainMenu = true;
+                this.mMenu = true;
                 this.game.click = false;
-                this.camera.roundNumber = 0;
-                this.camera.END = false;
+                PARAMS.SKILL_POINTS = 0;
+
             }
         }
 
@@ -250,14 +251,14 @@ class GameOver {
             ctx.fillStyle = "Red";
             ctx.fillText("RESTART", 540,400);
 
-            // ctx.fillStyle = "Black";
-            // ctx.fillRect(530,150, 250, 60);
+            ctx.fillStyle = "Black";
+            ctx.fillRect(530,150, 250, 60);
     
       
 
-            // ctx.font = ctx.font.replace(/\d+px/, "40px");
-            // ctx.fillStyle = "Red";
-            // ctx.fillText("MAIN MENU", 540,200);
+            ctx.font = ctx.font.replace(/\d+px/, "40px");
+            ctx.fillStyle = "Red";
+            ctx.fillText("MAIN MENU", 540,200);
         } 
         
         
@@ -269,24 +270,28 @@ class Win {
         this.game = game;
         this.camera = camera;
         this.restart = false;
-        this.mainMenu = false;
+        this.mMenu = false;
     }
 
     update() {
         if (this.game.click) {
             if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 730 
                 && this.game.click.y >= 350 && this.game.click.y <= 410) {
-                this.mainMenu = true;
+                this.restart = true;
                 this.game.click = false;
                 this.camera.roundNumber = 0;
                 this.camera.END = false;
+                PARAMS.SKILL_POINTS = 0;
+
             }
-            if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 780 
+            else if (this.game.click && this.game.click.x >= 530 && this.game.click.x <= 780 
                 && this.game.click.y >= 150 && this.game.click.y <= 210) {
-                this.mainMenu = true;
+                this.mMenu = true;
                 this.game.click = false;
                 this.camera.roundNumber = 0;
                 this.camera.END = false;
+                PARAMS.SKILL_POINTS = 0;
+
             }
         }
     }
@@ -310,15 +315,15 @@ class Win {
             ctx.fillText("RESTART", 540,400);
             ctx.font = ctx.font.replace(/\d+px/, "10px");
 
-        //     ctx.fillStyle = "White";
-        //     ctx.fillRect(530,150, 250, 60);
+            ctx.fillStyle = "White";
+            ctx.fillRect(530,150, 250, 60);
     
       
 
-        //     ctx.font = ctx.font.replace(/\d+px/, "40px");
-        //     ctx.fillStyle = "Blue";
-        //     ctx.fillText("MAIN MENU", 540,200);
-        //     ctx.font = ctx.font.replace(/\d+px/, "10px");
+            ctx.font = ctx.font.replace(/\d+px/, "40px");
+            ctx.fillStyle = "Blue";
+            ctx.fillText("MAIN MENU", 540,200);
+            ctx.font = ctx.font.replace(/\d+px/, "10px");
         } 
         
         

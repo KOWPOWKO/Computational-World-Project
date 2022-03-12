@@ -661,7 +661,7 @@ class Chest {
             PARAMS.BUY2 = false;
         }
         if(!this.reset4 && this.castleD && PARAMS.SCORE  >= 25 && this.count4 === 0){
-            this.game.addEntityInventory(new CastleShield(this.game,80,80));
+            this.game.addEntityInventory(new CastleShield(this.game,100,250));
             this.count4++;
             PARAMS.SCORE = PARAMS.SCORE-25;
         }

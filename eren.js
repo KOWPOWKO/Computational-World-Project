@@ -32,70 +32,36 @@ class ErenJ {
     }
 
     loadAnimation() {
-        if(this.transform == false){
+        
         for (var i = 0; i < 5; i++) { // 3 states (0 = IDLE, 1 = WALKING, 2 = RUNNING)
             this.animations.push([]);
         }
+            // Idle
+            this.animations[0] = new Animator(this.spritesheet2,860,46, 40,54,1,0.6,0,false,true);
+            // Walking
+            this.animations[1] = new Animator(this.spritesheet1,4,290,117,52,7,0.2,1.5,true,true);
+            // Run
+            this.animations[2] = new Animator(this.spritesheet2,132,260,115,62,6,0.1,-5.2,true,true);
+            // Damaged
+            this.knockbackAnim = new Animator(this.spritesheet2,128,142,96,118,2,0.6,-1,false,true);
+            // Blocking
+            this.blockAnim = new Animator(this.spritesheet2,0,176,100,54,1,0.8,18,false,true);
+            // Attacking
+            this.attackAnim = new Animator(this.spritesheet2,360,0,120,110,3,0.2,0.5,false,false);
+            // TItan attack
+            this.attackAnim2 = new Animator(this.spritesheet1,0,0,120,110,6,0.3,0.5,false,false);
+            // Jumping
+            this.jumpAnim = new Animator(this.spritesheet2,500,130,100,74,1,.8,-0.5,false,true);
 
-        // Idle
-        this.animations[0] = new Animator(this.spritesheet2,860,46, 40,54,1,0.6,0,false,true);
-        // Walking
-        this.animations[1] = new Animator(this.spritesheet1,4,290,117,52,7,0.2,1.5,true,true);
-        // Run
-        this.animations[2] = new Animator(this.spritesheet2,132,260,115,62,6,0.1,-5.2,true,true);
-        // Damaged
-        this.knockbackAnim = new Animator(this.spritesheet2,128,142,96,118,2,0.6,-1,false,true);
-        // Blocking
-        this.blockAnim = new Animator(this.spritesheet2,0,176,100,54,1,0.8,18,false,true);
-        // Attacking
-        this.attackAnim = new Animator(this.spritesheet2,360,0,120,110,3,0.2,0.5,false,false);
-        // TItan attack
-        this.attackAnim2 = new Animator(this.spritesheet1,0,0,120,110,6,0.3,0.5,false,false);
-        // Jumping
-        this.jumpAnim = new Animator(this.spritesheet2,500,130,100,74,1,.8,-0.5,false,true);
-
-        // Die
-        this.deadAnim= new Animator(this.spritesheet2,732,176,96,54,2,0.8,-1,false,false);
-        /*
-        
+            // Die
+            this.deadAnim= new Animator(this.spritesheet2,732,176,96,54,2,0.8,-1,false,false);
+            /*
+            
         // Damaged
         this.animations[6] = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
         // Jump
         this.jumpAnim = new Animator(this.spritesheet,89,1098,96,104,10,0.15,-0.5,false,true);
         */
-    }
-    if(this.transform == true){
-        for (var i = 0; i < 5; i++) { // 3 states (0 = IDLE, 1 = WALKING, 2 = RUNNING)
-            this.animations.push([]);
-        }
-
-        // Idle
-        this.animations[0] = new Animator(this.spritesheet,20,1020,68,99,3,0.3,0,false,true);
-        // Walking
-        this.animations[1] = new Animator(this.spritesheet,76.9,1136,54,99,8,0.2,1.5,true,true);
-        // Run
-        this.animations[2] = new Animator(this.spritesheet,76.9,1136,54,99,8,0.2,1.5,true,true);
-        // Damaged
-        this.knockbackAnim = new Animator(this.spritesheet,20,1020,68,99,3,0.3,-1,false,true);
-        // Blocking
-        this.blockAnim = new Animator(this.spritesheet,20,1690,75,70,1,0.8,18,false,true);
-        // Attacking
-        this.attackAnim = new Animator(this.spritesheet,21,1761,164,70,6,0.2,0.5,false,false);
-        // TItan attack
-        this.attackAnim2 = new Animator(this.spritesheet,21,1260,74,108,4,0.2,false,false);
-        // Jumping
-        this.jumpAnim = new Animator(this.spritesheet,20,898,70,100,1,0.8,-0.5,false,true);
-
-        // Die
-        this.deadAnim= new Animator(this.spritesheet,40,1862,16,28,4,0.3,-1,false,false);
-        /*
-        
-        // Damaged
-        this.animations[6] = new Animator(this.spritesheet,84,178,96,120,1,0.15,-1,false,true);
-        // Jump
-        this.jumpAnim = new Animator(this.spritesheet,89,1098,96,104,10,0.15,-0.5,false,true);
-        */
-    }
     }
 
     loadProperties() {
@@ -500,7 +466,7 @@ class ErenJ {
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
        
-        
+        if(this.game.click && this.game.click.x >= 500 && this.game.click.x <= 650 && this.game.click.y >= 650 && this.game.click.y <= 680) this.transform = true;
 
         if (this.dead == false && PARAMS.PAUSE == false) {
             PARAMS.TIME += this.game.clockTick;
