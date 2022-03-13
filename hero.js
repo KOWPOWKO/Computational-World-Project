@@ -86,7 +86,9 @@ class Hero {
         this.kSlot = false;
         this.lSlot = false;
         this.kFill;
-        this.lFill
+        this.lFill;
+        this.lFillElapsed = 0;
+        this.lFillMax = 1;
 
         //basic restrictions
         this.GROUND = 455;
@@ -243,7 +245,6 @@ class Hero {
 
 
         this.game.entities[3].forEach(function (entity) {
-           
             if(entity instanceof ArrowShooterInvetory) {
                 if (that.kSlot == false) {
                     that.kFill = entity;
@@ -260,8 +261,8 @@ class Hero {
                     that.lFill = entity;
                     that.lSlot = true;   
                    // entity.removeFromWorld = true;
-                
                  }
+                 entity.removeFromWorld = true;
             }
             if(entity instanceof LazerInvetory) {
                 entity.removeFromWorld = true;
@@ -270,6 +271,7 @@ class Hero {
                     that.lSlot = true;                    
                 //entity.removeFromWorld = true;
                 }
+                entity.removeFromWorld = true;
             }
             if(entity instanceof SonicWaveInvetory) {
                 if (that.lSlot == false) {
@@ -277,6 +279,7 @@ class Hero {
                     that.lSlot = true;                    
                 //entity.removeFromWorld = true;
                 }
+                entity.removeFromWorld = true;
             }
             if(entity instanceof CoolDown && entity.removeFromWorld == false) {
                 if (that.coolDown > 0.3) {
@@ -361,7 +364,7 @@ class Hero {
                         that.health = 0;
                         that.dead = true;
                     } 
-                    if (that.BLOCK == false) {
+                    if (that.BLOCK == false && PARAMS.INVINCIBILITY == false) {
                         ASSET_MANAGER.playAsset("./resources/sound/playerHurt.mp3");
                         if (that.shield > 0) {
                             that.shield -= entity instanceof SmallFireBall ? 10 : 20;
@@ -404,9 +407,9 @@ class Hero {
                             that.hasBeenAttacked = true;
                             that.knockback = true;
 
-                            if (that.shield > 0) {
+                            if (that.shield > 0 && PARAMS.INVINCIBILITY == false) {
                                 that.shield -= 25;
-                            } else if (that.shield <= 0){
+                            } else if (that.shield <= 0 && PARAMS.INVINCIBILITY == false){
                                 that.shield = 0;
                                 that.health -= 25;
                             }
@@ -446,17 +449,45 @@ class Hero {
             if (this.lSlot == true) {
                 if (this.lFill instanceof ArrowShooterInvetory) {
                     this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                    this.lSlot = false;
                 }
                 else if (this.lFill instanceof AirSlashInvetory) {
-                    this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
+                    this.lFillMax = 1;
+                    this.game.specialL = false;
+                    if (this.lFillElapsed >= this.lFillMax) {
+                        this.lFill.canShoot = true;
+                    }
+                    if (this.lFill.canShoot == true) {
+                        this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
+                        this.lFill.canShoot = false;
+                        this.lFillElapsed = 0;
+                    }
                 }
                 else if (this.lFill instanceof LazerInvetory) {
-                    this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+                    this.lFillMax = 3;
+                    this.game.specialL = false;
+                    if (this.lFillElapsed >= this.lFillMax) {
+                        this.lFill.canShoot = true;
+                    }
+                    if (this.lFill.canShoot == true) {
+                        this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+                        this.lFill.canShoot = false;
+                        this.lFillElapsed = 0;
+                    }
                 }
                 else if (this.lFill instanceof SonicWaveInvetory) {
-                    this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
-                }
-                this.lSlot = false;
+                    this.lFillMax = 3;
+                    this.game.specialL = false;
+                    if (this.lFillElapsed >= this.lFillMax) {
+                        this.lFill.canShoot = true;
+                    }
+                    if (this.lFill.canShoot == true) {
+                        this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
+                        this.lFill.canShoot = false;
+                        this.lFillElapsed = 0;
+                    }
+                    
+                } 
             }
         }
         // if (this.game.specialL) {
@@ -476,6 +507,8 @@ class Hero {
         
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
+        this.lFillElapsed += TICK;
+        
        
         
         

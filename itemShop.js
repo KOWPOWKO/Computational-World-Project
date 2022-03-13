@@ -84,13 +84,37 @@ class Invincibility {
     constructor(game, x, y) {
         Object.assign(this, {game, x, y});
         this.spritesheet = ASSET_MANAGER.getAsset("./resources/powerUps/star.png");
-
+        this.x = 125;
+        this.y = 600;
+        this.loadProperties();
+        this.removeFromWorld = false;
     };
+
+    loadProperties() {
+        this.duration = 10;
+        this.elapsed = 0;
+        this.startTimer = false;
+    }
     
-    update () {};
+    update () {
+        if (this.startTimer == true) {
+            this.elapsed += this.game.clockTick;
+            PARAMS.INVINCIBILITY = true;
+        }
+        if(this.elapsed >= this.duration) {
+            this.removeFromWorld = true;
+            PARAMS.BUY = true;
+            PARAMS.INVINCIBILITY = false;
+        }
+    };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet,this.x,this.y);
+        if(this.elapsed < this.duration) {
+            ctx.drawImage(this.spritesheet,this.x,this.y);
+            ctx.fillText("Time: " + Math.round(this.duration - this.elapsed), this.x + 20, this.y + 110); 
+        } else if(this.elapsed >= this.duration) {
+            
+        }
     };
 };
 
@@ -397,7 +421,7 @@ class SonicWaveInvetory {
     loadProperties() {
         this.coolDown = 10;
         this.previous = 10;
-
+        this.canShoot = true;
     };
 
     update() {
@@ -500,6 +524,7 @@ class LazerInvetory {
     loadProperties() {
         this.coolDown = 60;
         this.previous = 60;
+        this.canShoot = true;
 
     };
 
@@ -712,13 +737,14 @@ class AirSlashInvetory {
 
         this.animation = new Animator(this.spritesheet,0,0,71,89,1,0.1,0,false,true);
     }
-    loadProperties(){
-
+    loadProperties() {
+        this.startTimer = true;
+        this.canShoot = true;
     }
+    
+    update () {
 
-    update() {
-
-    }
+    };
 
     draw(ctx) {
   

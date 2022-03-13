@@ -87,6 +87,7 @@ class SceneManager {
 
     loadProperties() {
         PARAMS.SLOW = 1;
+        PARAMS.INVINCIBILITY = false;
     }
 
     UpdateAudio() {
@@ -138,6 +139,11 @@ class SceneManager {
                     PARAMS.SLOW = 0.1;
                 }
             }
+            if(entity instanceof Invincibility) {
+                if(!PARAMS.PAUSE) {
+                    entity.startTimer = true;
+                }
+            }
             if(entity instanceof SpeedIncrease) {
                 if(!PARAMS.PAUSE){
                     entity.startTimer = true;
@@ -156,9 +162,6 @@ class SceneManager {
         
         this.game.entities[2].forEach(function (entity) {
             if(entity instanceof StartingScreen && (entity.loadGame == true) && (entity.loaded == false)) {
-                
-                  
-                
                 that.loadGame = true;
                 that.loadWorld();
                 that.setRoundMonters();

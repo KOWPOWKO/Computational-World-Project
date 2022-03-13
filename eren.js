@@ -90,7 +90,9 @@ class ErenJ {
         this.kSlot = false;
         this.lSlot = false;
         this.kFill;
-        this.lFill
+        this.lFill;
+        this.lFillElapsed = 0;
+        this.lFillMax = 1;
 
         //basic restrictions
         this.GROUND = 455;
@@ -441,16 +443,47 @@ class ErenJ {
             if (this.lSlot == true) {
                 if (this.lFill instanceof ArrowShooterInvetory) {
                     this.game.addEntityForeground(new ArrowShooter(this.game,this.x,this.y,this.facing));
+                    this.lSlot = false;
                 }
                 else if (this.lFill instanceof AirSlashInvetory) {
-                    this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
+                    this.lFillMax = 1;
+                    this.game.specialL = false;
+                    if (this.lFillElapsed >= this.lFillMax) {
+                        this.lFill.canShoot = true;
+                    }
+                    if (this.lFill.canShoot == true) {
+                        this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
+                        this.lFill.canShoot = false;
+                        this.lFillElapsed = 0;
+                    }
                 }
-                this.lSlot = false;
+                else if (this.lFill instanceof LazerInvetory) {
+                    this.lFillMax = 3;
+                    this.game.specialL = false;
+                    if (this.lFillElapsed >= this.lFillMax) {
+                        this.lFill.canShoot = true;
+                    }
+                    if (this.lFill.canShoot == true) {
+                        this.game.addEntityForeground(new Lazer(this.game,this.x,this.y,this.facing));
+                        this.lFill.canShoot = false;
+                        this.lFillElapsed = 0;
+                    }
+                }
+                else if (this.lFill instanceof SonicWaveInvetory) {
+                    this.lFillMax = 3;
+                    this.game.specialL = false;
+                    if (this.lFillElapsed >= this.lFillMax) {
+                        this.lFill.canShoot = true;
+                    }
+                    if (this.lFill.canShoot == true) {
+                        this.game.addEntityForeground(new SonicWave(this.game,this.x,this.y,this.facing));
+                        this.lFill.canShoot = false;
+                        this.lFillElapsed = 0;
+                    }
+                    
+                } 
             }
         }
-        // if (this.game.specialL) {
-        //     this.game.addEntityForeground(new AirSlash(this.game,this.x,this.y,this.facing));
-        // }
     }
 
     checkInventoryFull() {
@@ -462,9 +495,9 @@ class ErenJ {
     }
 
     update() {
-
         const TICK = this.game.clockTick;
         this.previousAttack += TICK;
+        this.lFillElapsed += TICK;
        
         if(this.game.click && this.game.click.x >= 500 && this.game.click.x <= 650 && this.game.click.y >= 650 && this.game.click.y <= 680) this.transform = true;
 

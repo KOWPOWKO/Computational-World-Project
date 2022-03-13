@@ -643,7 +643,7 @@ class Chest {
         }
 
         
-        if(!this.reset1 && PARAMS.SCORE >= 10 && this.timePower  && this.count1 === 0 & PARAMS.BUY){
+        if(!this.reset1 && PARAMS.SCORE >= 10 && this.timePower  && this.count1 === 0 && PARAMS.BUY){
             this.game.addEntityInventory(new TimeStop(this.game,25,250));
             this.count1++;
             PARAMS.SCORE = PARAMS.SCORE-10; 
@@ -673,24 +673,31 @@ class Chest {
             }
         }
         if(!this.reset6 && this.slashAbility && PARAMS.SCORE  >= 20 && this.count6 === 0){
-            this.count6++;
-            this.game.addEntityInventory(new AirSlashInvetory(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-20;
+            if (PARAMS.INV_FULL == false) {
+                this.count6++;
+                this.game.addEntityInventory(new AirSlashInvetory(this.game,80,80));
+                PARAMS.SCORE = PARAMS.SCORE-20;
+            }
         }
         if(!this.reset7 && this.laserB && PARAMS.SCORE  >= 30 && this.count7 === 0){
-            this.count7++;
-            this.game.addEntityInventory(new LazerInvetory(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-30;
+            if (PARAMS.INV_FULL == false) {
+                this.count7++;
+                this.game.addEntityInventory(new LazerInvetory(this.game,80,80));
+                PARAMS.SCORE = PARAMS.SCORE-30;
+            }
         }
         if(!this.reset8 && this.waveS && PARAMS.SCORE  >= 40 && this.count8 === 0){
-            this.count8++;
-            this.game.addEntityInventory(new SonicWaveInvetory(this.game,80,80));
-            PARAMS.SCORE = PARAMS.SCORE-40;
+            if (PARAMS.INV_FULL == false) {
+                this.count8++;
+                this.game.addEntityInventory(new SonicWaveInvetory(this.game,80,80));
+                PARAMS.SCORE = PARAMS.SCORE-40;
+            }
         }
-        if(!this.reset9 && this.invincibility && PARAMS.SCORE  >= 50 && this.count9 === 0){
+        if(!this.reset9 && this.invincibility && PARAMS.SCORE  >= 50 && this.count9 === 0 && PARAMS.BUY1){
             this.count9++;
             this.game.addEntityInventory(new Invincibility(this.game,80,80));
             PARAMS.SCORE = PARAMS.SCORE-50;
+            PARAMS.BUY1 = false;
         }
         if(!this.reset10 && this.nuke && PARAMS.SCORE  >= 70 && this.count10 === 0){
             this.count10++;
