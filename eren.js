@@ -269,20 +269,37 @@ class ErenJ {
                     that.kFill = entity;
                     that.kSlot = true;                    
                 }
-            else if (that.lSlot == false) {
-                that.lFill = entity;
-                that.lSlot = true;
-            }
+                else if (that.lSlot == false) {
+                    that.lFill = entity;
+                    at.lSlot = true;
+                }
                 entity.removeFromWorld = true;
             }
             if(entity instanceof AirSlashInvetory) {
                 if (that.lSlot == false) {
                     that.lFill = entity;
-                    that.lSlot = true;                    
-                entity.removeFromWorld = true;
-                }
+                    that.lSlot = true;   
+                   // entity.removeFromWorld = true;
+                 }
+                 entity.removeFromWorld = true;
             }
-
+            if(entity instanceof LazerInvetory) {
+                entity.removeFromWorld = true;
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
+                //entity.removeFromWorld = true;
+                }
+                entity.removeFromWorld = true;
+            }
+            if(entity instanceof SonicWaveInvetory) {
+                if (that.lSlot == false) {
+                    that.lFill = entity;
+                    that.lSlot = true;                    
+                //entity.removeFromWorld = true;
+                }
+                entity.removeFromWorld = true;
+            }
             if(entity instanceof CoolDown && entity.removeFromWorld == false) {
                 if (that.coolDown > 0.3) {
                     that.coolDown -= 0.2;
